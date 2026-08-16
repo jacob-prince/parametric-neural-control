@@ -282,7 +282,7 @@ def fig_encoding_scatter_grid(
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     import argparse
-    from circuit_toolkit.plot_utils import saveallforms
+    from core.plot_utils import saveallforms
 
     parser = argparse.ArgumentParser(
         description="Plot encoding model scatter for a session")

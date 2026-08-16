@@ -5,10 +5,10 @@ from os.path import join
 from PIL import Image
 from torchvision.transforms import ToPILImage
 from torchvision.utils import make_grid
-from circuit_toolkit.montage_utils import make_grid_T, make_grid_np
+from core.montage_utils import make_grid_T, make_grid_np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import circuit_toolkit.colormap_matlab
+import core.colormap_matlab
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['axes.spines.right'] = False
 mpl.rcParams['axes.spines.top'] = False

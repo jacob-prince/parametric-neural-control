@@ -16,8 +16,8 @@ import torch as th
 import torch.nn as nn
 import timm
 from torch.utils.data import DataLoader
-from circuit_toolkit.layer_hook_utils import featureFetcher_module, featureFetcher, get_module_names
-from circuit_toolkit.dataset_utils import ImagePathDataset
+from core.layer_hook_utils import featureFetcher_module, featureFetcher, get_module_names
+from core.dataset_utils import ImagePathDataset
 sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
 from core.model_load_utils import load_model_transform
 
@@ -345,4 +345,3 @@ def parse_accentuated_filenames_to_df(filenames, include_parse_fail=False):
         return pd.DataFrame(parsed_data)
     else:
         return pd.DataFrame()
-

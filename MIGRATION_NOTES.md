@@ -1,7 +1,13 @@
 # Migration notes
 
-The initial camera-ready migration preserves the original module organization,
-filenames, and behavior from `Closed-loop-visual-insilico` at commit `48ca561`.
+The initial camera-ready migration preserves the original `core` and
+`neural_regress` filenames and behavior from `Closed-loop-visual-insilico` at
+commit `48ca561`.
+
+The small `circuit_toolkit` subset required by this code was consolidated into
+`core/` to keep only two library packages. Its module filenames and function
+bodies are preserved from `PonceLab/circuit_toolkit` commit `81cca60`; the MIT
+notice is retained in `CIRCUIT_TOOLKIT_LICENSE`.
 
 ## Deferred model and data path work
 

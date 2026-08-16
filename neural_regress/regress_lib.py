@@ -24,9 +24,9 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.decomposition import PCA
-from circuit_toolkit.plot_utils import show_imgrid
-from circuit_toolkit.layer_hook_utils import featureFetcher
-from circuit_toolkit.dataset_utils import ImagePathDataset, DataLoader
+from core.plot_utils import show_imgrid
+from core.layer_hook_utils import featureFetcher
+from core.dataset_utils import ImagePathDataset, DataLoader
 
 
 denormalizer = Normalize(mean=[-0.485/0.229, -0.456/0.224, -0.406/0.225],
