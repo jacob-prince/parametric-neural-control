@@ -1,0 +1,17 @@
+# Extra dependencies for scripts/ (encoding-model fitting, image synthesis,
+# adversarial attacks, gradient analyses). These stages ran on GPU nodes; they
+# are not needed to reproduce the figures from preprocessed_data.
+#
+#   pip install -r requirements-scripts.txt
+torch
+torchvision
+timm
+open_clip_torch
+clip @ git+https://github.com/openai/CLIP.git
+horama
+pyyaml
+boto3
+requests
+einops
+dill
+imageio

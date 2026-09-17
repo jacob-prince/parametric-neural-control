@@ -1,0 +1,7 @@
+# Keeps committed notebooks free of outputs and execution counts.
+#   pip install pre-commit && pre-commit install
+repos:
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout

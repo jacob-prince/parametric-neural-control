@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "parametric-neural-control"
+version = "1.0.0"
+description = "Code and figure pipeline for: Parametric neural control differentiates top neural network models of primate visual cortex (Prince & Wang et al., 2026)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+authors = [
+  { name = "Jacob S. Prince", email = "jacob.samuel.prince@gmail.com" },
+  { name = "Binxu Wang" },
+]
+# The reference (pixel-exact) environment is environment.yml. These are the
+# minimum runtime requirements so `pip install -e .` also works elsewhere.
+dependencies = [
+  "numpy",
+  "scipy",
+  "pandas",
+  "matplotlib",
+  "pillow",
+  "seaborn",
+  "statsmodels",
+  "h5py",
+  "scikit-learn",
+  "torch",
+  "tqdm",
+]
+
+[project.optional-dependencies]
+test = ["pytest", "nbformat", "nbclient", "ipykernel"]
+scripts = ["torchvision", "timm", "open_clip_torch", "horama", "pyyaml", "boto3", "requests"]
+
+[project.urls]
+Repository = "https://github.com/jacob-prince/parametric-neural-control"
+
+[tool.setuptools]
+packages = [
+  "pnc", "pnc.preproc",
+  "core", "neural_regress",
+  "figures", "figures.main", "figures.supplementary",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"
+markers = [
+  "pixel: renders figures and compares them pixel-exactly to the manuscript (needs preprocessed_data)",
+  "preproc: regenerates preprocessed_data from source_data (needs source_data, slow)",
+  "notebooks: executes notebooks end to end",
+  "slow: takes more than a minute",
+  "gpu: needs a CUDA device",
+  "raw: validates the large raw HDF5 sources (needs source_data)",
+]

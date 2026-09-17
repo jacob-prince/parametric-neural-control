@@ -1,0 +1,38 @@
+# Reference environment for pixel-exact figure reproduction.
+#
+# Every version below is the exact build the manuscript figures were rendered
+# with (macOS arm64, conda-forge). Text rendering depends on matplotlib,
+# freetype and the system 'Helvetica Neue' font, so pixel-exact output is only
+# promised on macOS with these pins; elsewhere the tests fall back to a
+# tolerance comparison (see README, "Pixel-exact policy").
+#
+#   conda env create -f environment.yml
+#   conda activate pnc
+#   pip install -e .
+name: pnc
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12.12
+  - numpy=2.4.1
+  - scipy=1.17.0
+  - pandas=3.0.0
+  - matplotlib=3.10.8
+  - pillow=12.1.0
+  - seaborn=0.13.2
+  - statsmodels=0.14.6
+  - h5py=3.15.1
+  - freetype=2.14.1
+  - libopenblas=0.3.30
+  - pytorch=2.10.0
+  - scikit-learn
+  - pytest=9.0.2
+  - ipykernel=7.1.0
+  - nbformat
+  - nbclient
+  - jupyterlab
+  - pip
+  - pip:
+      - torchvision==0.25.0
+      - tqdm==4.69.0
