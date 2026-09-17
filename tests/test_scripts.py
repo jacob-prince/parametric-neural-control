@@ -41,7 +41,13 @@ def test_no_private_paths_outside_comments():
     os.environ.get('PNC_*', ...) lookup (documenting where the data lived when we ran the code)."""
     bad = []
     for p in SCRIPTS + sorted((REPO / 'scripts').rglob('*.sh')):
+        in_doc = False
         for n, line in enumerate(p.read_text().splitlines(), 1):
+            if line.count('"""') % 2 == 1:          # docstrings are documentation, like comments
+                in_doc = not in_doc
+                continue
+            if in_doc:
+                continue
             code = line.split('#', 1)[0]
             if re.search(r'/n/(holylabs|holylfs|home\d+|netscratch)|/Volumes/CORSAIR|/Users/jacobprince|binxuwang', code) \
                     and not re.search(r"environ\.get\(['\"]PNC_", code):

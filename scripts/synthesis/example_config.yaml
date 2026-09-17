@@ -1,0 +1,101 @@
+# PNC NOTE: production accentuation config, copied verbatim from
+#   accentuation_configs/red_20250428-20250430/red_20250428-20250430_resnet50_robust_Ch9_accentuation_config.yaml
+# The absolute /n/holylabs/... paths below (outputdir, readout_path, xtransform_path, meta_path,
+# result_folder, gifs_folder, log_dir) are Harvard-cluster paths and MUST be edited to your local
+# copies before `python run.py --config example_config.yaml`. seed_image_paths are relative to the cwd.
+model_name: "resnet50_robust"  
+fit_method_name: "RidgeCV"  
+
+# Units to process
+unit_ids: [9]
+
+# Model and data paths
+subject_id: "red_20250428-20250430"  
+layer_name: ".layer4.Bottleneck2"  
+outputdir: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/Encoding_model_outputs/red_20250428-20250430"
+readout_path: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/Encoding_model_outputs/red_20250428-20250430/red_20250428-20250430_resnet50_robust_Ch09_readout_.layer4.Bottleneck2_pca750_RidgeCV.pth"
+xtransform_path: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/Encoding_model_outputs/red_20250428-20250430/red_20250428-20250430_resnet50_robust_Ch09_Xtfmer_.layer4.Bottleneck2_pca750_RidgeCV_JITscript.pt"
+meta_path: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/Encoding_model_outputs/red_20250428-20250430/red_20250428-20250430_resnet50_robust_Ch09_meta_.layer4.Bottleneck2_pca750_RidgeCV.pkl"
+
+
+# Paths
+# result_folder: "/n/netscratch/kempner_fellows/Lab/tfel/prj_control/02-05-2025_resnet50_robust_accentuation"
+# gifs_folder: "/n/netscratch/kempner_fellows/Lab/tfel/prj_control/02-05-2025_resnet50_robust_gifs"
+# log_dir: "/n/netscratch/kempner_fellows/Lab/tfel/prj_control/02-05-2025_resnet50_robust_logs"
+result_folder: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/accentuation_outputs/02-05-2025_red_20250428-20250430_resnet50_robust_accentuation"
+gifs_folder: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/accentuation_outputs/02-05-2025_red_20250428-20250430_resnet50_robust_gifs"
+log_dir: "/n/holylabs/LABS/alvarez_lab/Everyone/Accentuate_VVS/accentuation_outputs/02-05-2025_red_20250428-20250430_resnet50_robust_logs"
+
+# Input images
+seed_image_paths:
+  # - "shared1000/shared0631_nsd46161.png"
+  # - "shared1000/shared0131_nsd11160.png"
+  # - "shared1000/shared0196_nsd16467.png"
+  # - "shared1000/shared0147_nsd12066.png"
+  # - "shared1000/shared0491_nsd37225.png"
+  # - "shared1000/shared0485_nsd36911.png"
+  # - "shared1000/shared0862_nsd62480.png"
+  # - "shared1000/shared0255_nsd21193.png"
+  # - "shared1000/shared0974_nsd70506.png"
+  # - "shared1000/shared0189_nsd15794.png"
+  - "shared1000/shared0575_nsd43157.png"
+  - "shared1000/shared0850_nsd61798.png"
+  - "shared1000/shared0968_nsd70194.png"
+  - "shared1000/shared0241_nsd20065.png"
+  - "shared1000/shared0160_nsd13231.png"
+  - "shared1000/shared0070_nsd07008.png"
+  - "shared1000/shared0055_nsd05879.png"
+  - "shared1000/shared0668_nsd48623.png"
+  - "shared1000/shared0488_nsd36979.png"
+  - "shared1000/shared0940_nsd68312.png"
+
+# Hyperparameter tuning settings
+hp_tuning:
+  enabled: true
+  num_images: 3  # Number of images to use for tuning
+  configs:
+    - noise: 0.30
+      decay: 2.5
+      total_steps: 6000
+      learning_rate: 12.0
+      box_size: [0.90, 0.95]
+    - noise: 0.25
+      decay: 2.4
+      total_steps: 6000
+      learning_rate: 12.0
+      box_size: [0.90, 0.95]
+    - noise: 0.15
+      decay: 2.0
+      total_steps: 6000
+      learning_rate: 12.0
+      box_size: [0.90, 0.95]
+    - noise: 0.1
+      decay: 1.5
+      total_steps: 6000
+      learning_rate: 12.0
+      box_size: [0.90, 0.95]
+    - noise: 0.05
+      decay: 1.2
+      total_steps: 6000
+      learning_rate: 12.0
+      box_size: [0.90, 0.95]
+
+# Feature Accentuation hyperparameters (default if tuning is disabled)
+fa_hyperparameters:
+  noise: 0.1
+  decay: 1.5
+  total_steps: 6000
+  learning_rate: 12.0
+  image_size: 1024
+  model_input_size: 224
+  values_range: [0.0, 1.0]
+  crops_per_iteration: 8
+  box_size: [0.90, 0.95]
+  penalty: 0.0
+
+# Other settings
+extend_range: 0.25  # Percentage to extend range of target levels
+num_levels: 11      # Number of target levels to generate
+generate_gifs: true
+bicubic_interpolation: false
+generate_comprehensive_gifs: true
