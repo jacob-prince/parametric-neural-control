@@ -1,5 +1,6 @@
 """Every script under scripts/ compiles, and every argparse CLI answers --help. Scripts that need
 GPU-only packages (timm, open_clip, clip, horama, yaml, ...) are only compiled."""
+import os
 import py_compile
 import re
 import subprocess
@@ -17,8 +18,8 @@ OPTIONAL = {'timm', 'open_clip', 'clip', 'horama', 'yaml', 'boto3', 'cv2', 'skim
 
 
 @pytest.mark.parametrize('path', SCRIPTS, ids=[str(p.relative_to(REPO / 'scripts')) for p in SCRIPTS])
-def test_script_compiles(path):
-    py_compile.compile(str(path), doraise=True, cfile=None if False else str(Path('/dev/null')) if sys.platform != 'win32' else None)
+def test_script_compiles(path, tmp_path):
+    py_compile.compile(str(path), doraise=True, cfile=str(tmp_path / 'out.pyc'))
 
 
 CLI = [p for p in SCRIPTS if re.search(r'argparse|--help', p.read_text())]
@@ -36,10 +37,13 @@ def test_script_help(path):
 
 
 def test_no_private_paths_outside_comments():
+    """Cluster paths may survive only as comments or as the overridable default of an
+    os.environ.get('PNC_*', ...) lookup (documenting where the data lived when we ran the code)."""
     bad = []
     for p in SCRIPTS + sorted((REPO / 'scripts').rglob('*.sh')):
         for n, line in enumerate(p.read_text().splitlines(), 1):
             code = line.split('#', 1)[0]
-            if re.search(r'/n/(holylabs|holylfs|home\d+|netscratch)|/Volumes/CORSAIR|/Users/jacobprince|binxuwang', code):
+            if re.search(r'/n/(holylabs|holylfs|home\d+|netscratch)|/Volumes/CORSAIR|/Users/jacobprince|binxuwang', code) \
+                    and not re.search(r"environ\.get\(['\"]PNC_", code):
                 bad.append(f'{p.relative_to(REPO)}:{n}: {line.strip()[:100]}')
-    assert not bad, 'private paths in code (keep them only in comments):\n' + '\n'.join(bad)
+    assert not bad, 'private paths in code (keep them only in comments or PNC_* env defaults):\n' + '\n'.join(bad)
