@@ -24,7 +24,6 @@ fig_encoding_scatter_grid(df, unit_ids, model_names, ...)
 from __future__ import annotations
 
 import os
-import sys
 import pickle as pkl
 from os.path import join
 from typing import Sequence
@@ -39,14 +38,13 @@ import seaborn as sns
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
 
-sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
 from core.data_utils import load_from_hdf5, extract_neural_data_dict_2025apr
 
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-EPHYS_DIR    = "/n/holylabs/LABS/alvarez_lab/Lab/VVS_Accentuation/Ephys_Data"
-ENCODING_DIR = "/n/holylabs/LABS/alvarez_lab/Lab/VVS_Accentuation/Encoding_models"
+EPHYS_DIR    = os.environ.get("PNC_EPHYS_DIR", "")     # was /n/holylabs/LABS/alvarez_lab/Lab/VVS_Accentuation/Ephys_Data
+ENCODING_DIR = os.environ.get("PNC_ENCODING_DIR", "")  # was /n/holylabs/LABS/alvarez_lab/Lab/VVS_Accentuation/Encoding_models
 
 _BOOL_MAP = {1: True, 0: False, "1": True, "0": False,
              "True": True, "False": False, True: True, False: False}
@@ -290,9 +288,7 @@ if __name__ == "__main__":
     parser.add_argument("--units",   nargs="+", type=int, default=[0, 2, 9, 15, 19])
     parser.add_argument("--models",  nargs="+",
                         default=["resnet50_robust", "resnet50"])
-    parser.add_argument("--figdir",  default=(
-        "/n/home12/binxuwang/Github/Closed-loop-visual-insilico/"
-        "figures/peer_review_export"))
+    parser.add_argument("--figdir",  default="figures/peer_review_export")  # was /n/home12/binxuwang/Github/Closed-loop-visual-insilico/figures/peer_review_export
     args = parser.parse_args()
 
     os.makedirs(args.figdir, exist_ok=True)
