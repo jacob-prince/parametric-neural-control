@@ -5,6 +5,9 @@
 Jacob S. Prince\*, Binxu Wang\*, Thomas Fel, Akshay V. Jagadeesh, Parisa A. Vaziri, George A. Alvarez, Margaret S. Livingstone & Talia Konkle<br>
 <sub>Harvard University · Kempner Institute · Harvard Medical School · 2026</sub>
 
+**[📄 Read the preprint on bioRxiv](https://www.biorxiv.org/content/10.64898/2026.08.16.745063v1)**
+
+[![preprint](https://img.shields.io/badge/bioRxiv-10.64898%2F2026.08.16.745063-b31b1b.svg)](https://www.biorxiv.org/content/10.64898/2026.08.16.745063v1)
 [![python](https://img.shields.io/badge/python-3.12-blue.svg)](environment.yml)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![data](https://img.shields.io/badge/data-zenodo-orange.svg)](#-data)
@@ -117,7 +120,10 @@ How the figures are verified against the submitted manuscript, how the caches ar
   title   = {Parametric neural control differentiates top neural network models of primate visual cortex},
   author  = {Prince, Jacob S. and Wang, Binxu and Fel, Thomas and Jagadeesh, Akshay V. and Vaziri, Parisa A.
              and Alvarez, George A. and Livingstone, Margaret S. and Konkle, Talia},
-  year    = {2026}
+  journal = {bioRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.08.16.745063},
+  url     = {https://www.biorxiv.org/content/10.64898/2026.08.16.745063v1}
 }
 ```
 

@@ -41,7 +41,10 @@ identifiers:
 preferred-citation:
   type: article
   title: "Parametric neural control differentiates top neural network models of primate visual cortex"
+  journal: bioRxiv
   year: 2026
+  doi: 10.64898/2026.08.16.745063
+  url: "https://www.biorxiv.org/content/10.64898/2026.08.16.745063v1"
   authors:
     - family-names: Prince
       given-names: Jacob S.
