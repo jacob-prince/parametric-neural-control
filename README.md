@@ -30,7 +30,7 @@ Ten deep networks were each fitted to the same neurons in five macaques, then as
 - **Controversial accentuation** - the same machinery with an objective of the form *model A up, model B down*, so two models disagree maximally about one image (`notebooks/demos/03`).
 - **Encoding-model fitting** - layer-wise feature hooks, GPU PCA, ridge regression and the per-site layer-selection rule used in the paper (`core/`, `neural_regress/`, `notebooks/demos/01`).
 - **Adversarial sensitivity and gradient spectra** - the two model properties the paper links to control success: how far a small pixel perturbation can move a readout, and how the readout's input gradient is distributed over spatial frequency (`scripts/adversarial/`, `scripts/gradients/`, `notebooks/demos/04-05`).
-- **Every figure of the paper** - 6 main + 49 supplementary, as scripts and as notebooks, rendered from the released data (`figures/`, `notebooks/figures/`).
+- **Every figure of the paper** - 6 main + 49 supplementary, as scripts and as step-by-step notebooks that lay each script out with explanations, rendered from the released data (`figures/`, `notebooks/figures/`).
 
 <div align="center">
 <img src="docs/assets/sweep_cake.gif" width="240" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
@@ -56,7 +56,7 @@ python figures/render_all.py --only divergence        # -> outputs/figures/diver
 python figures/render_all.py                          # all 55 figures
 ```
 
-Or open a notebook: `notebooks/figures/04_divergence.ipynb` calls the same function and shows the figure with its caption.
+Or open the figure's notebook, for example `notebooks/figures/04_divergence.ipynb`: it walks through the script piece by piece (the data it loads, each panel builder, then the assembly of the final figure) with explanations between the cells, and ends with the rendered figure and its caption. Every code cell is a verbatim slice of the script, so what you read is what produced the paper's figure.
 
 ## 🔬 Use the method
 
