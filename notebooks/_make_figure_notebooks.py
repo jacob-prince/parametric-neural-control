@@ -63,17 +63,12 @@ def build(nb_stem, stem, module, kwargs, cap):
                           f'below is pixel-identical to the manuscript file `{stem}.png` (see docs/REPRODUCIBILITY.md); '
                           f'the preview at the end is downscaled.', id=f'{stem}-title'),
         new_code_cell('import sys\n'
-                      "sys.path[:0] = ['..', 'notebooks']        # notebooks/nbsetup.py holds the setup shared by every notebook\n"
+                      "sys.path[:0] = ['..', 'notebooks']\n"
                       'from nbsetup import setup, show_figure\n'
-                      '\n'
-                      "out_dir = setup()                          # single-thread BLAS, Agg backend, repo on the path, data check", id=f'{stem}-setup'),
+                      'out_dir = setup()', id=f'{stem}-setup'),
         new_code_cell(f'from {module} import main\n'
-                      '\n'
-                      '# main() writes <out_dir>/<manuscript name>.png (border-trimmed, so it matches the submitted file)\n'
-                      '# and returns its path; keyword arguments select the variants documented in the script header.\n'
-                      f'png = main(str(out_dir){kw})\n'
-                      'print(png)', id=f'{stem}-render'),
-        new_code_cell('show_figure(png)                          # preview of the rendered figure, caption underneath', id=f'{stem}-show'),
+                      f'png = main(str(out_dir){kw})', id=f'{stem}-render'),
+        new_code_cell('show_figure(png)', id=f'{stem}-show'),
     ]
     nb = new_notebook(cells=cells, metadata={'kernelspec': KERNEL, 'language_info': {'name': 'python'}})
     return nb

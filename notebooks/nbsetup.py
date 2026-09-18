@@ -2,6 +2,12 @@
 
     from nbsetup import setup, show_figure          # from notebooks/figures/ or notebooks/demos/
     out_dir = setup()
+    png = main(str(out_dir))                        # a figure script's main(): writes the trimmed PNG, returns its path
+    show_figure(png)
+
+A figure script's main(out_dir, **variant) writes <out_dir>/<manuscript name>.png, border-trimmed
+so it matches the submitted file, and returns the path; keyword arguments select the variants
+documented in the script's header (the notebooks render the defaults, which are the paper's figures).
 
 setup() does what the command-line harness does before a figure script runs: pins BLAS to one
 thread (multithreaded OpenMP together with torch can kill the Jupyter kernel on macOS), selects
