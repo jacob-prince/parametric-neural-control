@@ -41,9 +41,12 @@ def file_url(record_id, name, sandbox=False):
 
 
 def http_download(url, dst, expected_bytes, retries=6):
-    """Resumable download to `dst` (a .part file), with exponential backoff."""
+    """Resumable download to `dst` (a .part file): keeps issuing range requests until the file
+    is complete, with exponential backoff on transient errors. A response that ends early only
+    triggers another range request, not a failure."""
     dst = Path(dst)
-    for attempt in range(retries):
+    failures = 0
+    while True:
         have = dst.stat().st_size if dst.exists() else 0
         if have >= expected_bytes:
             return
@@ -59,15 +62,20 @@ def http_download(url, dst, expected_bytes, retries=6):
                     if time.time() - t0 > 2:
                         print(f'\r    {done / 1e9:7.2f} / {expected_bytes / 1e9:.2f} GB', end='', flush=True); t0 = time.time()
             print('\r', end='')
-            return
+            if done == have:                       # no progress at all: count it as a failure
+                failures += 1
+            else:
+                failures = 0
         except (urllib.error.URLError, urllib.error.HTTPError, ConnectionError, TimeoutError) as e:
             code = getattr(e, 'code', None)
             if code is not None and code not in (408, 429, 500, 502, 503, 504):
                 raise
-            wait = min(60, 2 ** attempt)
+            failures += 1
+            wait = min(60, 2 ** failures)
             print(f'\n    transient error ({e}); retrying in {wait}s', flush=True)
             time.sleep(wait)
-    raise RuntimeError(f'giving up on {url}')
+        if failures >= retries:
+            raise RuntimeError(f'giving up on {url} after {failures} failed attempts')
 
 
 def verify(path, entry, fast=False):

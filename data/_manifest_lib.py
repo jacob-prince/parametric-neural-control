@@ -57,7 +57,8 @@ def write_tar(archive, root, arc_prefix, compress=False, pattern=None):
     if compress:
         # gzip header carries a timestamp; pin it so archive hashes are reproducible.
         import gzip
-        fobj = gzip.GzipFile(archive, 'wb', compresslevel=6, mtime=0)
+        raw = open(archive, 'wb')
+        fobj = gzip.GzipFile(filename='', mode='wb', compresslevel=6, fileobj=raw, mtime=0)  # no name/time in the header
         tf = tarfile.open(fileobj=fobj, mode='w', format=tarfile.PAX_FORMAT)
     else:
         fobj = None
@@ -70,6 +71,7 @@ def write_tar(archive, root, arc_prefix, compress=False, pattern=None):
             tf.add(Path(root) / rel, arcname=f'{arc_prefix}/{rel}', recursive=False, filter=_normalize)
     if fobj is not None:
         fobj.close()
+        raw.close()
     return members
 
 

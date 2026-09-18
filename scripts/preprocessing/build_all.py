@@ -100,7 +100,8 @@ def sha256(path):
 def write_hashes(out_dir):
     rows = {}
     for p in sorted(out_dir.rglob('*')):
-        if p.is_file() and not p.name.startswith('.') and p.name != 'BUILD_MANIFEST.json':
+        if p.is_file() and not any(part.startswith('.') for part in p.relative_to(out_dir).parts) \
+                and p.name != 'BUILD_MANIFEST.json':
             rows[str(p.relative_to(out_dir))] = dict(bytes=p.stat().st_size, sha256=sha256(p))
     return rows
 
