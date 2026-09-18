@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp. Fig. — Synthesis regularization and parametric control (within-model difficulty axis).
+"""Supp. Fig. - Synthesis regularization and parametric control (within-model difficulty axis).
 
 The automatically-selected synthesis regularization (augmentation NOISE + spectral-decay ALPHA,
 recovered from the production run logs) plotted against control fidelity across all 250

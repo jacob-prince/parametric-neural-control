@@ -64,6 +64,7 @@ FROZEN = [  # copied verbatim from source_data/frozen_inputs (see PROVENANCE.md 
 
 
 def pinned_env(out_dir):
+    # PNC_SOURCE_DATA passes through; PNC_PREPROCESSED_DATA is forced to out_dir so every builder writes there
     keep = ('PATH', 'HOME', 'TMPDIR', 'USER', 'LANG', 'LC_ALL', 'PNC_SOURCE_DATA')
     env = {k: os.environ[k] for k in keep if k in os.environ}
     env.update(PNC_PREPROCESSED_DATA=str(out_dir), MPLBACKEND='Agg', PYTHONHASHSEED='0',
@@ -81,7 +82,7 @@ def stage_frozen(out_dir):
             raise paths.MissingDataError(f'frozen input missing: {s}\n  -> python data/download_data.py --tier source')
         if s.is_dir():
             if d.exists():
-                shutil.rmtree(d)
+                shutil.rmtree(d)             # replace wholesale so stale files from an earlier build do not linger
             shutil.copytree(s, d, ignore=shutil.ignore_patterns('._*', '.DS_Store'))
         else:
             shutil.copy2(s, d)
@@ -98,6 +99,7 @@ def sha256(path):
 
 
 def write_hashes(out_dir):
+    # skip dot-entries (.build_logs) and the manifest itself, which is written after hashing
     rows = {}
     for p in sorted(out_dir.rglob('*')):
         if p.is_file() and not any(part.startswith('.') for part in p.relative_to(out_dir).parts) \
@@ -147,7 +149,7 @@ def main(argv=None):
         print(f"{'ok' if r.returncode == 0 else 'FAILED'} ({records[-1]['duration_seconds']}s)", flush=True)
         if r.returncode != 0:
             print((r.stdout or '')[-3000:])
-            return 1
+            return 1                         # later stages read this one's output; stop here
     manifest = dict(output_dir=str(out_dir), python=sys.version.split()[0], stages=records,
                     files=write_hashes(out_dir))
     (out_dir / 'BUILD_MANIFEST.json').write_text(json.dumps(manifest, indent=1) + '\n')

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (gradient_gallery) — input-gradient saliency galleries by seed image.
+r"""Supp fig (gradient_gallery) - input-gradient saliency galleries by seed image.
 
 For each of the ten natural seed images (rows), the mean input-gradient saliency of each
 of the ten models (columns), averaged over all 25 recorded sites. Saliency = L2 magnitude

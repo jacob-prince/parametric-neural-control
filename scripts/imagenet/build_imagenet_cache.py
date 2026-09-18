@@ -27,7 +27,7 @@ def main():
         mats.append(d['imagenet_predictions'].astype(np.float32)); have.append(m)
         ref = d
     if len(have) != len(MODELS):
-        print(f'  only {len(have)}/{len(MODELS)} models present — not writing cache yet'); return
+        print(f'  only {len(have)}/{len(MODELS)} models present - not writing cache yet'); return
     pred = np.stack(mats, axis=-1)                                   # (50000, 25, 10)
     out = dict(imagenet_predictions=pred, models=np.array(have, dtype=object),
                unit_monkeys=ref['unit_monkeys'], unit_ids=ref['unit_ids'])

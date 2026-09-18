@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-heldout_gradmap_freq.py — recompute the gradient radial Fourier profiles (-> spectral
+heldout_gradmap_freq.py - recompute the gradient radial Fourier profiles (-> spectral
 flatness) on the HELD-OUT image set (item 1), using the SAME upstream recipe as the
 seed-based caches so held-out flatness is directly comparable to the seed flatness in
 verification_data.

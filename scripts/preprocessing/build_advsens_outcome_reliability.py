@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Spearman-Brown split-half reliability of the site-residualized control slope, per model
-group — the reliability ceiling for the `site r` (dashed fit) in the adversarial-sensitivity
+group - the reliability ceiling for the `site r` (dashed fit) in the adversarial-sensitivity
 supplement's panels c/d/e.
 
 For each of the 250 site-model experiments, split its accentuated stimuli in half and

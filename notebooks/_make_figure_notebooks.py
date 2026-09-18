@@ -6,8 +6,9 @@
 
 Each notebook has a fixed structure and fixed cell ids, so regenerating is a no-op diff:
 title + caption (from figures/CAPTIONS.md), a setup cell that checks the data are present (kernel 'pnc': see README, Install),
-one cell that calls the figure script's main(), and one that displays the PNG. Notebooks are
-committed without outputs (see tests/test_notebooks_clean.py).
+one cell that calls the figure script's main(), and one that displays a downscaled preview of the
+PNG. The committed notebooks carry that preview as their only output (the full-resolution file
+is written to outputs/figures/); --check compares cell sources only.
 """
 import argparse
 import re
@@ -58,26 +59,45 @@ def build(nb_stem, stem, module, kwargs, cap):
     cells = [
         new_markdown_cell(f'# {head}\n\n{body}\n\n'
                           f'Rendered by `{module.replace(".", "/")}.py`; the PNG written below is pixel-identical '
-                          f'to the manuscript file `{stem}.png` in the reference environment (see README, '
-                          f'"Pixel-exact policy").', id=f'{stem}-title'),
+                          f'to the manuscript file `{stem}.png` in the reference environment (see '
+                          f'docs/REPRODUCIBILITY.md). The preview shown here is downscaled.', id=f'{stem}-title'),
         new_code_cell('import os, sys\n'
                       'from pathlib import Path\n'
+                      '\n'
+                      '# Keep BLAS single-threaded: multithreaded OpenMP together with torch can kill the kernel on macOS.\n'
                       "for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS'):\n"
-                      "    os.environ.setdefault(_v, '1')          # multithreaded blas + torch can crash the kernel on macos\n"
+                      "    os.environ.setdefault(_v, '1')\n"
                       "os.environ.setdefault('KMP_DUPLICATE_LIB_OK', 'TRUE')\n"
+                      '\n'
+                      "# Render with the Agg backend and matplotlib's defaults, exactly like the figure scripts;\n"
+                      "# Jupyter's inline backend would otherwise change dpi and bounding boxes.\n"
                       "os.environ['MPLBACKEND'] = 'Agg'\n"
-                      "import matplotlib; matplotlib.use('Agg'); matplotlib.rcdefaults()   # jupyter's inline backend pre-sets rcParams; start from matplotlib defaults like the scripts do\n"
+                      "import matplotlib; matplotlib.use('Agg'); matplotlib.rcdefaults()\n"
+                      '\n'
+                      "# Work from the repository root whether the notebook is opened there or in notebooks/figures/.\n"
                       "REPO = Path.cwd() if (Path.cwd() / 'pnc').exists() else Path.cwd().parents[1]\n"
                       'sys.path.insert(0, str(REPO))\n'
                       'from pnc import paths\n'
-                      "paths.require(paths.preprocessed_data() / 'brain_red.pkl')  # python data/download_data.py --tier preprocessed\n"
+                      '\n'
+                      '# The figures read the preprocessed caches only; this raises a clear message if they are missing.\n'
+                      "paths.require(paths.preprocessed_data() / 'brain_red.pkl')   # python data/download_data.py --tier preprocessed\n"
                       "out_dir = paths.output_dir() / 'figures'\n"
                       'out_dir.mkdir(parents=True, exist_ok=True)', id=f'{stem}-setup'),
         new_code_cell(f'from {module} import main\n'
+                      '\n'
+                      '# main() writes <out_dir>/<manuscript name>.png (border-trimmed, so it matches the submitted file)\n'
+                      '# and returns its path; keyword arguments select the non-default variants documented in the script.\n'
                       f'png = main(str(out_dir){kw})\n'
                       'print(png)', id=f'{stem}-render'),
-        new_code_cell('from IPython.display import Image, display\n'
-                      'display(Image(filename=png, width=900))', id=f'{stem}-show'),
+        new_code_cell('import io\n'
+                      'from IPython.display import Image, display\n'
+                      'from PIL import Image as PILImage\n'
+                      '\n'
+                      '# Show a downscaled JPEG preview (the full-resolution PNG can be tens of MB); open the file for detail.\n'
+                      'im = PILImage.open(png).convert("RGB")\n'
+                      'im.thumbnail((1200, 1200))\n'
+                      'buf = io.BytesIO(); im.save(buf, "JPEG", quality=85, optimize=True)\n'
+                      'display(Image(data=buf.getvalue(), format="jpeg", width=900))', id=f'{stem}-show'),
     ]
     nb = new_notebook(cells=cells, metadata={'kernelspec': KERNEL, 'language_info': {'name': 'python'}})
     return nb
@@ -93,6 +113,11 @@ def render_all():
     return out
 
 
+def skeleton(nb):
+    """What --check compares: cell ids, types, sources and the kernelspec (never outputs)."""
+    return ([(c.id, c.cell_type, c.source) for c in nb.cells], nb.metadata.get('kernelspec'))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--check', action='store_true')
@@ -101,8 +126,19 @@ def main(argv=None):
     stale = []
     for path, text in render_all().items():
         if args.check:
-            if not path.exists() or path.read_text() != text:
+            # compare the generated skeleton (sources, ids, kernel) with the committed notebook; outputs are ignored
+            if not path.exists() or skeleton(nbformat.reads(text, as_version=4)) != skeleton(nbformat.read(path, as_version=4)):
                 stale.append(path.name)
+        elif path.exists():
+            # keep the committed outputs (rendered previews) and refresh only the skeleton
+            nb = nbformat.read(path, as_version=4); gen = nbformat.reads(text, as_version=4)
+            if skeleton(nb) != skeleton(gen):
+                by_id = {c.id: c for c in nb.cells}
+                for c in gen.cells:
+                    old = by_id.get(c.id)
+                    if old is not None and old.cell_type == 'code' and old.source == c.source:
+                        c.outputs, c.execution_count = old.outputs, old.execution_count
+                nbformat.write(gen, path)
         else:
             path.write_text(text)
     if args.check:
@@ -111,7 +147,7 @@ def main(argv=None):
             return 1
         print('all figure notebooks up to date')
         return 0
-    print(f'wrote {len(render_all())} notebooks -> {OUT}')
+    print(f'wrote {len(render_all())} notebook skeletons -> {OUT} (existing outputs kept where the source is unchanged)')
     return 0
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Figure 4 — encoding vs. parametric control across models and brain areas.
+"""Figure 4 - encoding vs. parametric control across models and brain areas.
 
 a  encoding test r per model (bars = mean over the 25 sites, dots = sites).
 b  control r per model (same treatment).

@@ -21,6 +21,7 @@ import pytest
 
 TESTS = Path(__file__).resolve().parent
 REPO = TESTS.parent
+# match the render harness: Agg backend, private matplotlib config, no .pyc under the repo
 sys.dont_write_bytecode = True
 os.environ.setdefault('PYTHONDONTWRITEBYTECODE', '1')
 os.environ.setdefault('MPLBACKEND', 'Agg')
@@ -123,6 +124,7 @@ def models(config):
 
 
 def _cached_loader(cache, prefix, load_pickle_file):
+    # one load per monkey for the whole session; the caches are tens of MB each
     store = {}
 
     def load(monkey):
@@ -148,6 +150,7 @@ def predictions(load_pickle_file, cache):
 
 
 def _tree_digest(root):
+    # path + size + mtime only: hashing the contents twice per session would be slow
     h = hashlib.sha256()
     root = Path(root)
     if not root.exists():

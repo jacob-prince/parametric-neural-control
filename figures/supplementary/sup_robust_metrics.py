@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (robust_metrics) — the adversarially-trained advantage is not an artefact
+"""Supp fig (robust_metrics) - the adversarially-trained advantage is not an artefact
 of the scoring metric.
 
 The main-text control advantage was scored with Pearson r on seed-averaged sweeps.
@@ -8,7 +8,7 @@ aggregation:
   (a) linear-fit SLOPE  (measured vs predicted, accentuated control),
   (b) R2                (coefficient of determination, accentuated control),
   (c) PER-SEED Pearson r (each seed sweep scored separately, not seed-averaged).
-Models are grouped by the paper's three training families — adversarially trained,
+Models are grouped by the paper's three training families - adversarially trained,
 conventionally trained, untrained (figure-4 family palette); Untrained is its own
 reference class, excluded from the adv-vs-conventional test.
 
@@ -40,7 +40,7 @@ MODEL_SHORT_NAMES['AlexNet_training_seed_01'] = 'Untrained'
 UNTRAINED = 'AlexNet_training_seed_01'
 ROBUST = set(ROBUST_MODELS)
 
-# Group -> color: the figure-4 family palette — adversarially trained green,
+# Group -> color: the figure-4 family palette - adversarially trained green,
 # conventionally trained magenta, Untrained deep indigo (its own reference class,
 # excluded from the adv-vs-conventional test).
 C_ADV = '#70C35E'

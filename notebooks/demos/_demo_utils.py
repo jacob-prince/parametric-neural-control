@@ -128,7 +128,7 @@ def load_backbone(model_name, device='cpu'):
         paths.require(os.path.join(os.environ['PNC_MODEL_BACKBONES'], 'imagenet_linf_8_pure.pt'), DOWNLOAD_HINT)
     model, transform = load_model_transform(model_name, device=device)
     model = model.eval().to(device)
-    model.requires_grad_(False)
+    model.requires_grad_(False)                     # frozen: only the input image ever receives gradients
     return model, transform
 
 
@@ -155,7 +155,7 @@ class EncodingObjective:
         return self.r['xtransform'](feat) @ self.r['readout_vec'] + self.r['readout_bias']
 
     def __call__(self, x01):
-        if x01.shape[-1] != 224 or x01.shape[-2] != 224:
+        if x01.shape[-1] != 224 or x01.shape[-2] != 224:   # any canvas size in; the backbone always sees 224 px
             x01 = F.interpolate(x01, size=(224, 224), mode='bilinear', align_corners=False, antialias=True)
         return self.from_normalized(normalize01(x01))
 
@@ -171,6 +171,8 @@ def compute_unit_levels(lower, upper, extend_range=0.25, num_levels=11):
     """Target levels of a sweep, verbatim from scripts/synthesis/run.py: the natural range
     [q01, q99] is extended by extend_range*bandwidth below and 2*extend_range*bandwidth above."""
     bandwidth = upper - lower
+    # equally spaced levels; the top end overshoots q99 twice as far as the bottom undershoots q01,
+    # so a sweep probes super-natural responses more than sub-natural ones
     return np.linspace(lower - extend_range * bandwidth, upper + extend_range * bandwidth * 2, num_levels)
 
 
@@ -195,8 +197,8 @@ def get_fft_scale(width, height, decay_power=1.0):
     freq_y = torch.fft.fftfreq(height).unsqueeze(1)
     freq_x = torch.fft.fftfreq(width)[:width // 2 + 1 + int(width % 2 == 1)]
     freqs = torch.sqrt(freq_x ** 2 + freq_y ** 2)
-    scale = 1.0 / torch.maximum(freqs, torch.tensor(1.0 / max(width, height))) ** decay_power
-    scale = scale * math.sqrt(width * height)
+    scale = 1.0 / torch.maximum(freqs, torch.tensor(1.0 / max(width, height))) ** decay_power   # floor at the lowest resolvable frequency (no 1/0 at DC)
+    scale = scale * math.sqrt(width * height)         # keeps the spatial amplitude independent of the canvas size
     return scale.to(torch.complex64)[None, :, :]
 
 
@@ -211,13 +213,15 @@ class _SpectrumBackward(torch.autograd.Function):
     @staticmethod
     def backward(ctx, grad_output):
         (scaler,) = ctx.saved_tensors
+        # low frequencies receive the larger update, so the ascent favours coarse, natural-looking changes
+        # over high-frequency adversarial texture; the forward image is untouched
         return grad_output * scaler, None
 
 
 def fa_preconditioner(spectrum, scaler, values_range=(0.0, 1.0)):
     """feature_viz.fa_preconditionner: spectrum -> image in values_range."""
     spatial = torch.fft.irfft2(_SpectrumBackward.apply(spectrum, scaler))
-    spatial = spatial - spatial.mean()
+    spatial = spatial - spatial.mean()               # zero-mean so the sigmoid is centred on mid-gray
     image = torch.sigmoid(recorrelate_colors(spatial))
     return image * (values_range[1] - values_range[0]) + values_range[0]
 
@@ -226,7 +230,7 @@ def inverse_image_spectrum(image):
     """feature_viz.inverse_image_spectrum: seed image (3,H,W) -> spectrum whose preconditioned
     reconstruction is (close to) the seed, so the optimization starts *at* the natural image."""
     image = (image - image.min()) / (image.max() - image.min())
-    eps = 1e-3
+    eps = 1e-3                                       # keeps the inverse sigmoid finite at 0 and 1
     inv_sigmoid = torch.log((image + eps) / (1.0 - image + eps))
     inv_C = torch.linalg.pinv(COLOR_CORRELATION_SVD_SQRT.to(image.device))
     flat = inv_sigmoid.permute(1, 2, 0).reshape(-1, 3) @ inv_C
@@ -238,15 +242,17 @@ def optimization_step(objective, image, box_size, noise, crops_per_iteration, mo
     """horama.common.optimization_step: random crops (box_size fraction of the canvas, jittered
     centre) -> resize to the model input -> gaussian + uniform noise -> objective; loss = -mean score."""
     device = image.device
-    image.retain_grad()
+    image.retain_grad()                              # image is not a leaf (it comes from the spectrum); maco reads its grad
     n = crops_per_iteration
+    # crops covering most of the canvas, with jittered centre and size: the score has to hold under small
+    # shifts and rescales, which keeps the optimizer from exploiting one exact pixel alignment
     x0 = 0.5 + torch.randn(n, device=device) * 0.15
     y0 = 0.5 + torch.randn(n, device=device) * 0.15
     dx = torch.rand(n, device=device) * (box_size[1] - box_size[0]) + box_size[1]
     boxes = torch.stack([torch.zeros(n, device=device), x0 - dx / 2, y0 - dx / 2, x0 + dx / 2, y0 + dx / 2], 1) * image.shape[1]
-    crops = roi_align(image.unsqueeze(0), boxes, output_size=(model_input_size * 2, model_input_size * 2)).squeeze(0)
+    crops = roi_align(image.unsqueeze(0), boxes, output_size=(model_input_size * 2, model_input_size * 2)).squeeze(0)   # crop at 2x, then antialiased downsample
     crops = F.interpolate(crops, size=(model_input_size, model_input_size), mode='bicubic', align_corners=True, antialias=True)
-    crops = crops + torch.randn_like(crops) * noise + (torch.rand_like(crops) - 0.5) * noise
+    crops = crops + torch.randn_like(crops) * noise + (torch.rand_like(crops) - 0.5) * noise   # pixel noise: the score must also survive perturbation
     return -objective(crops).mean(), image
 
 
@@ -285,11 +291,11 @@ def feature_accentuation(objective, image_seed, target_level=None, noise=0.1, de
         history.append(full_score)
         if target_level is not None:
             delta = abs(full_score - target_level)
-            if delta < best_delta:
+            if delta < best_delta:                  # keep the image whose full-canvas score is closest to the target
                 best_delta, best_image, best_score = delta, img.detach().clone(), full_score
                 if best_delta < tol:
                     break
-            if full_score > target_level:
+            if full_score > target_level:           # overshot: descend instead, damped, so the score settles onto the target
                 loss = -0.1 * loss
         loss.backward()
         optimizer.step()
@@ -334,7 +340,7 @@ def maco(objective, magnitude, total_steps=4096, learning_rate=0.1, image_size=2
     score history of the full canvas, transparency = accumulated |d loss / d image|)."""
     torch.manual_seed(seed)
     magnitude = magnitude.to(device)
-    phase = (torch.randn_like(magnitude)).requires_grad_(True)
+    phase = (torch.randn_like(magnitude)).requires_grad_(True)   # only the phase is free; the magnitude stays the natural template
     optimizer = torch.optim.NAdam([phase], lr=learning_rate)
     transparency = torch.zeros(3, image_size, image_size, device=device)
     eval_fn = eval_fn or objective
@@ -344,7 +350,7 @@ def maco(objective, magnitude, total_steps=4096, learning_rate=0.1, image_size=2
         image = maco_preconditioner(magnitude, phase, values_range)
         loss, img = optimization_step(objective, image, box_size, noise, crops_per_iteration, model_input_size)
         loss.backward()
-        transparency += img.grad.abs()
+        transparency += img.grad.abs()              # where the objective pushed pixels: the MACO transparency mask
         optimizer.step()
         with torch.no_grad():
             history.append(float(eval_fn(F.interpolate(img.detach().unsqueeze(0), size=(model_input_size, model_input_size),

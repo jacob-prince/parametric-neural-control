@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (controversial_results) — controversial-accentuation results across the 7
+"""Supp fig (controversial_results) - controversial-accentuation results across the 7
 targeted aIT sites.
 
 For each targeted aIT site the two encoding models' predictions are pitted against the

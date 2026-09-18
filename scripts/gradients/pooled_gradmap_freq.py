@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-pooled_gradmap_freq.py — gradient radial Fourier profiles for the POOLED-REFIT readouts
+pooled_gradmap_freq.py - gradient radial Fourier profiles for the POOLED-REFIT readouts
 (figS66, slug pooled_refit), on the same 100 held-out images and with the same recipe as
 heldout_gradmap_freq.py, so pooled-refit spectral CoV is directly comparable to the original
 encodings' held-out CoV.
@@ -8,7 +8,7 @@ encodings' held-out CoV.
 Identical to heldout_gradmap_freq.py except the readout: instead of the synthesis-time readout
 inside get_predictor_from_config's predictor, the prediction is Xtransform(features) @ w_new,
 where w_new is the pooled-refit readout in RAW PCA space (coef_/scale_ from
-build_pooled_refit.py; bias omitted — constant, no gradient). Everything upstream (backbone,
+build_pooled_refit.py; bias omitted - constant, no gradient). Everything upstream (backbone,
 layer, featureFetcher, PCA transform, image transform) comes from the accentuation config
 exactly as before.
 

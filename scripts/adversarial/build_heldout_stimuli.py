@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build_heldout_stimuli.py — resolve the 88 NSD shared1000 images that were never used
+build_heldout_stimuli.py - resolve the 88 NSD shared1000 images that were never used
 anywhere in the study (item 1 held-out validation set) to full cluster paths, and render a
 contact-sheet montage for a diversity check.
 

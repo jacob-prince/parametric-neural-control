@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (controversial_stimuli) — full set of controversial-accentuation stimuli.
+"""Supp fig (controversial_stimuli) - full set of controversial-accentuation stimuli.
 
 The controversial experiment (Monkey R, area aIT, 7 sites) synthesized images that DRIVE
 one encoding model's prediction while SUPPRESSING the other's. Each site contributes 10

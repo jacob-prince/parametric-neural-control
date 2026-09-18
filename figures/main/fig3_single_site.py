@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Figure 3 — a highly predictive encoding model of natural images can fail to
+Figure 3 - a highly predictive encoding model of natural images can fail to
 precisely control neural firing (single-site ResNet50 deep dive).
 
 Site: Monkey R, aIT unit 9 (manuscript label "channel 2"), ResNet50.
@@ -8,7 +8,7 @@ Site: Monkey R, aIT unit 9 (manuscript label "channel 2"), ResNet50.
   a  Embedding of encoding + accentuated stimuli in the readout-aligned basis:
      image-icon cloud (left) + accentuation trajectories over the natural-image
      distribution (right), sharing the green encoding axis.
-  b  Accentuated image sweeps — 4 seeds x 7 levels, suppress -> seed -> drive.
+  b  Accentuated image sweeps - 4 seeds x 7 levels, suppress -> seed -> drive.
   c  Encoding generalization: phase 1 (held-out natural, encoding phase) and
      phase 2 (held-out calibration images re-presented in the control session;
      P2SET selects the re-test set, canonical = 'heldout').
@@ -126,11 +126,11 @@ SZ_ANNOT = 14.5
 
 
 # ══════════════════════════════════════════════════════════════════════
-# NC_R — noise-ceiling definition
+# NC_R - noise-ceiling definition
 # ══════════════════════════════════════════════════════════════════════
 # The "nc r" printed in each scatter's stat box is the NSD noise
 # CEILING of that panel's own stimulus group (the maximum Pearson r
-# attainable given the channel's trial reliability on that stim set) — the
+# attainable given the channel's trial reliability on that stim set) - the
 # same quantity earlier drafts displayed. It is NOT r divided by the ceiling.
 #
 # It is computed with the canonical NSD estimator (pnc/preproc/ceilings.py):
@@ -292,7 +292,7 @@ def _calib_trials(unit):
 
 def _calib_sem_z(unit):
     """Per-stimulus SEM (std/sqrt(n_reps)) from the encoding-session trials now retained
-    in the brain cache — enables phase-1 error bars self-contained."""
+    in the brain cache - enables phase-1 error bars self-contained."""
     ts, tz = _calib_trials(unit)
     d = defaultdict(list)
     for n, z in zip(ts, tz):

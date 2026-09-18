@@ -1,8 +1,7 @@
-# cluster — ImageNet-val prediction extraction (self-contained)
+# cluster - ImageNet-val prediction extraction (self-contained)
 
 Computes the 50k ImageNet-val encoding predictions per model (the natural-image cloud used by
-the benchmarking figure). Runs on a GPU cluster. Nothing here imports code outside this tree —
-the model/hook code is vendored below.
+the benchmarking figure). Runs on a GPU cluster. Nothing here imports code outside this tree - the model/hook code is vendored below.
 
 ## What it produces
 `imagenet_pred_<model>.pkl` per model: `imagenet_predictions` (50000 x 25 sites), plus
@@ -27,7 +26,7 @@ backbone -> hooked layer -> Xtfmer (JIT PCA) -> readout(vec, bias) -> predicted 
 - stage dir: `<project>/imagenet` (created by `sync.sh push`)
 - ImageNet val: the cluster's `imagenet1k-256` dataset
 - Encoding_model_outputs (Xtfmer JIT), model_backbones under `<project>`
-- env: a conda env under `<project>/conda_envs/` (torch 2.10, timm, open_clip) — call by
+- env: a conda env under `<project>/conda_envs/` (torch 2.10, timm, open_clip) - call by
   FULL PATH; `conda activate` does NOT work (env not on the default conda path)
 - SLURM: submit to a GPU partition / account you have access to
 
@@ -46,7 +45,7 @@ python build_imagenet_cache.py                    # fold imagenet_out/*.pkl -> p
   Vendored models.py / models_utils.py / layer_hook_utils.py; wrote extract/sync/submit/test.
 - Fixed env (env not on conda path -> call env python by full path) and the SLURM
   account/partition. Ran a small validation (256 imgs, resnet50 + resnet50_robust).
-- Env fix worked — small validation (256 imgs) PASSED bit-exact vs the reference for resnet50
+- Env fix worked - small validation (256 imgs) PASSED bit-exact vs the reference for resnet50
   AND resnet50_robust (corr=1.00000, max|Δ|=0.0000). Confirms the recipe + this tree's readouts
   reproduce the reference. Launched FULL extraction (all 10 models x 50k). Wrote
   `build_imagenet_cache.py` to fold outputs into the preproc cache.
@@ -58,7 +57,7 @@ python build_imagenet_cache.py                    # fold imagenet_out/*.pkl -> p
 `preproc/cache/`, and `run_preproc.build_controversial` folds it into `controversial.pkl`.
 - Extracted controversial SEM (recomputed-mean vs repavg corr=1.00000); folded into
   controversial table, SEM 140/140 matches the reference (max|Δ|=0).
-- Gradient Fourier profiles extracted on a COMPUTE node (CPU partition — no login-node compute)
+- Gradient Fourier profiles extracted on a COMPUTE node (CPU partition - no login-node compute)
   via extract_gradient_freq.py + submit_gradient.sh; pulled + build_gradient_cache.py ->
   preproc/cache/gradient_freq.pkl (250 records + 969 natural profiles); validated against an
   independent reference (max|Δ|=0). Aggregation logic also validated locally on the red-unit9

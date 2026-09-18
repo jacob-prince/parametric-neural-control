@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp Fig (hyperparam_selection) — automated synthesis-regularization selection.
+r"""Supp Fig (hyperparam_selection) - automated synthesis-regularization selection.
 
 An automated procedure identified a suitable regularization regime independently for each of
 the 250 model-site combinations. It stepped up a ladder of (augmentation-noise, spectral-decay

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp Fig (superstimuli) — robust models yield the most super-stimuli.
+r"""Supp Fig (superstimuli) - robust models yield the most super-stimuli.
 
 A super-stimulus is an accentuated image whose MEASURED control response falls beyond the
 extremes of a site's natural (calibration) response distribution. Super-drive = measured

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (flatness_pipeline) — feature accentuations and how gradient spectral
+"""Supp fig (flatness_pipeline) - feature accentuations and how gradient spectral
 participation ratio (PR) is computed, for a single seed image at a single site.
 
 Site = Monkey V V3/V4 unit 331; seed image = the cat (seed idx 3).

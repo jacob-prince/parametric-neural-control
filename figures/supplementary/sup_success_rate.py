@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (success_rate) — feature-accentuation success rate.
+"""Supp fig (success_rate) - feature-accentuation success rate.
 
 For every synthesized stimulus the achieved level (the generating model's own post-hoc
 pred_resp for the SAVED image) is compared to its intended target. A generation succeeds
@@ -166,7 +166,7 @@ def main(out_dir):
     fig.suptitle('Feature-accentuation success rate',
                  fontsize=FS_TITLE, fontfamily=FONT_FAMILY, fontweight='bold', y=0.98)
 
-    # panel letters — anchored to the top-left of each subplot
+    # panel letters - anchored to the top-left of each subplot
     fig.canvas.draw()
     fig.text(0.065 - 0.036, outer[0].get_position(fig).y1 + 0.045 + 0.028, 'a', fontsize=12,
              fontweight='bold', fontfamily=FONT_FAMILY, va='top', ha='left')

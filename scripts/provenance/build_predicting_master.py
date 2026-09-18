@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fig 9 — build the site-model master predictor table (n=250).
+"""Fig 9 - build the site-model master predictor table (n=250).
 
 Canonical predictors are recomputed from the preproc cache (self-contained, identical to the
 figS variance-partition loader); the three legitimately-precomputed axes are merged from their

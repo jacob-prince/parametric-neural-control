@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build preprocessed_data/fig2_cloud.pkl — the Fig 2 panel D 3D accentuation-dataset cloud.
+"""Build preprocessed_data/fig2_cloud.pkl - the Fig 2 panel D 3D accentuation-dataset cloud.
 
 Each (monkey, unit, model) is aligned into a unified space (residual PC1, residual
 PC2, predicted z along the encoding axis), z-scored to that combo's encoding stats

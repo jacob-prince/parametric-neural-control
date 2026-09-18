@@ -77,6 +77,7 @@ def request(method, url, tok, data=None, headers=None, raw=None):
             payload = resp.read()
             return json.loads(payload) if payload else {}
     except urllib.error.HTTPError as e:
+        # include the response body: Zenodo's validation messages live there
         raise SystemExit(f'{method} {url} -> HTTP {e.code}: {e.read().decode(errors="replace")[:2000]}')
 
 
@@ -87,7 +88,7 @@ class _FileReader:
     def read(self, n=-1):
         return self.fh.read(n)
     def __len__(self):
-        return self.size
+        return self.size   # urllib takes Content-Length from len() of a non-bytes body
 
 
 def upload_file(bucket, path, tok):
@@ -130,6 +131,7 @@ def main(argv=None):
         if not args.archives:
             raise SystemExit('--archives DIR is required to upload files')
         bucket = dep['links']['bucket']
+        # archives whose md5 Zenodo already holds are skipped, so a re-run only uploads what changed
         existing = {f['filename']: f for f in request('GET', f"{api}/deposit/depositions/{dep['id']}/files", tok)}
         wanted = {w.strip() for w in args.only.split(',')} if args.only else None
         for name, a in manifest['archives'].items():

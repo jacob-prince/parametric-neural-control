@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (controllability_variation) — variation in controllability across sites and models.
+r"""Supp fig (controllability_variation) - variation in controllability across sites and models.
 
 Per-site parametric-control predictivity (mean Pearson control r over the 10 models) for the
 25 recorded sites, sorted low-to-high and coloured by cortical area. Each site shows its 10

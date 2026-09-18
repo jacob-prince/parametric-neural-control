@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (anatomy) — array / Neuropixels placement across recorded animals.
+r"""Supp fig (anatomy) - array / Neuropixels placement across recorded animals.
 
 Three stacked raster rows of intra-operative CT and structural-MRI sections showing the probe
 tracks for the recorded sites. Row a: Monkey R, anterior IT (two CT sections). Row b: Monkey V,

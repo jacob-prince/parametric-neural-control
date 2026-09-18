@@ -201,11 +201,11 @@ def get_model_color(model):
     return get_model_group_color(model)
 
 MONKEY_COLORS = {
-    'red': '#2F4858',    # aIT   — dark slate
-    'paul': '#2E86DE',   # cIT   — dodgerblue
-    'venus': '#E36BA0',  # V3/V4 — pink
-    'leap': '#8896A6',   # STS·L — blue-grey
-    'three0': '#B87F33', # STS·T — ochre
+    'red': '#2F4858',    # aIT - dark slate
+    'paul': '#2E86DE',   # cIT - dodgerblue
+    'venus': '#E36BA0',  # V3/V4 - pink
+    'leap': '#8896A6',   # STS·L - blue-grey
+    'three0': '#B87F33', # STS·T - ochre
 }
 
 # =============================================================================
@@ -464,6 +464,7 @@ def load_control_hdf5(monkey):
     Returns (stim_names, response_peak, trial_stim_names, trial_response_peak).
     """
     with h5py.File(CONTROL_HDF5_PATH, 'r') as h5f:
+        # one group per monkey, named <monkey>_<dates>; match on the prefix
         matching_key = None
         for key in h5f.keys():
             if key.startswith(monkey.lower()):
@@ -519,6 +520,7 @@ def compute_sem_for_unit(stim_names, trial_index, trial_responses, unit):
     for j, name in enumerate(stim_names):
         indices = trial_index.get(name, [])
         n_reps[j] = len(indices)
+        # SEM needs at least two trials; single-trial stimuli keep SEM 0
         if len(indices) > 1:
             trial_vals = trial_responses[indices, unit]
             sems[j] = np.std(trial_vals, ddof=1) / np.sqrt(len(indices))
@@ -532,6 +534,7 @@ def parse_stimulus_name(stim_name):
     """
     if 'score' not in stim_name:
         return None
+    # layout: <model>_RidgeCV_unit_<u>_img_<seed>_level_<target>_score_<score>.png
     try:
         model = stim_name.split('_RidgeCV')[0]
         suffix = stim_name.split('_RidgeCV')[1]

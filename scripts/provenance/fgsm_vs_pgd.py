@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FGSM vs PGD — does the encoding-axis adversarial-sensitivity result depend on the attack method?
+FGSM vs PGD - does the encoding-axis adversarial-sensitivity result depend on the attack method?
 
 Recomputes ALL the critical sensitivity metrics with a single-step FGSM attack on the SAME 100
 held-out NSD images used for the PGD validation (item 1), then checks that every downstream
@@ -9,9 +9,9 @@ conclusion is unchanged:
   (1) per-readout & per-model FGSM-vs-PGD sensitivity agreement (canonical swing@4/255, AUC, L2);
       grad-norm invariance (attack-independent, must be bit-identical).
   (2) held-out sensitivity -> control prediction (7 conventional models exact-perm; monkey-FE +
-      reliability partial; leave-one-model-out CV) — side by side FGSM vs PGD.
+      reliability partial; leave-one-model-out CV) - side by side FGSM vs PGD.
   (3) the endpoint-dependent leave-out structure (all 10 -> minus 2 adv-trained -> conventional 7),
-      site-level monkey+reliability-adjusted r with control — side by side FGSM vs PGD.
+      site-level monkey+reliability-adjusted r with control - side by side FGSM vs PGD.
 
 Reads ../intermediate/{ext_heldout (PGD), ext_heldout_fgsm (FGSM), verification_data.csv}.
 Writes ../intermediate/{fgsm_vs_pgd.txt, fgsm_vs_pgd_table.csv}.  Self-contained.
@@ -151,7 +151,7 @@ def main():
     df.to_csv(OUT / "fgsm_vs_pgd_table.csv", index=False)
 
     emit("=" * 84)
-    emit("FGSM vs PGD — attack-method invariance of adversarial sensitivity (100 held-out images)")
+    emit("FGSM vs PGD - attack-method invariance of adversarial sensitivity (100 held-out images)")
     emit("=" * 84)
     emit(f"merged {len(df)} readouts ({df.model.nunique()} models x 25 axes); "
          f"conventional-7 = {sorted(NORMAL7)}")
@@ -228,11 +228,11 @@ def main():
     emit("  * Robust/adv-trained models are the low-sensitivity EXTREME under both attacks (robust ranked")
     emit("    9-10/10 at eps<=4/255; non-robust swing 3-19x robust).")
     emit("  * Per-axis/per-model sensitivity agrees at imperceptible eps (site r 0.82-0.88, model rho")
-    emit("    0.71-0.90 at eps<=1/255) — FGSM is a faithful first-order probe there.")
+    emit("    0.71-0.90 at eps<=1/255) - FGSM is a faithful first-order probe there.")
     emit("  * The flatness-vs-sensitivity dissociation is UNCHANGED: flatness is attack-independent and")
     emit("    the stable predictor; generic sensitivity is jackknife-unstable under BOTH attacks.")
     emit("  CAVEAT: single-step FGSM saturates at large eps (>=16/255), so the whole-sweep AUC summary")
-    emit("  (which up-weights extreme eps) is the one measure FGSM does not reproduce — an intrinsic")
+    emit("  (which up-weights extreme eps) is the one measure FGSM does not reproduce - an intrinsic")
     emit("  property of FGSM-as-optimizer, not attack-dependence of the neural signal. Read at matched")
     emit("  imperceptible eps (canonical 4/255), the conclusions do NOT depend on PGD vs FGSM.")
     emit("=" * 84)

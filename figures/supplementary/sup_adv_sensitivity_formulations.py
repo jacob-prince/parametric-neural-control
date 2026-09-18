@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (adv_sensitivity_formulations) — the endpoint-dependence result ("adversarial
+"""Supp fig (adv_sensitivity_formulations) - the endpoint-dependence result ("adversarial
 sensitivity correlates with control over the full model set, but the relationship vanishes
 once the adversarially-trained models are removed") replicates across every alternative
 formulation of adversarial sensitivity, under BOTH attack methods (each formulation is
@@ -11,8 +11,7 @@ Everything uses the exact main-figure recipe: sensitivity measured on held-out N
 against the 9 trained models' per-(monkey,channel) mean, raw predictor. Model level =
 per-model means; exact p = full 7! permutation of model means. All displayed correlations
 are ORIENTED: each measure is multiplied by the sign of its own all-10 correlation (per
-level), so "keeps the full-set relationship" reads positive and a sign flip reads negative
-— this puts the sensitivity formulations and gradient spectral PR on one common scale.
+level), so "keeps the full-set relationship" reads positive and a sign flip reads negative - this puts the sensitivity formulations and gradient spectral PR on one common scale.
 
   a  adversarial-sensitivity formulations x {attack x model-subset}: oriented Pearson r
      with control slope at the model level then the site level, for {all 10 / 9 trained /
@@ -66,7 +65,7 @@ UNTR = 'AlexNet_training_seed_01'
 EXTREMES = ['resnet50_robust', 'clipag_vitb32', UNTR]
 SUBSET_COL = {10: '#5E35B1', 9: '#00838F', 7: '#C2185B'}   # main-figure subset label colours
 # palette (CVD-validated): muted indigo <-> brick diverging heatmap (sns 'vlag': flip <-> keeps);
-# the accent hues stay OFF the heatmap poles — steel/gold = the two attacks (SAME hue in every
+# the accent hues stay OFF the heatmap poles - steel/gold = the two attacks (SAME hue in every
 # panel), neutral grey = attack-independent gradient norms, violet = the spectral family.
 C_PGD, C_FGSM, C_SHARED, C_CV = '#3D7FB3', '#BC8F0F', '#8A8A8A', '#8746B8'
 C_SENSGRP = '#3A5A72'                                      # row-group colour: adversarial sensitivity

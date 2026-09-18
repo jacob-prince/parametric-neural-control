@@ -46,7 +46,7 @@ def _control_image_path(monkey, model, filename):
 
 
 # =============================================================================
-# venus (Monkey V) cache — take9 sup_superstim_scatter_venus.build_cache
+# venus (Monkey V) cache - take9 sup_superstim_scatter_venus.build_cache
 # =============================================================================
 VENUS = 'venus'
 
@@ -160,7 +160,7 @@ def build_venus(cache):
 
 
 # =============================================================================
-# all-sites cache — take9 sup_superstim_scatter_all.build
+# all-sites cache - take9 sup_superstim_scatter_all.build
 # =============================================================================
 CLOUD_POOL = 5000
 EXCLUDED_LEVELS = {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (cross_area_consistency) — cross-area consistency of the control ranking.
+r"""Supp fig (cross_area_consistency) - cross-area consistency of the control ranking.
 
 Per-area (5 recording areas = 5 animals) per-model mean control r. The rank order of
 models by control predictivity is consistent across areas: the mean pairwise Spearman

@@ -6,7 +6,7 @@ seeds (columns), thumbnails upright. Borders use the fig3 deepdive scheme:
 RdBu_r mapped from each cell's ACHIEVED response score (Normalize over the min/max
 achieved score across all shown cells), with the seed row in light yellow
 (un-accentuated marker) and the fig3 saturation/brightness boost on thumbnails.
-No text or axes — designed to be embedded tall on the left of the fig 1 schematic.
+No text or axes - designed to be embedded tall on the left of the fig 1 schematic.
 
 Render-time ingredient of fig1_framework: main(out_path) writes the grid PNG to the
 given path (fig1_framework uses <out_dir>/_fig1_accentuation_grid.png).
@@ -133,7 +133,7 @@ def main(out_path):
                   left=0.135, right=0.995, top=0.99, bottom=0.01,
                   wspace=0.06, hspace=0.06)
 
-    # Border colors: fig3 deepdive scheme — RdBu_r mapped from each cell's ACHIEVED
+    # Border colors: fig3 deepdive scheme - RdBu_r mapped from each cell's ACHIEVED
     # score, normalized over the min/max achieved score across all shown cells; the
     # seed cell (score=None) gets the fig3 light-yellow un-accentuated marker.
     all_scores = np.array([sc for row in grid for _l, sc, _p in row if sc is not None])

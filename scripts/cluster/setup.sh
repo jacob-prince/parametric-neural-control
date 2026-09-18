@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cluster/setup.sh — One-time setup on the Kempner cluster
+# cluster/setup.sh - One-time setup on the Kempner cluster
 # Creates project dirs, data symlink farm, and conda environment.
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
@@ -40,7 +40,7 @@ ls -la "${CLUSTER_PROJECT}/data/"
 if [ -d "${LAB_STORAGE_CHECK_DIR:-}" ]; then   # PNC: set LAB_STORAGE_CHECK_DIR to your lab storage; was the literal /n/holylabs/LABS/alvarez_lab/Lab/VVS_Accentuation
     echo "  [OK] Lab storage accessible"
 else
-    echo "  [WARN] Lab storage not accessible from login node — this is normal, it should be accessible from compute nodes"
+    echo "  [WARN] Lab storage not accessible from login node - this is normal, it should be accessible from compute nodes"
 fi
 REMOTE_SETUP
 

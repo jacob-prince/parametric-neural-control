@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp. Fig. (slug high_control_examples) — top high-control example sweeps.
+"""Supp. Fig. (slug high_control_examples) - top high-control example sweeps.
 
 For the highest control-r site-model combinations, show the accentuation sweep
 alongside the predicted-vs-measured control scatter (per-seed connectors, dots

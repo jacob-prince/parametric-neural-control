@@ -159,7 +159,7 @@ def build_readout_layer(readout_vec, readout_bias, device):
     """
     Build a single-output linear layer from the encoding direction.
 
-    readout_vec: (750,) tensor — the encoding axis in PCA space
+    readout_vec: (750,) tensor - the encoding axis in PCA space
     readout_bias: scalar bias
     """
     if hasattr(readout_vec, 'numpy'):
@@ -305,7 +305,7 @@ def main():
 
                 # Skip if already generated
                 if os.path.exists(output_path) and not args.force:
-                    print(f"  [skip] {monkey} Ch{unit} — already exists")
+                    print(f"  [skip] {monkey} Ch{unit} - already exists")
                     skipped += 1
                     continue
 

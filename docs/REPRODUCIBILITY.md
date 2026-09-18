@@ -101,7 +101,7 @@ What the suite covers:
   consistency, raw HDF5 sources. Eight invariants the original suite deliberately kept red are
   strict `xfail`s with the reason spelled out.
 - **notebooks**: the figure notebooks reproduce the manuscript PNGs, the demos execute end to
-  end, and committed notebooks carry no outputs.
+  end, and the committed notebooks carry their rendered outputs (a downscaled preview per figure).
 - **tooling and docs**: deterministic archives, resumable downloads (against a local range
   server), the draft-only uploader, captions per figure, README paths, citation metadata, no
   private paths or legacy switches in the ported code.

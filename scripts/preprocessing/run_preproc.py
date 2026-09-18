@@ -1,4 +1,4 @@
-"""take9 preprocessing entrypoint — the single place every hyperparameter is set.
+"""take9 preprocessing entrypoint - the single place every hyperparameter is set.
 
 Runs the settled pipeline once and writes the canonical caches every downstream figure
 reads (via loader.py). NOTHING downstream reads repavg or raw HDF5 again.
@@ -189,7 +189,7 @@ def build_encoding(monkey, cfg):
 # -------------------- cross-model encoding predictions ----------------------
 def build_predictions(monkey, cfg):
     """Every model's encoding prediction for every accentuated stimulus at every target unit
-    (the cross-model / pooled matrix). RAW pred_resp (NOT floor-clamped) — the firing floor is
+    (the cross-model / pooled matrix). RAW pred_resp (NOT floor-clamped) - the firing floor is
     applied last, only when predictions are compared to the brain (loader.control_cloud), so the
     hit/miss assessment isn't polluted by clamping. Covers the personalized diagonal
     (predicting==generating, own unit) and all off-diagonal pooled / peer-review cells. Keyed by

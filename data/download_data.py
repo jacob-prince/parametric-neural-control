@@ -49,7 +49,7 @@ def http_download(url, dst, expected_bytes, retries=6):
     while True:
         have = dst.stat().st_size if dst.exists() else 0
         if have >= expected_bytes:
-            return
+            return                             # complete (possibly left by an earlier run)
         req = urllib.request.Request(url, headers={'Range': f'bytes={have}-'} if have else {})
         try:
             with urllib.request.urlopen(req, timeout=60) as resp, open(dst, 'ab' if have else 'wb') as out:
@@ -67,6 +67,7 @@ def http_download(url, dst, expected_bytes, retries=6):
             else:
                 failures = 0
         except (urllib.error.URLError, urllib.error.HTTPError, ConnectionError, TimeoutError) as e:
+            # retry only timeouts, rate limits and server errors; a 403/404 is a real problem
             code = getattr(e, 'code', None)
             if code is not None and code not in (408, 429, 500, 502, 503, 504):
                 raise
@@ -79,6 +80,7 @@ def http_download(url, dst, expected_bytes, retries=6):
 
 
 def verify(path, entry, fast=False):
+    # size first: cheap, and enough to reject an unfinished download
     if not Path(path).exists() or Path(path).stat().st_size != entry['bytes']:
         return False
     if fast:
@@ -92,6 +94,7 @@ def members_ok(root, members, fast=False):
 
 
 def read_members(archive):
+    # returns (members dict, archive prefix), read from the MEMBERS.json that write_tar puts first
     with tarfile.open(archive, 'r:*') as tf:
         first = tf.next()
         if first is None or not first.name.endswith(L.MEMBERS_NAME):
@@ -106,7 +109,7 @@ def extract(archive, tier_root, members, prefix, force=False):
         shutil.rmtree(staging)
     staging.mkdir(parents=True)
     with tarfile.open(archive, 'r:*') as tf:
-        tf.extractall(staging, filter='data')
+        tf.extractall(staging, filter='data')   # refuses absolute paths and links escaping the tree
     src_root = staging / prefix
     # prefix is '<tier>' or '<tier>/<relpath>'; strip the leading tier component
     rel_root = Path(*Path(prefix).parts[1:]) if len(Path(prefix).parts) > 1 else Path('.')
@@ -120,7 +123,7 @@ def extract(archive, tier_root, members, prefix, force=False):
             if not force:
                 raise RuntimeError(f'{d} exists with different content; re-run with --force to replace it')
         d.parent.mkdir(parents=True, exist_ok=True)
-        os.replace(s, d)
+        os.replace(s, d)                     # same filesystem: atomic, so a crash leaves old or new, never half
     shutil.rmtree(staging, ignore_errors=True)
 
 
@@ -141,7 +144,7 @@ def main(argv=None):
     roots = {'source_data': paths.source_data(), 'preprocessed_data': paths.preprocessed_data(),
              'reference_figures': L.REPO / 'tests' / 'reference' / 'manuscript_png'}
     entries = {n: a for n, a in manifest['archives'].items() if a['tier'] in TIERS[args.tier]}
-    if args.only:
+    if args.only:   # explicit archive names override the tier selection
         wanted = {w.strip() for w in args.only.split(',')}
         entries = {n: a for n, a in manifest['archives'].items() if n in wanted}
         if not entries:
@@ -176,6 +179,7 @@ def main(argv=None):
             if dst.exists() and not args.force and not verify(dst, a):
                 raise SystemExit(f'{dst} exists with different content; re-run with --force')
             dst.parent.mkdir(parents=True, exist_ok=True)
+            # a downloaded .part is moved into place; a --from-local file is copied so that set stays intact
             if src != dst:
                 (os.replace if not args.from_local else shutil.copy2)(src, dst)
             print(f'{name}: ok')
@@ -183,6 +187,7 @@ def main(argv=None):
         # directory archive
         archive = (args.from_local / name) if args.from_local else (cache / name)
         members = prefix = None
+        # a verified archive on hand lets us check the extracted files without downloading anything
         if archive.exists() and verify(archive, a):
             members, prefix = read_members(archive)
         if members is not None and members_ok(tier_root / ('' if a['path'] == '.' else a['path']), members, args.fast):
@@ -202,7 +207,7 @@ def main(argv=None):
         members, prefix = read_members(archive)
         extract(archive, tier_root, members, prefix, force=args.force)
         if not args.keep_archives and not args.from_local:
-            archive.unlink()
+            archive.unlink()                 # members are in place; drop the tar to stay at ~1x disk
         print(f'{name}: ok ({len(members)} files extracted)')
     if problems:
         print(f'{len(problems)} problem(s): {problems}')

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-outcome_ceiling_seedsplit.py — noise ceiling on the CORRELATION between any (near-noise-free) predictor
+outcome_ceiling_seedsplit.py - noise ceiling on the CORRELATION between any (near-noise-free) predictor
 and the control outcome, from split-half reliability of the control-slope estimate over the 10 seeds.
 
 Method (standard split-half noise ceiling, done per model-set and per aggregation level):
@@ -13,7 +13,7 @@ Method (standard split-half noise ceiling, done per model-set and per aggregatio
       - MODEL level: average each half to per-model means, correlate the two model-mean vectors, SB
   * The CEILING ON A CORRELATION is sqrt(reliability):  a perfect predictor X ∝ signal gives
     corr(X, O) = sd(signal)/sd(O) = sqrt(rho).  (Predictors here are ~perfectly reliable over the 100
-    held-out images — flatness 0.997, sensitivity 1.000 — so sqrt(rho_pred·rho_out) ≈ sqrt(rho_out).)
+    held-out images - flatness 0.997, sensitivity 1.000 - so sqrt(rho_pred·rho_out) ≈ sqrt(rho_out).)
   * The model-level ceiling is estimated from only 7-10 models -> report a bootstrap CI over models.
 
 Writes preproc_data/fig5_outcome_ceiling_seedsplit*.csv:

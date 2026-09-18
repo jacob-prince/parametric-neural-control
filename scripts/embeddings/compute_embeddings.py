@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-compute_embeddings.py — Extract ResNet-50 activations for encoding images
+compute_embeddings.py - Extract ResNet-50 activations for encoding images
 (PCA fit) and accentuated stimuli (PCA transform), saving compact PC scores.
 
 Runs on cluster (GPU).  Output: data/fig1_resnet50_pc50.npz

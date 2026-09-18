@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp. Figs. — accentuation-sweep galleries (one per monkey; a 5-figure span).
+"""Supp. Figs. - accentuation-sweep galleries (one per monkey; a 5-figure span).
 
 For each monkey, shows how all ten DNN models accentuate three of its recorded sites, each site
 paired with a different seed image. Within a monkey panel: three (site, seed) groups sit side by
@@ -52,7 +52,7 @@ DIRPREF = {'red': ('02-05-2025', '20250428-20250430'),
            'venus': ('05-05-2025', '250426-250429'),
            'leap': ('06-05-2025', '250426-250501'),
            'three0': ('06-05-2025', '250426-250501')}
-# three (site, seed) groups per monkey — one seed per site (face / animal / scene bases)
+# three (site, seed) groups per monkey - one seed per site (face / animal / scene bases)
 GROUPS_BY_MONKEY = {
     'red':    [(9, 3), (0, 4), (19, 7)],
     'paul':   [(8, 3), (24, 4), (40, 7)],

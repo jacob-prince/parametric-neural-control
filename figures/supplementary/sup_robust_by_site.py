@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (robust_by_site) — per-site adversarially-trained control advantage.
+r"""Supp fig (robust_by_site) - per-site adversarially-trained control advantage.
 
 Control score = Pearson r between a model's accentuation scores and the measured neural
 response to its accentuated stimuli (control_r in the canonical control_table). Per site

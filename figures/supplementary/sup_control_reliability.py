@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (control_reliability) — control-phase reliability and ceiling-normalized control.
+r"""Supp fig (control_reliability) - control-phase reliability and ceiling-normalized control.
 
 Control-phase noise ceiling = the canonical NSD estimator on the accentuated-stimulus
 group (the maximum Pearson r attainable given the channel's trial reliability on that
@@ -198,7 +198,7 @@ def panel_c(ax, tab):
     ax.tick_params(axis='x', length=0)
 
     handles = [Line2D([0], [0], marker='o', ls='', mfc=MONKEY_COLORS[m], mec='white', mew=0.4,
-                      ms=4.5, label=f'{MONKEY_TAG[m]} — {MONKEY_REGION[m]}') for m in CEIL_MONKEYS]
+                      ms=4.5, label=f'{MONKEY_TAG[m]} - {MONKEY_REGION[m]}') for m in CEIL_MONKEYS]
     lg = ax.legend(handles=handles, fontsize=FS_ANNOT, frameon=True, loc='lower right',
                    ncol=1, handletextpad=0.35, labelspacing=0.3, borderpad=0.5)
     lg.get_frame().set(facecolor='white', edgecolor='#cccccc', linewidth=0.6, alpha=0.95)

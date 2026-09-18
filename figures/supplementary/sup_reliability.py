@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (reliability) — channel selection, response reliability, NSD noise ceiling.
+r"""Supp fig (reliability) - channel selection, response reliability, NSD noise ceiling.
 
 Four panels covering how the 25 targeted electrodes were chosen and how reliable they are:
 
@@ -15,12 +15,12 @@ Four panels covering how the 25 targeted electrodes were chosen and how reliable
   c  Tuning stability: per-site cross-day (within encoding) and cross-phase (encoding vs
      control) Pearson over the shared natural images, grouped by region.
   d  Tuning correlation among the five selected channels: per monkey a 5x5 Pearson matrix
-     over the encoding images — selected channels are reliable and tuning-diverse.
+     over the encoding images - selected channels are reliable and tuning-diverse.
 
 Numbered from the manifest. Panel c reads pnc.preproc.loader (load_tuning_stability).
 Panels a/b/d read the channel-selection cache
 (preprocessed_data/sup_reliability_channel_selection_cache.pkl, built by
-scripts/preprocessing/build_sup_reliability_cache.py from the raw encoding HDF5 — the
+scripts/preprocessing/build_sup_reliability_cache.py from the raw encoding HDF5 - the
 all-channel grey cloud is not in the preproc cache).
 """
 import os

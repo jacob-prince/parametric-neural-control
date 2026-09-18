@@ -52,6 +52,7 @@ LAYOUT = [
 
 
 def archive_name(tier, rel, kind, compress):
+    # e.g. source_data__stimuli_encoding.tar, source_data__brain_data_encoding__sessdata_pkl.tar
     if kind == 'file':
         return f'{tier}__{Path(rel).name}'
     stem = tier if rel == '.' else f"{tier}__{rel.replace('/', '__')}"
@@ -69,11 +70,12 @@ def main(argv=None):
     args.archives.mkdir(parents=True, exist_ok=True)
     roots = {'source_data': paths.source_data(), 'preprocessed_data': paths.preprocessed_data(),
              'reference_figures': L.REPO / 'tests' / 'reference' / 'manuscript_png'}
+    # an existing manifest is updated in place, so --only runs keep the other entries
     manifest = L.load_manifest(args.manifest) if args.manifest.exists() else dict(record_id=None, sandbox=False, archives={})
     wanted = {w.strip() for w in args.only.split(',')} if args.only else None
     for tier, rel, kind, compress in LAYOUT:
         name = archive_name(tier, rel, kind, compress)
-        if wanted and not ({name, tier} & wanted):
+        if wanted and not ({name, tier} & wanted):   # --only takes archive names or whole tiers
             continue
         src = roots[tier] / rel
         if not src.exists():
@@ -97,7 +99,7 @@ def main(argv=None):
         manifest['archives'][name] = dict(tier=tier, path=rel, kind=kind, bytes=n, sha256=sha, md5=md5,
                                           n_members=(len(members) if members else 1))
         print(f'{n / 1e9:.2f} GB')
-        L.save_manifest(manifest, args.manifest)
+        L.save_manifest(manifest, args.manifest)   # after every archive, so an interrupted run keeps its progress
     total = sum(a['bytes'] for a in manifest['archives'].values())
     print(f"{len(manifest['archives'])} archives, {total / 1e9:.1f} GB -> {args.manifest}")
     return 0

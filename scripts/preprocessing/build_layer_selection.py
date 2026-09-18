@@ -67,7 +67,7 @@ def load_areas():
             for ch in TARGET[mk]:
                 areas[(mk, ch)] = areas_all[ch]
                 depths[(mk, ch)] = float(depth[ch]) if depth is not None else np.nan
-            if depth is not None:  # Neuropixels probe — keep full depth/area profile
+            if depth is not None:  # Neuropixels probe - keep full depth/area profile
                 profiles[mk] = {'depth': depth.astype(float), 'area': areas_all}
     return areas, depths, profiles
 

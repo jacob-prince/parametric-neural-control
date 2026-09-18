@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (fair_filtering) — structure of synthesis failures.
+"""Supp fig (fair_filtering) - structure of synthesis failures.
 
 A synthesized stimulus "fails" when its own post-hoc prediction (the faithful
 pred_resp for the SAVED image, the prediction-cache diagonal) misses the intended
@@ -47,7 +47,7 @@ FAIL_C = '#E15759'
 # ── data: pull straight from the precomputed masks (no rebuild) ─────────────
 def load_all():
     """Concatenate the exclusion cache over all 5 monkeys. Everything the
-    figure needs is precomputed in the cache — relerr, plus (gen_model, level_ord)."""
+    figure needs is precomputed in the cache - relerr, plus (gen_model, level_ord)."""
     model, level = [], []
     relerr = {t: [] for t in THRESHOLDS}
     for m in MONKEYS:
@@ -116,7 +116,7 @@ def draw_error_hist(ax, D):
 # ── build ────────────────────────────────────────────────────────────────────
 # Heatmap cells are square (aspect='equal'): NLEV columns x n-models rows, so the
 # native content aspect is NLEV/len(MODEL_ORDER). We size the figure height so each
-# heatmap *box* matches that content aspect exactly — no pillar-box dead bands, and
+# heatmap *box* matches that content aspect exactly - no pillar-box dead bands, and
 # the title/panel-letter (anchored to the box) sit tight against the map.
 FIG_W_IN = WIDTH_2COL_MM * MM
 LEFT, RIGHT, TOP, BOTTOM = 0.075, 0.965, 0.80, 0.17
@@ -166,7 +166,7 @@ def main(out_dir):
     cbA.set_ticks([0, 25, 50, 75, 100]); cbA.ax.tick_params(labelsize=FS_TICK)
     draw_error_hist(axB, D)
 
-    # panel letters — anchored to the top of each subplot band, clearly larger than titles
+    # panel letters - anchored to the top of each subplot band, clearly larger than titles
     fig.canvas.draw()
     for ax_ref, lab in [(axA1, 'a'), (axB, 'b')]:
         x = ax_ref.get_position().x0 - 0.055

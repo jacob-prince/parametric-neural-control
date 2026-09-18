@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (controversial) — synthetic-controversial experiment, red monkey (aIT).
+"""Supp fig (controversial) - synthetic-controversial experiment, red monkey (aIT).
 
 Images synthesized to DRIVE one encoding model's prediction while SUPPRESSING the
 other's (ResNet50 vs RN50-Robust), then shown back to the animal.
@@ -7,7 +7,7 @@ other's (ResNet50 vs RN50-Robust), then shown back to the animal.
   a  Procedure schematic flanked by the two models' stimulus goals.
   b  ResNet50-preferring mosaic | prediction-space scatter | RN50-Robust-preferring
      mosaic (4 example units, shared seed columns ranked by mean controversy).
-  c  3 example units — model prediction vs measured neural response, ResNet50
+  c  3 example units - model prediction vs measured neural response, ResNet50
      (orange) + RN50-Robust (green) fits with per-unit correlations.
   d  Per-unit r summary (ResNet50 vs RN50-Robust), paired lines + mean diamonds +
      Wilcoxon signed-rank across the 7 targeted units.

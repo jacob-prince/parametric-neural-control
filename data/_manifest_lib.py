@@ -8,7 +8,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = Path(__file__).resolve().parent / 'zenodo_manifest.json'
 MEMBERS_NAME = 'MEMBERS.json'
-CHUNK = 1 << 20
+CHUNK = 1 << 20   # 1 MiB read size for hashing and downloads
 
 
 def digests(path):
@@ -31,6 +31,7 @@ def iter_files(root, pattern=None):
 
 
 def members_manifest(root, rel_to, pattern=None):
+    # {relative path: bytes/sha256/md5}; this is what MEMBERS.json holds
     rows = {}
     for p in iter_files(root, pattern):
         sha, md5, n = digests(p)
@@ -64,9 +65,11 @@ def write_tar(archive, root, arc_prefix, compress=False, pattern=None):
         fobj = None
         tf = tarfile.open(archive, mode, **kwargs)
     with tf:
+        # MEMBERS.json first, so download_data.read_members can read it without scanning the archive
         payload = json.dumps(members, indent=1, sort_keys=True).encode()
         ti = tarfile.TarInfo(f'{arc_prefix}/{MEMBERS_NAME}'); ti.size = len(payload); _normalize(ti)
         tf.addfile(ti, io.BytesIO(payload))
+        # files only, one at a time, in sorted order (no directory entries)
         for rel in members:
             tf.add(Path(root) / rel, arcname=f'{arc_prefix}/{rel}', recursive=False, filter=_normalize)
     if fobj is not None:
@@ -80,4 +83,5 @@ def load_manifest(path=MANIFEST_PATH):
 
 
 def save_manifest(m, path=MANIFEST_PATH):
+    # sorted keys + trailing newline: the committed JSON diffs cleanly
     Path(path).write_text(json.dumps(m, indent=1, sort_keys=True) + '\n')

@@ -198,7 +198,7 @@ def main(out_dir):
     ax_b.set_title('Axis-aligned feature accentuation', fontsize=FS_TITLE, fontfamily=FONT_FAMILY,
                    fontweight='bold', loc='center', pad=12)
 
-    # c — sweep strip
+    # c - sweep strip
     strip, n_supp, n_drive = build_sweep_strip()
     ax_c.imshow(np.asarray(strip)); ax_c.set_axis_off(); ax_c.set_anchor('N')
 

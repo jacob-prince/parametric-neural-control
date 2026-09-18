@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-item 1 — held-out-image validation. Recomputes gradient spectral flatness AND adversarial
+item 1 - held-out-image validation. Recomputes gradient spectral flatness AND adversarial
 sensitivity on 100 NSD images never used to fit the encoding models / as synthesis seeds, then:
   (2) seed-vs-held-out agreement for each measure,
   (3) per-metric split-half reliability across the 100 images (Spearman-Brown),

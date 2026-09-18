@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cluster/config.sh — Shared configuration for the SLURM cluster pipeline
+# cluster/config.sh - Shared configuration for the SLURM cluster pipeline
 # Source this file from other scripts: source "$(dirname "$0")/config.sh"
 #
 # PNC NOTE: this is config.example.sh -- copy it to config.sh and replace every <PLACEHOLDER>.

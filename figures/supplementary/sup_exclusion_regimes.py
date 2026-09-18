@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (exclusion_regimes) — control outcomes across accentuated-image exclusion
+"""Supp fig (exclusion_regimes) - control outcomes across accentuated-image exclusion
 regimes.
 
 A synthesized stimulus "fails" when the generating model's own post-hoc prediction for
@@ -100,8 +100,8 @@ def _setup():
     D = load_all()
     MK, MO, UN, SD, LO = D['monkey'], D['model'], D['unit'], D['seed'], D['level']
     N = len(MO)
-    SWEEP = list(zip(MK, UN, MO, SD))          # (monkey, unit, model, seed) — a sweep
-    SEEDCOND = list(zip(MK, UN, SD))           # (monkey, unit, seed) — a seed-condition
+    SWEEP = list(zip(MK, UN, MO, SD))          # (monkey, unit, model, seed) - a sweep
+    SEEDCOND = list(zip(MK, UN, SD))           # (monkey, unit, seed) - a seed-condition
     SEEDCONDS = sorted(set(SEEDCOND))
     STATS = {t: compute(t) for t in THRESHOLDS}
     N_SWEEPS = len(set(SWEEP))
@@ -141,7 +141,7 @@ def compute(t):
 
 # ── per-regime control outcomes (tau = TAU_PRIMARY) ──────────────────────────
 def control_by_regime():
-    """{regime: {(monkey, unit, model): control r over the kept stimuli}} — the control
+    """{regime: {(monkey, unit, model): control r over the kept stimuli}} - the control
     cloud rebuilt per regime (generating model's own prediction vs measured response,
     firing floor applied), exactly as loader.control_cloud but with the regime mask."""
     out = {k: {} for k in CRIT_KEYS}
@@ -345,7 +345,7 @@ def main(out_dir):
     B_TOP, B_BOT = 0.5702, 0.4062
     C_TOP, C_BOT = 0.3532, 0.1099
 
-    # Row a — footing check (both thresholds) + retention bars + completion per monkey
+    # Row a - footing check (both thresholds) + retention bars + completion per monkey
     gsA = GridSpec(1, 4, figure=fig, left=LEFT, right=RIGHT, top=A_TOP, bottom=A_BOT,
                    wspace=0.62, width_ratios=[1.20, 1.20, 0.68, 0.40])
     axA0 = fig.add_subplot(gsA[0])
@@ -354,11 +354,11 @@ def main(out_dir):
     draw_retention(fig.add_subplot(gsA[2]))
     draw_completion(fig.add_subplot(gsA[3]))
 
-    # Row b — table
+    # Row b - table
     axB = fig.add_axes([LEFT, B_BOT, RIGHT - LEFT, B_TOP - B_BOT])
     draw_table(axB)
 
-    # Row c — per-model control outcomes under each regime
+    # Row c - per-model control outcomes under each regime
     gsC = GridSpec(1, 4, figure=fig, left=LEFT, right=RIGHT, top=C_TOP, bottom=C_BOT, wspace=0.14)
     axesC = draw_regime_outcomes(fig, gsC, ctrl)
 

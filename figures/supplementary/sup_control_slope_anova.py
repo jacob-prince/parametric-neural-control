@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (control_slope_anova) — variance decomposition of the control slope.
+r"""Supp fig (control_slope_anova) - variance decomposition of the control slope.
 
 Slope variant of the Fig 4 model-differences ANOVA. Repeats the population analysis using
 the control-fit SLOPE (measured-vs-predicted regression slope) in place of control r, and
@@ -10,7 +10,7 @@ pnc.preproc.loader.
   a  Per-model distribution of control slope across the 25 recorded sites (violin + swarm,
      models sorted by mean slope, robust highlighted, Untrained its own class). Repeated-
      measures ANOVA (model within-factor, 25 sites) annotated.
-  b  Per-region RM-ANOVA F (5 sites/region) — the model effect holds within every area.
+  b  Per-region RM-ANOVA F (5 sites/region) - the model effect holds within every area.
 """
 import os
 

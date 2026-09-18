@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Supp fig (gradient_geometry) — encoding input-gradient geometry and neural control.
+"""Supp fig (gradient_geometry) - encoding input-gradient geometry and neural control.
 
 Structural companion of the adversarial-sensitivity supplement, with the adversarial data
 swapped for input-gradient geometry (metric = gradient spectral participation ratio, the
 main-figure measure).
 
   a      mosaic: top row = per-model input-gradient saliency of the cat seed at the
-         example site (paul ch8 — the same site/seed as the main-figure mosaic); bottom
+         example site (paul ch8 - the same site/seed as the main-figure mosaic); bottom
          row = the per-model accentuation of that seed toward the site, matched to a
          common achieved response (the highest response every trained model reaches;
          Untrained is capped below it and flagged). Columns ordered by per-model mean
          gradient spectral PR (annotated above each name).
   b      per-model gradient frequency spectra on the 100 held-out NSD images (thin
          per-site + bold per-model mean).
-  c/d/e  held-out gradient spectral PR vs site-residualized control slope — residualized
+  c/d/e  held-out gradient spectral PR vs site-residualized control slope - residualized
          against the per-site mean over the 9 TRAINED models, the main-figure
-         convention — for the three model subsets (all 10 / without adv.-trained 8 /
+         convention - for the three model subsets (all 10 / without adv.-trained 8 /
          without untrained 7); dashed = site-level fit, bold = model-mean fit; panel c
          carries the per-model PR inset.
 
@@ -181,7 +181,7 @@ def build():
         per_model_prof[m] = np.mean(profs, axis=0)
     ranked = sorted(per_pr.index, key=lambda m: -per_pr[m])   # high PR left, adv-trained right
 
-    # mosaic ingredients (site = paul8, cat seed) — matched on ACHIEVED response: common
+    # mosaic ingredients (site = paul8, cat seed) - matched on ACHIEVED response: common
     # target = min over models of each model's max achieved response, EXCLUDING Untrained
     grad_maps = L.load_grad_maps(ACC_MONKEY, ACC_UNIT)
     seed_img = load_seed_image(SEED_NAME)

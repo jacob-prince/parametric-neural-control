@@ -1,4 +1,4 @@
-"""Read side of the take9 preproc caches — the ONLY entry every downstream figure and
+"""Read side of the take9 preproc caches - the ONLY entry every downstream figure and
 notebook uses. Pure numpy/pandas; loads in any env (no pyarrow, no torch, no h5py).
 
     from pnc.preproc import loader as L
@@ -44,6 +44,7 @@ def _leap_merge_map():
     path = os.path.join(CACHE, 'leap_variant_similarity.json')
     if not os.path.exists(path):
         return {}
+    # names actually shown in the Leap control sessions; decides which variant is canonical
     presented = set(pickle.load(open(os.path.join(CACHE, 'brain_leap.pkl'),
                                      'rb'))['control']['stim'].tolist())
     out = {}
@@ -74,12 +75,13 @@ def load_brain(monkey):
         idx = {n: i for i, n in enumerate(names)}
         for b_name, a_name in mm.items():
             if b_name not in idx or a_name not in idx:
-                continue
+                continue                     # only one variant was presented: nothing to pool
             ia, ib = idx[a_name], idx[b_name]
             na, nb = c['n_reps'][ia], c['n_reps'][ib]
             c['resp_z'][ia] = (c['resp_z'][ia] * na + c['resp_z'][ib] * nb) / (na + nb)
             c['n_reps'][ia] = na + nb
             keep[ib] = False
+        # drop the absorbed variants from every per-stimulus array
         for k in ('stim', 'resp_z', 'n_reps', 'kind'):
             c[k] = np.asarray(c[k])[keep]
     return b
@@ -204,6 +206,7 @@ def load_exclusions(monkey):
     e = pickle.load(open(os.path.join(CACHE, f'exclusions_{monkey}.pkl'), 'rb'))
     mm = _leap_merge_map() if monkey == 'leap' else {}
     if mm:
+        # reindex the frozen (pre-merge) rows to the merged prediction order; dropped variants fall out
         order = {n: i for i, n in enumerate(e['stim'])}
         idx = np.array([order[n] for n in load_predictions(monkey)['stim']])
         for k in ('stim', 'gen_model', 'gen_unit', 'gen_seed', 'target', 'achieved',
@@ -237,11 +240,12 @@ def _acc_response(monkey, unit):
 
 def control_cloud(monkey, unit, model):
     """(predicted response, measured standardized response) over the (unit, model) personalized
-    accentuated sweep — this model's own accentuations for this unit, scored by its own readout
-    (the diagonal of the prediction cache). The firing floor is applied HERE — the last step
-    before comparing to the brain — not baked into the cache."""
+    accentuated sweep - this model's own accentuations for this unit, scored by its own readout
+    (the diagonal of the prediction cache). The firing floor is applied HERE - the last step
+    before comparing to the brain - not baked into the cache."""
     P = load_predictions(monkey)
     mi = list(P['pred_models']).index(model); ui = list(P['target_units']).index(unit)
+    # rows synthesized by (model, unit), scored by that same model's readout of the same unit
     sel = (P['gen_model'] == model) & (P['gen_unit'] == unit)
     resp = _acc_response(monkey, unit)
     x, y = [], []
@@ -254,12 +258,13 @@ def control_cloud(monkey, unit, model):
 
 def anchor_cloud(monkey, unit, model):
     """(model encoding prediction, measured standardized control response) over the control
-    anchor stimuli — the encoding-generalization cloud. Encoding predictions are not clamped
+    anchor stimuli - the encoding-generalization cloud. Encoding predictions are not clamped
     (the firing-floor clamp applies to control predictions only)."""
     b = load_brain(monkey); ui = list(b['units']).index(unit); c = b['control']
     e = load_encoding(monkey); mi = list(e['models']).index(model)
     epred = dict(zip(e['stim'].tolist(), e['pred'][list(e['units']).index(unit), mi]))
     x, y = [], []
+    # anchors = calibration images re-shown in the control session, paired with their encoding prediction
     for i, (n, k) in enumerate(zip(c['stim'], c['kind'])):
         if k == 'calibration' and n in epred:
             x.append(epred[n]); y.append(c['resp_z'][i, ui])
@@ -272,7 +277,7 @@ def _test_names(monkey):
     st = load_stimuli()['calibration']; m = st['monkey'] == monkey
     names = st['stimulus_name'][m]; tr = st['is_train'][m] if st['is_train'] is not None else None
     if tr is None:
-        return None
+        return None                          # no split recorded: callers fall back to every stimulus
     return set(names[~np.array([bool(x) for x in tr])].tolist())
 
 
@@ -292,11 +297,12 @@ def encoding_cloud(monkey, unit, model, split='test'):
 
 def shared_cloud(monkey, unit, model):
     """(model encoding prediction, measured control response) over the 'shared' calibration
-    stimuli — the cross-phase set used by Fig 4's phase-2 'Encoding' panel. Prediction unclamped."""
+    stimuli - the cross-phase set used by Fig 4's phase-2 'Encoding' panel. Prediction unclamped."""
     b = load_brain(monkey); ui = list(b['units']).index(unit); c = b['control']
     e = load_encoding(monkey); mi = list(e['models']).index(model)
     epred = dict(zip(e['stim'].tolist(), e['pred'][list(e['units']).index(unit), mi]))
     x, y = [], []
+    # the shared set is identified by its stimulus names
     for i, n in enumerate(c['stim']):
         if 'shared' in n.lower() and n in epred:
             x.append(epred[n]); y.append(c['resp_z'][i, ui])
@@ -317,7 +323,7 @@ def control_seed_rs(monkey, unit, model, min_per_seed=5):
     for lst in byseed.values():
         if len(lst) >= min_per_seed:
             x = np.array([a for a, _ in lst]); y = np.array([b_ for _, b_ in lst])
-            if x.std() > 0 and y.std() > 0:
+            if x.std() > 0 and y.std() > 0:  # pearsonr is undefined for a constant vector
                 out.append(float(stats.pearsonr(x, y)[0]))
     return out
 

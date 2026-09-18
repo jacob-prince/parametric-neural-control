@@ -212,7 +212,7 @@ def plot_level_grid(
                               fontsize=6, rotation=0,
                               ha="right", va="center", labelpad=4)
 
-    fig.suptitle(f"Accentuated images — unit {unit_id}", fontsize=11, y=1.01)
+    fig.suptitle(f"Accentuated images - unit {unit_id}", fontsize=11, y=1.01)
     fig.tight_layout(pad=0.2)
     if show:
         plt.show()

@@ -15,11 +15,14 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 ASSETS = REPO_ROOT / 'figures' / 'assets'
 
 
+# Subclass of FileNotFoundError so existing except-clauses still catch it; the message
+# carries the download hint.
 class MissingDataError(FileNotFoundError):
     pass
 
 
 def _root(env, default):
+    # `or`, not a dict default: an env var that is set but empty also falls back
     return Path(os.environ.get(env) or default).expanduser()
 
 
@@ -49,6 +52,7 @@ def require(path, hint=None):
     """Return `path` if it exists, else raise MissingDataError with a download hint."""
     path = Path(path)
     if not path.exists():
+        # name the download tier that owns this path, so the hint gives the right --tier
         where = 'source_data' if str(path).startswith(str(source_data())) else 'preprocessed_data'
         tier = 'source' if where == 'source_data' else 'preprocessed'
         msg = (f"missing {path}\n  -> run `python data/download_data.py --tier {tier}`"

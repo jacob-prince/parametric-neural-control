@@ -9,12 +9,12 @@ filename score:
 
 Two-stage ordering w.r.t. the firing floor (see README):
   1. DIVERGENCE (pre-floor). Whether a stimulus hit its own target is a fact about synthesis,
-     independent of the brain baseline — judged on RAW achieved. Clamping first would spuriously
+     independent of the brain baseline - judged on RAW achieved. Clamping first would spuriously
      fail the clamped low-baseline sites. Feeds `permodel` (and `drop2`, a rank of the target
      level that never touches achieved at all).
   2. FLOOR, then CROSS-MODEL LEVEL-SHARING (post-floor). Once every model's achieved is clamped
      to the unit's firing floor, a (unit, seed, level) cell counts as shared iff ALL models
-     succeed within tau on the FLOORED values. Feeds `intersect` — the only floor-sensitive mask.
+     succeed within tau on the FLOORED values. Feeds `intersect` - the only floor-sensitive mask.
 
 Masks (each also requires the stimulus to be PRESENT = shown with >=1 trial):
     none       present stimuli only                              (reference)

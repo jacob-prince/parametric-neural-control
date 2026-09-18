@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Figure 5 — adversarial sensitivity AND input-gradient geometry, paired, predict parametric control.
+"""Figure 5 - adversarial sensitivity AND input-gradient geometry, paired, predict parametric control.
 
 Panel a is one big integrated 4-row mosaic (columns = the 10 models, ordered by spectral flatness
 descending so robust models sit on the right; no seed column):
-  row 1  adversarial   — per-model minimal-eps adversarial perturbation of the cat seed (+2 z) toward the site
-  row 2  perturbation  — the perturbation itself
-  row 3  input gradient— per-model input-gradient saliency of the cat seed
-  row 4  accentuation  — the accentuation of the cat seed toward the site, matched to a common achieved
+  row 1  adversarial - per-model minimal-eps adversarial perturbation of the cat seed (+2 z) toward the site
+  row 2  perturbation - the perturbation itself
+  row 3  input gradient - per-model input-gradient saliency of the cat seed
+  row 4  accentuation - the accentuation of the cat seed toward the site, matched to a common achieved
                           response (the highest response every non-untrained model reaches)
 Row labels are on the far left; model names are the column headers.
 
@@ -130,7 +130,7 @@ def load_gallery(monkey, unit, seed_tag):
 
 
 def williams_p(r_ys, r_yf, r_sf, n):
-    """Two-sided p for H0: corr(control,sens) == corr(control,flat) — two DEPENDENT correlations that
+    """Two-sided p for H0: corr(control,sens) == corr(control,flat) - two DEPENDENT correlations that
     share the control variable (Williams/Hotelling test). r_sf = corr(sens, flat)."""
     if n < 5 or not np.all(np.isfinite([r_ys, r_yf, r_sf])):
         return np.nan
@@ -503,7 +503,7 @@ def build():
              ha="center", va="center", fontsize=11.5, fontweight="bold")
     fig.text(dcx, pdl.y1 + 0.010, "N = 10 models    ·    n = 250 site-model axes",
              ha="center", va="center", fontsize=8.5, color="0.35")
-    # panel letters — "a" aligned in the same left column as "b"
+    # panel letters - "a" aligned in the same left column as "b"
     fig.text(axb.get_position().x0 - 0.030, 0.985, "a", fontsize=20, fontweight="bold", va="top")
     for ax, lab in [(axb, "b"), (axc, "c"), (axd_l, "d"), (axe, "e")]:
         p = ax.get_position(); fig.text(p.x0 - 0.030, p.y1 + 0.010, lab, fontsize=20, fontweight="bold", va="bottom")

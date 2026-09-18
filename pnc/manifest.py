@@ -145,6 +145,7 @@ ENTRIES = [
 
 
 def _assign():
+    # walk ENTRIES once, handing each entry the next free S-number(s); ENTRIES itself is left untouched
     out, n = [], 1
     for e in ENTRIES:
         c = e.get('count', 1)
@@ -158,12 +159,12 @@ def _assign():
 
 _NUMBERED = _assign()
 _BY_SLUG = {e['slug']: e for e in _NUMBERED}
-TOTAL = _NUMBERED[-1]['num'] + (_NUMBERED[-1].get('count', 1) - 1)
+TOTAL = _NUMBERED[-1]['num'] + (_NUMBERED[-1].get('count', 1) - 1)   # last number consumed, span included
 
 
 def fig(slug):
     """Manifest entry for a slug, augmented with `num`, `span`, `prefix`, `label`."""
-    e = dict(_BY_SLUG[slug])
+    e = dict(_BY_SLUG[slug])   # copy: callers may mutate the entry they get back
     n = e['num']
     e['prefix'] = f"figS{n:02d}_{slug}"
     e['label'] = f"Supplementary Figure {n}"
@@ -187,6 +188,7 @@ def output_name(slug, monkey=None):
     's12_sweep_gallery_red'. This is the name the rendered PNG is saved under."""
     e = fig(slug)
     if e['span']:
+        # span entries take one number per monkey, in SPAN_MONKEYS order
         if monkey is None:
             raise ValueError(f"{slug} spans {e['span']}; pass monkey=")
         return f"s{e['num'] + SPAN_MONKEYS.index(monkey):02d}_{slug}_{monkey}"

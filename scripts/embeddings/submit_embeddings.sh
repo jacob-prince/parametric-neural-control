@@ -13,7 +13,7 @@
 # + accentuated stimuli (PCA transform) -> fig1_resnet50_pc50.npz.
 # Submit from the CLUSTER repo-mirror root (needs circuit_toolkit/ + data/ symlinks).
 # NOTE: output lands in the mirror's take9/preproc_data/; pull it to
-# outputs_from_cluster/fig1_embeddings_out/ for comparison — the local npz is the
+# outputs_from_cluster/fig1_embeddings_out/ for comparison - the local npz is the
 # frozen original (PCA sign/GPU nondeterminism makes bit-exact reproduction unlikely).
 PY=${PNC_PYTHON:?PNC_PYTHON must be set (as-run value in the comment)}  # was the cluster conda env python
 P=${PNC_REPO_ROOT:?PNC_REPO_ROOT must be set (as-run value in the comment)}  # was /n/holylabs/LABS/konkle_lab/Users/jacobprince/AccentuateVVS (repo mirror root)

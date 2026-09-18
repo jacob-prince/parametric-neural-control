@@ -42,6 +42,7 @@ def registry():
 
 def render_env(out_dir):
     """Environment for a figure subprocess: built from scratch, never inherited."""
+    # only the data roots and the font override pass through; PYTHONPATH, MPLRC etc. do not
     keep = ('PATH', 'HOME', 'TMPDIR', 'USER', 'LANG', 'LC_ALL', 'PNC_SOURCE_DATA',
             'PNC_PREPROCESSED_DATA', 'PNC_OUTPUT', 'PNC_HN_LIGHT_TTF')
     env = {k: os.environ[k] for k in keep if k in os.environ}
@@ -54,6 +55,7 @@ def render_env(out_dir):
 
 
 def pixel_hash(png):
+    # hash the decoded RGBA pixels, not the PNG bytes (encoder metadata would differ between runs)
     import numpy as np
     from PIL import Image
     arr = np.asarray(Image.open(png).convert('RGBA'))
@@ -84,7 +86,7 @@ def render(stem, module, extra, out_dir, env, timeout=1800):
     t0 = time.time()
     cmd = [sys.executable, '-m', module, '--out', str(out_dir), *extra]
     r = subprocess.run(cmd, cwd=str(REPO), env=env, text=True, stdout=subprocess.PIPE,
-                       stderr=subprocess.STDOUT, timeout=timeout)
+                       stderr=subprocess.STDOUT, timeout=timeout)   # one interleaved log per figure
     rec = dict(name=stem, module=module, args=extra, returncode=r.returncode,
                duration_seconds=round(time.time() - t0, 1))
     log_dir = Path(out_dir) / 'logs'
@@ -109,6 +111,7 @@ def main(argv=None):
     items = registry()
     if args.only:
         wanted = {w.strip() for w in args.only.split(',') if w.strip()}
+        # match on output stem, module name suffix or manifest slug
         items = [it for it in items if it[0] in wanted or it[1].rsplit('_', 1)[-1] in wanted
                  or it[1].split('.')[-1].removeprefix('sup_') in wanted]
         if not items:
@@ -126,6 +129,7 @@ def main(argv=None):
         if reference is not None and rec['returncode'] == 0:
             status += ' / pixel-exact' if rec.get('matches_reference') else ' / DIFFERS'
         print(f"{status} ({rec['duration_seconds']}s)", flush=True)
+        # a pixel mismatch is recorded and the run continues; a crash stops it unless --keep-going
         if rec['returncode'] != 0 or (reference is not None and not rec.get('matches_reference')):
             failed.append(stem)
             if rec['returncode'] != 0 and not args.keep_going:

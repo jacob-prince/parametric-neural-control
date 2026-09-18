@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (robadvctl_controls) — control outcomes after regressing out the effect of
+"""Supp fig (robadvctl_controls) - control outcomes after regressing out the effect of
 the synthesis hyperparameters.
 
 The synthesis regularization knobs (augmentation NOISE + spectral-decay ALPHA, selected

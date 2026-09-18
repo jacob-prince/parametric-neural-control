@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cluster/run.sh — Full pipeline: sync code → submit job → poll → sync results
+# cluster/run.sh - Full pipeline: sync code → submit job → poll → sync results
 set -euo pipefail
 source "$(dirname "$0")/config.sh"
 
@@ -45,7 +45,7 @@ SUBMIT
 )
 
 if [ -z "$JOB_ID" ]; then
-    echo "ERROR: Failed to submit job — no job ID returned"
+    echo "ERROR: Failed to submit job - no job ID returned"
     exit 1
 fi
 
@@ -78,7 +78,7 @@ while true; do
         break
     fi
 
-    echo "  [$(date +%H:%M:%S)] ${REMAINING} task(s) still running — next check in ${POLL_INTERVAL}s"
+    echo "  [$(date +%H:%M:%S)] ${REMAINING} task(s) still running - next check in ${POLL_INTERVAL}s"
     sleep "$POLL_INTERVAL"
 
     # Escalate interval

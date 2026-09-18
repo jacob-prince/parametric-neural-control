@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (predicting_summary) — single-predictor leaderboard + cross-validated best
+r"""Supp fig (predicting_summary) - single-predictor leaderboard + cross-validated best
 model of neural control, one row.
 
   a  single-predictor site-|r| leaderboard for every candidate predictor (dumbbell:
@@ -7,7 +7,7 @@ model of neural control, one row.
      subset survives p<.05 with the same sign), control slope then control r, with a
      boxed key grouping each predictor by what it measures.
   b  the overall best-subset model (the exact subset the analysis selects for control
-     slope) evaluated by repeated 10-fold cross-validation — predicted vs measured
+     slope) evaluated by repeated 10-fold cross-validation - predicted vs measured
      site-residualized control slope, one colour per monkey, per-monkey best-fit lines.
 
 Outcome throughout = site-residualized control (the 9-trained residual, matching the

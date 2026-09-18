@@ -81,7 +81,7 @@ def find_best_azimuth(all_pts):
 
 
 def build_exemplar(monkey, unit, model, enc_resp_cache, musig_cache):
-    """Fig 3A-right readout-aligned embedding of a cell — ALL seed sweeps."""
+    """Fig 3A-right readout-aligned embedding of a cell - ALL seed sweeps."""
     enc = load_encoding_pickle(monkey, unit, model)
     acc = load_accentuated_pickle(monkey, unit, model)
     PCA_resp = to_numpy(enc['PCA_resp'])

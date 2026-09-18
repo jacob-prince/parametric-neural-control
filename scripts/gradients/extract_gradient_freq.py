@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Aggregate input-output gradient radial-Fourier profiles per (site, model) — Fig 7 flatness.
+"""Aggregate input-output gradient radial-Fourier profiles per (site, model) - Fig 7 flatness.
 
 Reads Binxu's precomputed per-(site,model) gradient freq-profile pkls on the cluster
 (250 = 5 monkeys x 5 units x 10 models), takes the per-seed mean/std profile, and computes a
-natural-image reference radial profile from the 969 encoding stimuli. Pure numpy/PIL — runs on
+natural-image reference radial profile from the 969 encoding stimuli. Pure numpy/PIL - runs on
 a cluster login node (no GPU). Self-contained within cluster/.
 
 Output: gradient_freq.pkl with schema:

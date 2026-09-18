@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-r"""Supp Fig (superstim_scatter_venus) — super-stimuli in the predicted-vs-measured plane, Monkey V.
+r"""Supp Fig (superstim_scatter_venus) - super-stimuli in the predicted-vs-measured plane, Monkey V.
 
 The
 `figS27e_superstimuli_venus_suppress` (Monkey V, drive+suppress) variant. DiCarlo/Kar
 style, z units. Left: 10x10 gallery of the most intense super-stimuli (measured with
 >=3 trial repeats), image borders colored by generating model, split into 70 super-drive
-(top) and 30 super-suppress (bottom). Right: predicted vs measured z scatter — grey
+(top) and 30 super-suppress (bottom). Right: predicted vs measured z scatter - grey
 calibration (encoding) cloud (dots + SEM whiskers) hugging unity, the super-stimuli as
 bigger model-colored dots (+ SEM whiskers) beyond it, and the outermost called out to
 their images placed in the scatter's whitespace with dashed leader lines.

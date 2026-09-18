@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Supp fig (floc_selectivity) — site category-selectivity (fLoc).
+"""Supp fig (floc_selectivity) - site category-selectivity (fLoc).
 
 fLoc responses of the 25 recorded sites, in the context of the encoding-phase natural-image
 response distribution. For each site the natural-image response density (grey KDE) is shown
 with the six fLoc category responses overlaid as jittered coloured dots; the preferred domain
 (largest mean) is highlighted. A summary row distils each site to its preferred-domain d'
-(bar height, coloured by preferred domain) — the d' of whichever category is highest for that
+(bar height, coloured by preferred domain) - the d' of whichever category is highest for that
 site versus all other categories. The 10 face-patch-targeted aIT (red) and cIT (paul) sites
 are grouped first, followed by the remaining 16 sites (V3/V4, STS).
 

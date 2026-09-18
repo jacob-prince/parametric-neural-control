@@ -69,7 +69,7 @@ def plot_violin_panel(ax, per_model, title, dot_size, dot_alpha):
             body.set(facecolor=c, edgecolor=c, alpha=0.55, linewidth=0.8)
         med = float(np.median(arr))
         ax.plot([xi - vw / 2 * 0.55, xi - 0.005], [med, med], color='black', lw=1.1, zorder=5)
-        # Show EVERY point — no subsampling. The per-model RNG drives ONLY the horizontal jitter
+        # Show EVERY point - no subsampling. The per-model RNG drives ONLY the horizontal jitter
         # (seeded per model so a change to one model's n never reshuffles another's dots).
         # Rasterized: the full point cloud stays lightweight in the vector PDF.
         r = np.random.default_rng(1000 + xi)

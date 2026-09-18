@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp. Fig. — suppress / drive extremes across every recorded site.
+r"""Supp. Fig. - suppress / drive extremes across every recorded site.
 
 The strongest-suppress (level 0) and strongest-drive (level 10) accentuated stimulus for each of
 the 25 channels x 4 representative models (ResNet50, DINOv2, RN50-Robust, CLIPAG). The 25 sites are
@@ -45,7 +45,7 @@ THUMB = 224
 LEVEL_CMAP = plt.get_cmap('RdBu_r')
 C_SUPP, C_DRIVE = LEVEL_CMAP(0.0), LEVEL_CMAP(1.0)
 FS_TITLE, FS_MODEL, FS_ROW, FS_SD = 8.0, 6.5, 6.0, 5.5
-FS_MONKEY = 9.5   # rotated monkey/region block labels — larger than the per-site channel labels
+FS_MONKEY = 9.5   # rotated monkey/region block labels - larger than the per-site channel labels
 BLANK = np.full((THUMB, THUMB, 3), 240, np.uint8)
 MISSING = []
 
@@ -154,7 +154,7 @@ def main(out_dir):
             pt = gs[rowslot[(b, 0)], cmap_col[(0, 0)]].get_position(fig)
             pb = gs[rowslot[(b, len(chans) - 1)], cmap_col[(0, 0)]].get_position(fig)
             xlab = 0.015 if sd == 0 else pt.x0 - 0.052
-            fig.text(xlab, 0.5 * (pt.y1 + pb.y0), f'{TAG[mk]} — {REGION[mk]}',
+            fig.text(xlab, 0.5 * (pt.y1 + pb.y0), f'{TAG[mk]} - {REGION[mk]}',
                      rotation=90, ha='center', va='center', fontsize=FS_MONKEY,
                      fontweight='bold', color=MONKEY_COLORS[mk], fontfamily=FONT_FAMILY)
         # model names above each side's top row (spanning the model's 2 sub-columns)

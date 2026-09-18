@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (adversarial_robustness) — attack-method invariance of the adversarial-
+r"""Supp fig (adversarial_robustness) - attack-method invariance of the adversarial-
 sensitivity measurements.
 
 Compares the production PGD attack with single-step FGSM. Computation follows the
@@ -42,8 +42,7 @@ AUC_EPS_LO, AUC_EPS_HI = 0.125, 16.0                 # main-figure sensitivity i
 
 
 def load_logauc(dirs, name):
-    """Per-readout AUC of normalized swing over LOG2(eps) on the 100 held-out images —
-    the main-figure adversarial-sensitivity measure, computed per attack method."""
+    """Per-readout AUC of normalized swing over LOG2(eps) on the 100 held-out images - the main-figure adversarial-sensitivity measure, computed per attack method."""
     ho = pd.concat([pd.read_csv(p) for d in dirs
                     for p in sorted(glob.glob(os.path.join(paths.require(os.path.join(CLUSTER_OUT, d)),
                                                            'adv_robustness_*.csv')))

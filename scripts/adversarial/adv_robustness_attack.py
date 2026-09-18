@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-adv_robustness_attack.py — Continuous adversarial robustness of the 10-model family,
+adv_robustness_attack.py - Continuous adversarial robustness of the 10-model family,
 measured by attacking the 250 encoding-model readouts directly.
 
 For one DNN backbone (--model), this attacks each of its 25 fitted readouts
@@ -44,7 +44,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 
 def _find_project_root(start):
-    """Walk up to the repo root (.../AccentuateVVS) — robust to where this script is
+    """Walk up to the repo root (.../AccentuateVVS) - robust to where this script is
     placed (analyses/24/scripts OR take8/figure8/cluster)."""
     p = start
     for _ in range(8):
@@ -424,7 +424,7 @@ def main():
     ap.add_argument("--monkeys", default=None, help="comma list, default all")
     ap.add_argument("--channels", default=None, help="comma list, default per-monkey")
     ap.add_argument("--image-list", default=None,
-                    help="txt file (one image path per line) used for ALL readouts — held-out validation")
+                    help="txt file (one image path per line) used for ALL readouts - held-out validation")
     ap.add_argument("--tag", default="", help="suffix appended to the output filename (e.g. monkey, for sharded runs)")
     ap.add_argument("--smoke", action="store_true")
     args = ap.parse_args()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (adversarial_sensitivity) — encoding-axis adversarial sensitivity and neural control.
+"""Supp fig (adversarial_sensitivity) - encoding-axis adversarial sensitivity and neural control.
 
 Structural companion of the gradient-geometry supplement, with the gradient data swapped
 for adversarial sensitivity. Although only two backbones were explicitly adversarially
@@ -8,7 +8,7 @@ encoding axes (each backbone + its scalar neural readout is a differentiable inp
 function attacked with standardized pixel PGD).
 
   a      mosaic: top row = per-model minimal-eps adversarial perturbation of the cat seed,
-         raising the model's prediction by +2 z toward the example site (paul ch8 — the
+         raising the model's prediction by +2 z toward the example site (paul ch8 - the
          same records the main figure's mosaic draws). eps found by geometric bisection
          (adv_visual_attack.py --bisect) so the achieved change honestly lands at +2
          (within 0.05); minimal eps annotated under each perturbation. Bottom row = the
@@ -16,8 +16,8 @@ function attacked with standardized pixel PGD).
   b      encoding-axis adversarial sensitivity vs perturbation strength (25 axes/model +
          model mean; shaded band = the eps window the AUC metric integrates over).
   c/d/e  adversarial sensitivity (log-eps AUC on the 100 held-out NSD images) vs
-         site-residualized control slope — residualized against the per-site mean over the
-         9 TRAINED models, the main-figure convention — for the three model subsets (all
+         site-residualized control slope - residualized against the per-site mean over the
+         9 TRAINED models, the main-figure convention - for the three model subsets (all
          10 / without adv.-trained 8 / without untrained 7); dashed = site-level fit,
          bold = model-mean fit; panel c carries the per-model sensitivity inset.
 

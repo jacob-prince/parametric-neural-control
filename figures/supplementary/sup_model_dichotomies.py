@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-r"""Supp fig (model_dichotomies) — neural control does not dissociate by architecture, training objective, or
+r"""Supp fig (model_dichotomies) - neural control does not dissociate by architecture, training objective, or
 language alignment; only by adversarial training.
 
 With 10 models there are many ways to carve the set. This figure asks whether any of the natural
 architectural/training dichotomies separates models on parametric control the way adversarial
 training does. It does not: among the 9 trained models, CNN vs Transformer, label-supervised vs
-self-supervised (CLIP-family counted as self-supervised — no human labels), and language-aligned
+self-supervised (CLIP-family counted as self-supervised - no human labels), and language-aligned
 vs not are all null; only adversarially-trained vs standard shows a large, reliable gap.
 
-Outcome = control r (the Fig 4 headline; control slope is concordant — see printout). Each split is
+Outcome = control r (the Fig 4 headline; control slope is concordant - see printout). Each split is
 tested WITHIN SITE: for every recording site the mean control r of each group's models is computed,
 and the two group means are compared across the 25 sites (Wilcoxon signed-rank). The two
 adversarially-trained models (RN50-Robust, CLIPAG) sit on opposite sides of every split;
 because they dominate the small groups, each architecture/objective/language panel also reports the
-p EXCLUDING them — the only hint of an effect (objective, control r) vanishes there.
+p EXCLUDING them - the only hint of an effect (objective, control r) vanishes there.
 
   a  Architecture         CNN vs Transformer
   b  Training objective   supervised (labels) vs self-supervised (incl. CLIP-family)

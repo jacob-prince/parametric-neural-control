@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-adv_visual_attack.py — qualitative "how the attack looks" per model, matched on effect.
+adv_visual_attack.py - qualitative "how the attack looks" per model, matched on effect.
 
 For one encoding site (default red unit9, the Fig 7A example) and one seed image, find,
 for each model, the MINIMAL L∞ pixel perturbation that raises that model's predicted

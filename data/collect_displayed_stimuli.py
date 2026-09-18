@@ -27,6 +27,7 @@ OPENED = set()
 
 
 def _hook():
+    # wrap the two image readers the figure scripts use, recording every path they open
     import PIL.Image
     import matplotlib.image
     real_open, real_imread = PIL.Image.open, matplotlib.image.imread
@@ -51,6 +52,7 @@ def main(argv=None):
     _hook()
     src = paths.source_data().resolve()
     wanted = {w.strip() for w in args.only.split(',')} if args.only else None
+    # same registry as figures/render_all.py, but run in-process so the hook sees the opens
     items = [(n, f'figures.main.fig{i}_{n}', {}) for i, n in manifest.MAIN_FIGURES.items()]
     for e in manifest.all_entries():
         mod = f"figures.supplementary.sup_{e['slug']}"
@@ -66,6 +68,7 @@ def main(argv=None):
             print(f'{stem} ...', end=' ', flush=True)
             importlib.import_module(mod).main(tmp, **kw)
             print(f'{len(OPENED) - before} new opens', flush=True)
+    # keep only opens under source_data (figures also read assets and preprocessed caches)
     rel = sorted(os.path.relpath(p, src) for p in OPENED
                  if Path(p).resolve().is_relative_to(src) or p.startswith(str(src)))
     keep = [r for r in rel if r.split(os.sep)[0] in ('stimuli_control', 'stimuli_controversial')]

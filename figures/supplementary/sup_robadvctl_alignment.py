@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Supp fig (robadvctl_alignment) — relationship between encoding-axis alignment and
+r"""Supp fig (robadvctl_alignment) - relationship between encoding-axis alignment and
 neural control outcomes, and the control comparison with alignment regressed out.
 
 Axis alignment (per-dim displacement ratio, seed-averaged per site-model) is a

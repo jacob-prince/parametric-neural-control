@@ -3,10 +3,10 @@
 reliability supp figure.
 
 Two stability measures per site:
-  cross-day    within the encoding phase — mean pairwise correlation of a site's
+  cross-day    within the encoding phase - mean pairwise correlation of a site's
                per-session mean responses (over stimuli shown on every session).
                A within-phase reference: day-to-day tuning reliability.
-  cross-phase  encoding vs control — correlation of responses to the natural images
+  cross-phase  encoding vs control - correlation of responses to the natural images
                shown in BOTH phases. Lower-than-cross-day = phase-specific drift.
 
 Also flags whether the control-phase shared responses were repeated (reliable) vs
@@ -34,7 +34,7 @@ def cross_day(mk, units):
     """Day-to-day tuning stability via balanced session split-halves: partition the
     encoding sessions into two equal-ish halves (each half averaged so both estimates
     are reliable), correlate the halves per unit, over EVERY distinct partition. Mean
-    and SEM are taken across partitions — reliable (multi-session) estimates, with a
+    and SEM are taken across partitions - reliable (multi-session) estimates, with a
     spread. (Single-session pairwise correlations attenuate by per-session noise.)"""
     from itertools import combinations
     f = sorted(glob.glob(os.path.join(ENC_DIR, f'*{mk}*vvs-encodingstimuli*.h5')))[0]

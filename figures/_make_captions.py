@@ -20,6 +20,7 @@ INV_MAIN = {v: k for k, v in manifest.MAIN_FIGURES.items()}
 
 
 def braces(s, start):
+    # text inside the brace group opening at s[start]; nested groups are kept intact
     depth = 0
     for i in range(start, len(s)):
         if s[i] == '{':
@@ -32,10 +33,12 @@ def braces(s, start):
 
 
 def tex2md(s):
+    # strip TeX comments, then resolve figure cross-references through the manifest
     s = re.sub(r'(?<!\\)%[^\n]*', '', s)
     s = re.sub(r'\\sfrange\{([a-z0-9_]+)\}', lambda m: f"S{NUM[m.group(1)]}-S{NUM[m.group(1)] + 4}", s)
     s = re.sub(r'\\sfref\{([a-z0-9_]+)\}', lambda m: f"S{NUM.get(m.group(1), '?')}", s)
     s = re.sub(r'\\[cC]ref\{fig:([a-z_]+)\}', lambda m: f'Fig. {INV_MAIN.get(m.group(1), m.group(1))}', s)
+    # three passes handle formatting commands nested up to three deep
     for _ in range(3):
         s = re.sub(r'\\textbf\{([^{}]*)\}', r'**\1**', s)
         s = re.sub(r'\\(?:emph|textit)\{([^{}]*)\}', r'*\1*', s)
@@ -55,6 +58,7 @@ def main():
            'caption table); equations stay in TeX math notation. The notebooks under notebooks/figures/ carry '
            'these captions in their title cell.', '', '## Main figures', '']
     for i, name in manifest.MAIN_FIGURES.items():
+        # main captions come from each figure's TeX environment; supplementary ones from the caption table
         tex = (M / 'tex' / 'figures' / f'{name}.tex').read_text()
         m = re.search(r'\\(?:breakable)?caption', tex)
         k = tex.index('{', m.end())
@@ -71,6 +75,7 @@ def main():
             out += [f"### Supplementary Figure S{e['num']}: `{manifest.output_name(e['slug'])}`", '', cap, '']
     (REPO / 'figures' / 'CAPTIONS.md').write_text('\n'.join(out))
     txt = '\n'.join(out)
+    # report any TeX command that survived outside $...$, as a conversion check
     left = sorted(set(re.findall(r'\\[a-zA-Z]+', re.sub(r'\$[^$]*\$', '', txt))))
     print(f"{txt.count('### ')} captions written; tex commands left outside math: {left}")
 

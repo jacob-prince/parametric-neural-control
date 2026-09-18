@@ -4,7 +4,7 @@
 For each of the 25 target sites, loads encoding-session responses to the 61 fLoc
 stimuli (tagged by category domain) and to the natural (non-fLoc) calibration
 images, and caches them to ``preproc_data/floc_selectivity.pkl``. The floc supp figure then
-computes KDEs / selectivity stats and draws — no HDF5 touched at plot time.
+computes KDEs / selectivity stats and draws - no HDF5 touched at plot time.
 
 Mirrors analyses/10_fLoc_analysis (domain map, natural filter, file selection).
 Torch-free (encoding HDF5 via h5py). Run once:

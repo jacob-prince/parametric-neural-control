@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Supp fig (axis_alignment_stats) — encoding-axis alignment of accentuation sweeps.
+"""Supp fig (axis_alignment_stats) - encoding-axis alignment of accentuation sweeps.
 
 On-axis / off-axis decomposition of each sweep's
 net latent displacement in the 750-d PCA feature space:
@@ -164,7 +164,7 @@ def draw_ratio_by_model(ax, model, monkey, unit, ratio, overall_med, exemplars, 
                 solid_capstyle='round', zorder=6)
         ax.plot([i - 0.29, i + 0.29], [med, med], color=get_model_color(m), lw=0.9,
                 solid_capstyle='round', zorder=7)
-        # representative channel — its 10 seeds, large dots
+        # representative channel - its 10 seeds, large dots
         ex = exemplars[m]
         chan = (model == m) & (monkey == ex['monkey']) & (unit == ex['unit'])
         rc = np.clip(ratio[chan], 0, ymax)

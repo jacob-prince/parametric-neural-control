@@ -6,10 +6,9 @@ Two principled forms:
 
   raw       adv_gap(df, y)             site-fixed-effects OLS `y ~ adv + C(site)`;
                                        p from the exact within-site paired Wilcoxon
-                                       over per-site family means (n = sites) —
-                                       the design is balanced, so the FE coefficient
+                                       over per-site family means (n = sites) - the design is balanced, so the FE coefficient
                                        equals the plain family-mean gap.
-  adjusted  adv_gap(df, y, covars)     ANCOVA `y ~ adv + covars + C(site)` — the
+  adjusted  adv_gap(df, y, covars)     ANCOVA `y ~ adv + covars + C(site)` - the
                                        covariate enters the model jointly (residualize-
                                        then-test is only valid when family and covariate
                                        are uncorrelated); p from site-clustered SEs.
@@ -18,8 +17,7 @@ partial_residuals() produces DISPLAY values consistent with the ANCOVA: covariat
 site effects removed with coefficients from the joint fit (model structure held in the
 model, so family signal is not absorbed into the covariate slope).
 
-Covariates here (synthesis-hp regime, encoding-axis alignment) are post-treatment —
-properties produced by or selected in response to the trained model — so the adjusted
+Covariates here (synthesis-hp regime, encoding-axis alignment) are post-treatment - properties produced by or selected in response to the trained model - so the adjusted
 gap is a SENSITIVITY analysis ("the advantage is not explained by X"), not confound
 removal.
 """

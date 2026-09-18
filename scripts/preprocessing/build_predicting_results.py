@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""S49 predicting_summary — compute every number, cache to preproc_data/sup_predicting_results.pkl.
+"""S49 predicting_summary - compute every number, cache to preproc_data/sup_predicting_results.pkl.
 
 PORTED 2026-08-15 verbatim from take8/supplementary/scripts/build_predicting_results.py so the
 S49 pipeline is self-contained in take9 (paths only; analysis unchanged). Reads
@@ -10,7 +10,7 @@ PORTED 2026-08-08 from supplementary/SX_predicting/scripts/compute.py (verbatim 
 S54 pipeline lives in supplementary/ proper; output name now matches what sup_predicting_summary.py
 reads directly (no manual copy step). Spectral CoV AND spectral PR (= 111/(1+CoV^2), exact
 identity over the same 1:112 band, since fig9_master's cv is SD/mean over those 111 bins) are
-BOTH first-class predictor groups — leaderboard, best-subset, and Shapley. PR is a NONLINEAR
+BOTH first-class predictor groups - leaderboard, best-subset, and Shapley. PR is a NONLINEAR
 monotone transform of CoV, so carrying both lets the linear models capture that curvature.
 The former GRADSUM=pr variant build (predicting_results_pr.pkl / figS54b) is retired.
 
@@ -89,12 +89,12 @@ ALLCOLS = sorted({c for _, cs in RANK for c in cs})
 
 
 def residualize(df, models):
-    """Return a family sub-frame with SITE-residualized OUTCOMES and RAW predictors — exactly fig6's
+    """Return a family sub-frame with SITE-residualized OUTCOMES and RAW predictors - exactly fig6's
     site estimator: correlate the raw predictor against the control outcome after subtracting the
     per-site mean over the 9 trained models (excl Untrained) from the outcome only. The 10- and 7-model
     families share this one 9-trained reference (resid9). Predictors are left raw (not residualized), so a
     predictor's site r attenuates by its between-site variance fraction and site-constant predictors read
-    ~0 — matching fig6 exactly. (Switched 2026-07-28 to fig6's estimator; figS47 still uses within-site.)"""
+    ~0 - matching fig6 exactly. (Switched 2026-07-28 to fig6's estimator; figS47 still uses within-site.)"""
     d = df[df.model.isin(models)].copy()
     ref = df[df.model != 'AlexNet_training_seed_01']               # 9 trained models = resid9 reference
     for oc, _ in OUTCOMES:
@@ -311,7 +311,7 @@ def main():
         df = df[df.model != 'AlexNet_training_seed_01'].reset_index(drop=True)
         print('EXCLUDE_UNTRAINED=1: Untrained dropped; primary family = 9 trained models')
     # both gradient summaries as first-class predictors (PR = exact identity over the
-    # same 1:112 band, 111 bins, population-SD CoV — verified vs profiles)
+    # same 1:112 band, 111 bins, population-SD CoV - verified vs profiles)
     df['grad_cov'] = df['cv']
     df['grad_pr'] = 111.0 / (1.0 + df['cv'] ** 2)
     # control-phase encoding r: recomputed over held-out re-presented images only,

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Supp. Fig. — Accentuation sweeps in the read-out-aligned embedding.
+"""Supp. Fig. - Accentuation sweeps in the read-out-aligned embedding.
 
 SPLIT 2/2 of the old axis-alignment figure (take7 figS09 panel E): the per-model
 sweep gallery in the Fig 3A-style readout-aligned embedding. 4x5 grid:
 rows 1-2 = most representative channel per model, rows 3-4 = most axis-aligned
-channel per model — all 10 seed sweeps each. The vertical direction is the
+channel per model - all 10 seed sweeps each. The vertical direction is the
 encoding axis (teal); the horizontal + depth directions are the top two off-axis
 PCs (Fig 3A-style 3D projection; the third off-axis component recedes into depth).
 
@@ -56,8 +56,7 @@ def exemplar_bounds(ex):
 
 
 def draw_exemplar(ax, ex, xlim, ylim):
-    """Draw one cell's 10 sweeps in the given (shared-scale) window. No title —
-    model names are placed at a common y in main() so the top dots align."""
+    """Draw one cell's 10 sweeps in the given (shared-scale) window. No title - model names are placed at a common y in main() so the top dots align."""
     cx, cy = ex['cloud_x'], ex['cloud_y']
     cresp = ex['cloud_resp_spk']
     hull = np.column_stack([cx, cy])[ex['hull_idx']]
@@ -118,7 +117,7 @@ def main(out_dir):
     FIG_W, FIG_H = FIG_W_MM * MM, FIG_H_MM * MM      # inches, for physical-square panel math
     fig = plt.figure(figsize=(FIG_W, FIG_H), facecolor=FIG_FACECOLOR)
 
-    # 4x5 grid — rows 1-2 representative, rows 3-4 most-aligned
+    # 4x5 grid - rows 1-2 representative, rows 3-4 most-aligned
     ncol = 5
     L_, Rt, gap_c = 0.055, 0.985, 0.012
     pw = (Rt - L_ - (ncol - 1) * gap_c) / ncol

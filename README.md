@@ -26,11 +26,11 @@ Ten deep networks were each fitted to the same neurons in five macaques, then as
 
 ## What's inside
 
-- **Feature accentuation** — gradient-based synthesis that moves a seed image along a fitted encoding axis to hit a target level, in a Fourier-parameterised, augmentation-robust image space (`scripts/synthesis/`, `notebooks/demos/02`).
-- **Controversial accentuation** — the same machinery with an objective of the form *model A up, model B down*, so two models disagree maximally about one image (`notebooks/demos/03`).
-- **Encoding-model fitting** — layer-wise feature hooks, GPU PCA, ridge regression and the per-site layer-selection rule used in the paper (`core/`, `neural_regress/`, `notebooks/demos/01`).
-- **Adversarial sensitivity and gradient spectra** — the two model properties the paper links to control success: how far a small pixel perturbation can move a readout, and how the readout's input gradient is distributed over spatial frequency (`scripts/adversarial/`, `scripts/gradients/`, `notebooks/demos/04-05`).
-- **Every figure of the paper** — 6 main + 49 supplementary, as scripts and as notebooks, rendered from the released data (`figures/`, `notebooks/figures/`).
+- **Feature accentuation** - gradient-based synthesis that moves a seed image along a fitted encoding axis to hit a target level, in a Fourier-parameterised, augmentation-robust image space (`scripts/synthesis/`, `notebooks/demos/02`).
+- **Controversial accentuation** - the same machinery with an objective of the form *model A up, model B down*, so two models disagree maximally about one image (`notebooks/demos/03`).
+- **Encoding-model fitting** - layer-wise feature hooks, GPU PCA, ridge regression and the per-site layer-selection rule used in the paper (`core/`, `neural_regress/`, `notebooks/demos/01`).
+- **Adversarial sensitivity and gradient spectra** - the two model properties the paper links to control success: how far a small pixel perturbation can move a readout, and how the readout's input gradient is distributed over spatial frequency (`scripts/adversarial/`, `scripts/gradients/`, `notebooks/demos/04-05`).
+- **Every figure of the paper** - 6 main + 49 supplementary, as scripts and as notebooks, rendered from the released data (`figures/`, `notebooks/figures/`).
 
 <div align="center">
 <img src="docs/assets/sweep_cake.gif" width="240" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
@@ -77,12 +77,18 @@ The core of demo 02, in a few lines:
 import numpy as np
 from notebooks.demos._demo_utils import EncodingObjective, feature_accentuation, load_image01, stimulus_path
 
-obj = EncodingObjective('resnet50_robust', monkey='red', unit=9)      # backbone -> layer -> PCA -> readout
-seed = load_image01(stimulus_path('shared0850_nsd61798.png'), size=256)
-lo, hi = obj.stats['q01_resp'], obj.stats['q99_resp']                  # this site's natural response range
+# A fitted encoding model as a differentiable function of the image: backbone -> layer -> PCA -> readout.
+obj = EncodingObjective('resnet50_robust', monkey='red', unit=9)
 
-sweep = [feature_accentuation(obj, seed, target_level=t, image_size=256, total_steps=300)['image']
-         for t in np.linspace(lo - 0.25 * (hi - lo), hi + 0.5 * (hi - lo), 11)]
+# One of the held-out natural images used as accentuation seeds in the paper.
+seed = load_image01(stimulus_path('shared0850_nsd61798.png'), size=256)
+
+# Target levels span the site's natural response range (1st to 99th percentile), extended at both ends.
+lo, hi = obj.stats['q01_resp'], obj.stats['q99_resp']
+levels = np.linspace(lo - 0.25 * (hi - lo), hi + 0.5 * (hi - lo), 11)
+
+# Each run nudges the seed until the model's predicted response reaches the target (reduced settings here).
+sweep = [feature_accentuation(obj, seed, target_level=t, image_size=256, total_steps=300)['image'] for t in levels]
 ```
 
 `scripts/synthesis/` holds the production synthesiser as we ran it (with GPUs and 6000 steps), `scripts/encoding/` the fitting and layer-selection code, `scripts/adversarial/` and `scripts/gradients/` the analyses behind Figures 5–6. Each folder has a README with inputs, outputs and hardware needs.
@@ -129,9 +135,9 @@ How the figures are verified against the submitted manuscript, how the caches ar
 
 ## 🔗 Related
 
-- [Horama](https://github.com/serre-lab/Horama) — the feature-visualisation library the accentuation engine builds on (MACO, Fourier parameterisation)
+- [Horama](https://github.com/serre-lab/Horama) - the feature-visualisation library the accentuation engine builds on (MACO, Fourier parameterisation)
 - [Feature accentuation](https://arxiv.org/abs/2402.10039) (Hamblin et al., 2024) and [MACO](https://arxiv.org/abs/2306.06805) (Fel et al., 2023)
-- [circuit_toolkit](https://github.com/PonceLab/circuit_toolkit) — the feature-hook utilities vendored in `core/`
+- [circuit_toolkit](https://github.com/PonceLab/circuit_toolkit) - the feature-hook utilities vendored in `core/`
 
 ## Authors
 
