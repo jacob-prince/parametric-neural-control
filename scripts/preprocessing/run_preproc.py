@@ -356,7 +356,10 @@ def write_manifest(cfg):
                                 controversial_nc_dir=os.path.relpath(CONTROV_DIR, DATA_ROOT),
                                 controversial_h5=os.path.join('brain_data_controversial',
                                 'vvs_accentuate_day3_normalize_red_20250123-20250126.hdf5')),
-                    outputs=sorted(os.path.basename(p) for p in glob.glob(os.path.join(CACHE, '*.pkl'))))
+                    # only this script's products (the cache dir may hold other builders' files)
+                    outputs=sorted(f for f in os.listdir(CACHE) if f.endswith('.pkl') and (
+                        f.split('_')[0] in ('brain', 'encoding', 'predictions', 'exclusions')
+                        or f in ('stimuli.pkl', 'controversial.pkl'))))
     json.dump(manifest, open(os.path.join(CACHE, 'MANIFEST.json'), 'w'), indent=2)
     print(f"  MANIFEST.json written (git {git[:8] if git else 'n/a'})")
 
