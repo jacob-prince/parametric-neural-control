@@ -10,13 +10,16 @@ Site: Monkey R, aIT unit 9 (manuscript label "channel 2"), ResNet50.
      distribution (right), sharing the green encoding axis.
   b  Accentuated image sweeps — 4 seeds x 7 levels, suppress -> seed -> drive.
   c  Encoding generalization: phase 1 (held-out natural, encoding phase) and
-     phase 2 (shared natural stims re-measured in the control session).
+     phase 2 (held-out calibration images re-presented in the control session;
+     P2SET selects the re-test set, canonical = 'heldout').
   d  Parametric neural control: predicted vs measured on accentuated stims.
 
 Data:
   * Panels c/d scatter stats come from pnc.preproc.loader:
       c-phase1 -> L.encoding_cloud('red',9,'resnet50','test')
-      c-phase2 -> L.anchor_cloud('red',9,'resnet50')
+      c-phase2 -> control-session responses to the re-presented calibration images that
+                  pass _p2_keep (held-out validation items), predicted by the encoding cache;
+                  built in this script, not via L.anchor_cloud (which uses every anchor)
       d        -> L.control_cloud('red',9,'resnet50')
     Pearson r + OLS slope are fit in the loader's z-space; plotting is in spk/s*
     via the per-unit mu/sigma from the brain cache.

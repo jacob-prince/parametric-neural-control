@@ -24,7 +24,7 @@ Three analyses, each run for the 10-model family and the 7-model subset (drops t
 adversarially-trained models + the untrained model), for control slope and control r:
   1. single-predictor CV R² ranking (shared slope) -> is gradient flatness the best single predictor?
   2. best per-monkey-slopes model (forward-selected) CV R² vs the split-half explainable ceiling.
-  3. Shapley/LMG partition of CV R² across the 8 site-varying predictors.
+  3. Shapley/LMG partition of CV R² across the site-varying predictor groups listed in GROUPS.
 
 Plus the site-mean supplement numbers (per-site mean control vs reliability / calibration skew).
 
@@ -54,7 +54,8 @@ MK = ['red', 'paul', 'venus', 'leap', 'three0']
 EXTREMES = ['resnet50_robust', 'clipag_vitb32', 'AlexNet_training_seed_01']   # 2 adv-trained + untrained
 
 # ---- predictor definitions --------------------------------------------------
-# 8 site-varying groups used in the Shapley partition (label -> columns).
+# Site-varying groups used in the Shapley partition (label -> columns); the count is len(GROUPS)
+# (ten spectral/encoding/synthesis/readout/attack descriptors plus one ImageNet group).
 GROUPS = [
     ('spectral CoV', ['grad_cov']),                     # CoV of the encoding-gradient power spectrum
     ('spectral PR', ['grad_pr']),                       # participation ratio = 111/(1+CoV^2), same band
@@ -237,7 +238,7 @@ def ceiling_resid(models, kind, mk=None, n_splits=200, seed=0):
     return float(np.mean(rels)), float(np.std(rels))
 
 
-# ---- Shapley over the 8 site-varying groups ---------------------------------
+# ---- Shapley over the site-varying groups (len(GROUPS)) -----------------------
 def shapley(d, y):
     # subset CV R² floored at -1 ("worse than the null by more than the total variance"):
     # small within-monkey slices can produce degenerate out-of-fold fits for near-collinear
@@ -258,7 +259,7 @@ def shapley(d, y):
 # ---- best per-monkey model: EXHAUSTIVE best-subset over all 2^8 predictor subsets ----
 def best_model(d, y):
     """Provably-best predictor combination for the current predictor set: search every non-empty
-    subset of the 8 site-varying predictors, score each by per-monkey-slopes cross-validated R²,
+    subset of the site-varying predictors in GROUPS, score each by per-monkey-slopes cross-validated R²,
     keep the maximum (ascending subset size, so ties resolve to the more parsimonious model). Re-run
     the winner at full repeats for the reported CV R² and the panel-B out-of-fold scatter. Because it
     ranges over GNAMES, the selection is automatically re-estimated whenever a predictor changes."""
