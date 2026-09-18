@@ -27,6 +27,7 @@ cd parametric-neural-control
 conda env create -f environment.yml      # the reference environment (exact pins, CPU only)
 conda activate pnc
 pip install -e .
+python -m ipykernel install --user --name pnc --display-name "Python 3 (pnc)"   # kernel for the notebooks
 ```
 
 `environment.yml` pins the exact library versions the manuscript figures were rendered with
@@ -80,7 +81,7 @@ backend, private matplotlib config, hash seed 0, single-threaded BLAS), writes
 `--check`, compares the RGBA pixel array of each render with `tests/reference/figure_pixel_hashes.json`.
 
 Saved PNGs are border-trimmed exactly as the manuscript build trims them (`pnc/trim.py`), so a
-render *is* the manuscript file; pass `--no-trim` for the raw matplotlib canvas.
+render *is* the manuscript file; set `PNC_NO_TRIM=1` for the raw matplotlib canvas.
 
 `notebooks/figures/` has one notebook per figure (55) that calls the same `main()` and shows
 the result with its caption (`figures/CAPTIONS.md`).

@@ -64,14 +64,14 @@ def test_figure_matches_manuscript(stem, module, extra, out_dir, reference_env, 
 
 @pytest.mark.pixel
 def test_untrimmed_render_trims_to_the_trimmed_output(out_dir, cache):
-    """save_fig(do_trim=False) followed by pnc.trim.trim gives the same pixels as the default."""
+    """A PNC_NO_TRIM=1 render followed by pnc.trim.trim gives the same pixels as the default."""
     from pnc import trim
     stem, module, extra = ITEMS[3]  # divergence: fast, tight-bbox
     rec = render_all.render(stem, module, extra, out_dir, render_all.render_env(out_dir))
     assert rec['returncode'] == 0
     raw_dir = out_dir / 'raw'
-    env = render_all.render_env(raw_dir)
-    r = subprocess.run([sys.executable, '-m', module, '--out', str(raw_dir), '--no-trim', *extra], cwd=str(REPO),
+    env = dict(render_all.render_env(raw_dir), PNC_NO_TRIM='1')
+    r = subprocess.run([sys.executable, '-m', module, '--out', str(raw_dir), *extra], cwd=str(REPO),
                        env=env, text=True, capture_output=True)
     assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
     trim.trim(raw_dir / f'{stem}.png')

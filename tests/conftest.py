@@ -9,10 +9,12 @@ preprocessed_data before and after the run.
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import pickle
 import platform
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -164,3 +166,23 @@ def preprocessed_data_is_read_only(paths):
     yield
     after = _tree_digest(paths['cache'])
     assert before == after, 'the test session modified preprocessed_data/'
+
+
+@pytest.fixture(scope='session')
+def pnc_kernel():
+    """Name of a Jupyter kernel that runs THIS interpreter. A user-level 'python3' kernelspec
+    (~/Library/Jupyter or ~/.local/share/jupyter) would otherwise take precedence and execute
+    the notebooks under a different Python; JUPYTER_DATA_DIR overrides that lookup."""
+    tmp = tempfile.mkdtemp(prefix='pnc-kernel-')
+    spec = Path(tmp) / 'kernels' / 'pnc'
+    spec.mkdir(parents=True)
+    (spec / 'kernel.json').write_text(json.dumps({
+        'argv': [sys.executable, '-m', 'ipykernel_launcher', '-f', '{connection_file}'],
+        'display_name': 'Python 3 (pnc)', 'language': 'python'}))
+    old = os.environ.get('JUPYTER_DATA_DIR')
+    os.environ['JUPYTER_DATA_DIR'] = tmp
+    yield 'pnc'
+    if old is None:
+        os.environ.pop('JUPYTER_DATA_DIR', None)
+    else:
+        os.environ['JUPYTER_DATA_DIR'] = old

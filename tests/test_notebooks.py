@@ -24,13 +24,13 @@ DEMO_NBS = sorted((REPO / 'notebooks' / 'demos').glob('*.ipynb'))
 ORACLE = json.loads((REPO / 'tests' / 'reference' / 'figure_pixel_hashes.json').read_text())['figures']
 
 
-def _execute(path, out_dir, timeout=1800):
+def _execute(path, out_dir, kernel, timeout=1800):
     nb = nbformat.read(path, as_version=4)
     env_backup = dict(os.environ)
     os.environ.update({k: v for k, v in render_all.render_env(out_dir).items() if k != 'PATH'})
     os.environ['PNC_OUTPUT'] = str(out_dir)
     try:
-        client = nbclient.NotebookClient(nb, kernel_name=os.environ.get('PNC_KERNEL', 'python3'), timeout=timeout,
+        client = nbclient.NotebookClient(nb, kernel_name=kernel, timeout=timeout,
                                          resources={'metadata': {'path': str(REPO)}})
         client.execute()
     finally:
@@ -41,9 +41,9 @@ def _execute(path, out_dir, timeout=1800):
 @pytest.mark.notebooks
 @pytest.mark.pixel
 @pytest.mark.parametrize('path', FIG_NBS, ids=[p.stem for p in FIG_NBS])
-def test_figure_notebook_reproduces_manuscript_png(path, tmp_path_factory, cache, reference_env):
+def test_figure_notebook_reproduces_manuscript_png(path, tmp_path_factory, cache, reference_env, pnc_kernel):
     out_dir = tmp_path_factory.mktemp('nb')
-    _execute(path, out_dir)
+    _execute(path, out_dir, pnc_kernel)
     stem = re.sub(r'^\d\d_', '', path.stem)
     png = out_dir / 'figures' / f'{stem}.png'
     assert png.exists(), f'{path.name} did not write {png}'
@@ -58,5 +58,5 @@ def test_figure_notebook_reproduces_manuscript_png(path, tmp_path_factory, cache
 @pytest.mark.notebooks
 @pytest.mark.slow
 @pytest.mark.parametrize('path', DEMO_NBS, ids=[p.stem for p in DEMO_NBS])
-def test_demo_notebook_runs(path, tmp_path_factory, source, cache):
-    _execute(path, tmp_path_factory.mktemp('demo'), timeout=3600)
+def test_demo_notebook_runs(path, tmp_path_factory, source, cache, pnc_kernel):
+    _execute(path, tmp_path_factory.mktemp('demo'), pnc_kernel, timeout=3600)

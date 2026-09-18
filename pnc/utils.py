@@ -351,8 +351,8 @@ def save_fig(fig, path_no_ext, dpi=DPI, bbox_inches='tight', do_trim=True, pdf=F
     """Save `fig` as <path_no_ext>.png and return the path.
 
     The PNG is border-trimmed in place (pnc.trim.trim) so that the file on disk is
-    pixel-identical to the manuscript copy; pass do_trim=False for the raw matplotlib
-    canvas. pdf=True also writes <path_no_ext>.pdf (untrimmed).
+    pixel-identical to the manuscript copy; pass do_trim=False, or set PNC_NO_TRIM=1 in the
+    environment, for the raw matplotlib canvas. pdf=True also writes <path_no_ext>.pdf (untrimmed).
     """
     output_base = os.path.abspath(os.fspath(path_no_ext))
     os.makedirs(os.path.dirname(output_base), exist_ok=True)
@@ -360,7 +360,7 @@ def save_fig(fig, path_no_ext, dpi=DPI, bbox_inches='tight', do_trim=True, pdf=F
     fig.savefig(png, dpi=dpi, facecolor=FIG_FACECOLOR, bbox_inches=bbox_inches)
     if pdf:
         fig.savefig(output_base + '.pdf', facecolor=FIG_FACECOLOR, bbox_inches=bbox_inches)
-    if do_trim:
+    if do_trim and os.environ.get('PNC_NO_TRIM', '').strip().lower() not in {'1', 'true', 'yes'}:
         trim(png)
     return png
 

@@ -5,7 +5,7 @@
     python notebooks/_make_figure_notebooks.py --check    # exit 1 if any committed notebook is stale
 
 Each notebook has a fixed structure and fixed cell ids, so regenerating is a no-op diff:
-title + caption (from figures/CAPTIONS.md), a setup cell that checks the data are present,
+title + caption (from figures/CAPTIONS.md), a setup cell that checks the data are present (kernel 'pnc': see README, Install),
 one cell that calls the figure script's main(), and one that displays the PNG. Notebooks are
 committed without outputs (see tests/test_notebooks_clean.py).
 """
@@ -22,7 +22,7 @@ sys.path.insert(0, str(REPO))
 from pnc import manifest  # noqa: E402
 
 OUT = REPO / 'notebooks' / 'figures'
-KERNEL = dict(name='python3', display_name='Python 3 (pnc)', language='python')
+KERNEL = dict(name='pnc', display_name='Python 3 (pnc)', language='python')
 
 
 def captions():
@@ -60,10 +60,13 @@ def build(nb_stem, stem, module, kwargs, cap):
                           f'Rendered by `{module.replace(".", "/")}.py`; the PNG written below is pixel-identical '
                           f'to the manuscript file `{stem}.png` in the reference environment (see README, '
                           f'"Pixel-exact policy").', id=f'{stem}-title'),
-        new_code_cell('%matplotlib inline\n'
-                      'import os, sys\n'
+        new_code_cell('import os, sys\n'
                       'from pathlib import Path\n'
+                      "for _v in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS'):\n"
+                      "    os.environ.setdefault(_v, '1')          # multithreaded blas + torch can crash the kernel on macos\n"
                       "os.environ.setdefault('KMP_DUPLICATE_LIB_OK', 'TRUE')\n"
+                      "os.environ['MPLBACKEND'] = 'Agg'\n"
+                      "import matplotlib; matplotlib.use('Agg'); matplotlib.rcdefaults()   # jupyter's inline backend pre-sets rcParams; start from matplotlib defaults like the scripts do\n"
                       "REPO = Path.cwd() if (Path.cwd() / 'pnc').exists() else Path.cwd().parents[1]\n"
                       'sys.path.insert(0, str(REPO))\n'
                       'from pnc import paths\n'
