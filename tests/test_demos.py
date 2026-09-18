@@ -17,12 +17,15 @@ def _cells(path):
 
 
 @pytest.mark.parametrize('path', DEMOS, ids=[p.stem for p in DEMOS])
-def test_demo_setup_cell_is_kernel_safe(path):
+def test_demo_setup_cell_uses_the_shared_helper(path):
+    """The kernel-safety boilerplate (thread pinning, Agg backend, data check) lives in
+    notebooks/nbsetup.py; every demo's first code cell must go through it and nothing else."""
     cells = _cells(path)
     first = next(c for c in cells if c['cell_type'] == 'code')
     src = ''.join(first['source'])
-    assert 'OMP_NUM_THREADS' in src and 'KMP_DUPLICATE_LIB_OK' in src
-    assert 'paths.require' in ''.join(''.join(c['source']) for c in cells if c['cell_type'] == 'code')
+    assert 'from nbsetup import setup' in src and 'setup(' in src
+    assert 'OMP_NUM_THREADS' not in src and 'paths.require' not in src, f'{path.name}: boilerplate duplicated inline'
+    assert '%matplotlib inline' not in src, f'{path.name}: the inline backend would undo the Agg selection'
     assert cells[0]['cell_type'] == 'markdown' and ''.join(cells[0]['source']).startswith('#')
 
 

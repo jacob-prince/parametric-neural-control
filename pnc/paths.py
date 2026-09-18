@@ -48,13 +48,18 @@ def frozen_inputs():
     return source_data() / 'frozen_inputs'
 
 
-def require(path, hint=None):
-    """Return `path` if it exists, else raise MissingDataError with a download hint."""
+def require(path, hint=None, tier=None):
+    """Return `path` if it exists, else raise MissingDataError with a download hint.
+
+    tier ('preprocessed' or 'source') names the download tier in the hint; when omitted it is
+    inferred from which data root the path lies under.
+    """
     path = Path(path)
     if not path.exists():
-        # name the download tier that owns this path, so the hint gives the right --tier
-        where = 'source_data' if str(path).startswith(str(source_data())) else 'preprocessed_data'
-        tier = 'source' if where == 'source_data' else 'preprocessed'
+        if tier is None:
+            # infer the tier from the root the path lies under (preprocessed first: the two roots may
+            # coincide in custom layouts, and a cache file must still name the preprocessed tier)
+            tier = 'preprocessed' if str(path).startswith(str(preprocessed_data())) else 'source'
         msg = (f"missing {path}\n  -> run `python data/download_data.py --tier {tier}`"
                + (f"\n  -> or {hint}" if hint else ''))
         raise MissingDataError(msg)
