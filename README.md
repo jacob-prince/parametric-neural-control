@@ -10,7 +10,7 @@ Everything in the paper can be rebuilt from this repository plus two data tiers 
 | what you want | what you need | command |
 |---|---|---|
 | every main and supplementary figure, pixel-identical to the submitted PNGs | `preprocessed_data/` (~0.5 GB) | `python figures/render_all.py --check` |
-| regenerate `preprocessed_data/` byte-for-byte from the raw inputs | `source_data/` (~25 GB) | `python scripts/preprocessing/build_all.py` |
+| regenerate `preprocessed_data/` byte-for-byte from the raw inputs | `source_data/` (~35 GB) | `python scripts/preprocessing/build_all.py` |
 | fit an encoding model, accentuate an image, run an attack, compute a gradient spectrum | `source_data/` | `notebooks/demos/` |
 | re-run the upstream GPU stages as we ran them | `source_data/` + a GPU + the full stimulus set | `scripts/` (see the README in each folder) |
 
@@ -53,7 +53,8 @@ already present with the right checksum is never re-downloaded or overwritten.
 demos: trial-level neural recordings (HDF5) for the five macaques, the post-hoc encoding-model
 predictions, layer-selection scores, accentuation configs, the cluster analysis outputs (attacks,
 gradient spectra), the calibration image set, the accentuated and controversial stimuli that
-appear in figures, the robust ResNet-50 backbone, and a small set of *frozen inputs* whose
+appear in figures (complete sweeps), the robust ResNet-50 backbone, the exported readouts of the
+two model-site pairs used by the demos, and a small set of *frozen inputs* whose
 producers cannot be re-run publicly (`source_data/frozen_inputs/PROVENANCE.md`). It does not
 include the complete set of 27,720 accentuated stimuli, the exported readout weights, or
 ImageNet-val; the scripts that need those are marked in `scripts/README.md`.
