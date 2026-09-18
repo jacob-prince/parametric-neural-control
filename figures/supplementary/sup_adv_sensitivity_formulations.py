@@ -3,8 +3,8 @@
 sensitivity correlates with control over the full model set, but the relationship vanishes
 once the adversarially-trained models are removed") replicates across every alternative
 formulation of adversarial sensitivity, under BOTH attack methods (each formulation is
-computed for PGD and, matched exactly, for single-step FGSM), while gradient spectral CoV
-survives.
+computed for PGD and, matched exactly, for single-step FGSM), while the gradient spectral
+participation ratio (PR) survives.
 
 Everything uses the exact main-figure recipe: sensitivity measured on held-out NSD images
 (never used to fit the readouts or as synthesis seeds), control slope site-residualized
@@ -12,7 +12,7 @@ against the 9 trained models' per-(monkey,channel) mean, raw predictor. Model le
 per-model means; exact p = full 7! permutation of model means. All displayed correlations
 are ORIENTED: each measure is multiplied by the sign of its own all-10 correlation (per
 level), so "keeps the full-set relationship" reads positive and a sign flip reads negative
-— this puts the sensitivity formulations and gradient spectral CoV on one common scale.
+— this puts the sensitivity formulations and gradient spectral PR on one common scale.
 
   a  adversarial-sensitivity formulations x {attack x model-subset}: oriented Pearson r
      with control slope at the model level then the site level, for {all 10 / 9 trained /
@@ -22,16 +22,17 @@ level), so "keeps the full-set relationship" reads positive and a sign flip read
      half). Black box = the main-figure default (PGD logAUC[0.125,16]).
   b  gradient spectral characteristics x {model-subset}, own panel (attack-independent, so
      no PGD/FGSM pairing), grouped concentration | location | low-freq emphasis. Black
-     box = gradient spectral CoV (the main-figure measure). NOTE: participation ratio is
-     an exact monotone transform of CoV (PR = n_bins / (1 + CoV^2)).
+     box = gradient spectral PR (the main-figure measure). NOTE: PR is an exact monotone
+     transform of the coefficient of variation (PR = n_bins / (1 + CoV^2)); --gradsum cv
+     renders the CoV-family companion.
   c  aligned exact-p strips (model then site level), segmented to match a and b: one-sided
      all-7!-relabeling p among the standard-trained 7, oriented to each measure's own
      all-10 direction.
 
 Reads cluster outputs (fig5_ext_heldout{,_lowextra}, fig5_ext_heldout_fgsm{,_lowextra},
 fig5_heldout_gradfreq) + preproc_data/{fig5_heldout_table.csv,
-sup_advform_heldout_descriptors.csv}. Flags: --outcome slope|r, --gradsum cv|pr (non-default
-variants get a filename tag). The per-formulation statistics table is written next to the
+sup_advform_heldout_descriptors.csv}. Flags: --outcome slope|r, --gradsum pr|cv (defaults
+slope, pr = the manuscript figure; non-default variants get a filename tag). The per-formulation statistics table is written next to the
 figure as sup_advform_stats<tag>.csv.
 """
 import os
