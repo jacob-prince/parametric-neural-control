@@ -58,3 +58,10 @@ def test_entry_point_shape(path):
     assert "if __name__ == '__main__':" in src or 'if __name__ == "__main__":' in src
     assert "'--out'" in src or '"--out"' in src
     assert "matplotlib.use('Agg')" in src or 'matplotlib.use("Agg")' in src or 'import matplotlib' not in src.split('main(')[0]
+
+
+def test_rendered_labels_keep_the_manuscript_dash():
+    """Two supplementary figures print 'Monkey R \\u2014 aIT' style labels; the character is part of the
+    submitted PNGs and must stay (it is written as an escape so text sweeps do not touch it)."""
+    for name in ('sup_control_reliability.py', 'sup_sweep_extremes.py'):
+        assert '\\u2014' in (REPO / 'figures' / 'supplementary' / name).read_text(), name

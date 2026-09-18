@@ -154,7 +154,7 @@ def main(out_dir):
             pt = gs[rowslot[(b, 0)], cmap_col[(0, 0)]].get_position(fig)
             pb = gs[rowslot[(b, len(chans) - 1)], cmap_col[(0, 0)]].get_position(fig)
             xlab = 0.015 if sd == 0 else pt.x0 - 0.052
-            fig.text(xlab, 0.5 * (pt.y1 + pb.y0), f'{TAG[mk]} - {REGION[mk]}',
+            fig.text(xlab, 0.5 * (pt.y1 + pb.y0), f'{TAG[mk]} \u2014 {REGION[mk]}',
                      rotation=90, ha='center', va='center', fontsize=FS_MONKEY,
                      fontweight='bold', color=MONKEY_COLORS[mk], fontfamily=FONT_FAMILY)
         # model names above each side's top row (spanning the model's 2 sub-columns)
