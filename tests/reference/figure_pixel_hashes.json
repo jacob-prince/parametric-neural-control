@@ -54,7 +54,7 @@
     4119,
     4
    ],
-   "sha256": "53ddbffbc86521bc9d2e8ad5789c8d2218f29f0862318543b1ef70a0f1fde990"
+   "sha256": "83559c5a30b8145025d7527527ded0b5e44602e348a63836840862e247729e63"
   },
   "benchmarking": {
    "kind": "main",
@@ -543,7 +543,7 @@
     4055,
     4
    ],
-   "sha256": "b8ce356ac0b1162c1da3ab38934830e6ed235fdeaf3dae45fa743f83d897d736"
+   "sha256": "48e5ad50b4424a0888a06e73d511b8370d05363c044b7d76679080339c34ce43"
   },
   "s40_adversarial_robustness": {
    "kind": "supplementary",
@@ -603,7 +603,7 @@
     4078,
     4
    ],
-   "sha256": "71e3c40ab062f89b7b497cdca26cb497cdadbc6cb900349eed545c522cdb2119"
+   "sha256": "9596661e708b09dbef92a1e8cb763f8e8579530bdd7a4dea113558e53f47089a"
   },
   "s45_concentration_image_robustness": {
    "kind": "supplementary",

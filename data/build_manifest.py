@@ -14,6 +14,7 @@ Packaging rules (Zenodo default limits: 100 files / 50 GB per record):
 The manifest never contains URLs: download_data.py resolves files from the record id.
 """
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -81,9 +82,13 @@ def main(argv=None):
         print(f'{name} ...', end=' ', flush=True)
         dst = args.archives / name
         if kind == 'file':
-            if dst.resolve() != src.resolve():
-                import shutil
-                shutil.copy2(src, dst)
+            # raw upload: the archive *is* the file; link rather than copy (no 2x disk cost)
+            if dst.is_symlink() or dst.exists():
+                dst.unlink()
+            try:
+                os.link(src.resolve(), dst)
+            except OSError:
+                os.symlink(src.resolve(), dst)
             members = None
         else:
             pattern = kind[5:] if kind.startswith('glob:') else None
