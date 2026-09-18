@@ -1,10 +1,9 @@
 <div align="center">
 
-# Parametric neural control
+# Parametric neural control differentiates top neural network models of primate visual cortex
 
-**Code, models and data for**<br>
-*Parametric neural control differentiates top neural network models of primate visual cortex*<br>
-Prince J.S.\*, Wang B.\*, Fel T., Jagadeesh A.V., Vaziri P.A., Alvarez G.A., Livingstone M.S. & Konkle T. (2026)
+Jacob S. Prince\*, Binxu Wang\*, Thomas Fel, Akshay V. Jagadeesh, Parisa A. Vaziri, George A. Alvarez, Margaret S. Livingstone & Talia Konkle<br>
+<sub>Harvard University · Kempner Institute · Harvard Medical School · 2026</sub>
 
 [![python](https://img.shields.io/badge/python-3.12-blue.svg)](environment.yml)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
