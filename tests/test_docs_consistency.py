@@ -32,14 +32,26 @@ def test_readme_commands_refer_to_existing_files():
     for rel in re.findall(r'`([\w./-]+/)`', text):
         if rel.split('/')[0] in code_dirs:            # data-tree paths (source_data/..., cluster_outputs/) are not in git
             assert (REPO / rel).is_dir(), rel
-    for name in ('environment.yml', 'pyproject.toml', 'requirements-scripts.txt', 'CITATION.cff', 'LICENSE'):
+    for rel in re.findall(r'src="([^"]+)"', text) + re.findall(r'\]\(([\w./-]+\.md)\)', text):
+        assert (REPO / rel).exists(), rel
+    for name in ('environment.yml', 'LICENSE'):
         assert name in text and (REPO / name).exists()
+    docs = (REPO / 'docs' / 'REPRODUCIBILITY.md').read_text()
+    for rel in re.findall(r'`python ([\w./-]+\.py)', docs):
+        assert (REPO / rel).exists(), rel
+    for name in ('pyproject.toml', 'requirements-scripts.txt', 'CITATION.cff'):
+        assert (REPO / name).exists()
 
 
 def test_readme_mentions_every_top_level_package():
-    text = (REPO / 'README.md').read_text()
+    text = (REPO / 'README.md').read_text() + (REPO / 'docs' / 'REPRODUCIBILITY.md').read_text()
     for d in ('pnc/', 'core/', 'neural_regress/', 'figures/', 'notebooks/', 'scripts/', 'data/', 'tests/'):
         assert d in text, d
+
+
+def test_readme_gifs_are_small_enough_for_github():
+    for gif in (REPO / 'docs' / 'assets').glob('*.gif'):
+        assert gif.stat().st_size < 6_000_000, gif.name
 
 
 def test_citation_and_zenodo_metadata_agree():

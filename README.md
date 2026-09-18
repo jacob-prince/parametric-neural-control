@@ -1,187 +1,135 @@
-# parametric-neural-control
+<div align="center">
 
-Code, data pipeline and figure sources for
+<img src="figures/assets/schematic_fig1.png" width="720" alt="Closed-loop framework: calibrate, fit encoding models, accentuate images along the encoding axis, test the predictions back in the brain">
 
-> Prince J.S.\*, Wang B.\*, Fel T., Jagadeesh A.V., Vaziri P.A., Alvarez G.A., Livingstone M.S. & Konkle T. (2026).
-> **Parametric neural control differentiates top neural network models of primate visual cortex.**
+# Parametric neural control
 
-Everything in the paper can be rebuilt from this repository plus two data tiers hosted on Zenodo:
+**Code, models and data for**
+*Parametric neural control differentiates top neural network models of primate visual cortex*
+Prince J.S.\*, Wang B.\*, Fel T., Jagadeesh A.V., Vaziri P.A., Alvarez G.A., Livingstone M.S. & Konkle T. (2026)
 
-| what you want | what you need | command |
-|---|---|---|
-| every main and supplementary figure, pixel-identical to the submitted PNGs | `preprocessed_data/` (~0.5 GB) | `python figures/render_all.py --check` |
-| regenerate `preprocessed_data/` byte-for-byte from the raw inputs | `source_data/` (~35 GB) | `python scripts/preprocessing/build_all.py` |
-| fit an encoding model, accentuate an image, run an attack, compute a gradient spectrum | `source_data/` | `notebooks/demos/` |
-| re-run the upstream GPU stages as we ran them | `source_data/` + a GPU + the full stimulus set | `scripts/` (see the README in each folder) |
+[![python](https://img.shields.io/badge/python-3.12-blue.svg)](environment.yml)
+[![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![data](https://img.shields.io/badge/data-zenodo-orange.svg)](#data)
+[![notebooks](https://img.shields.io/badge/notebooks-61-lightgrey.svg)](notebooks)
 
-Data record: Zenodo DOI **10.5281/zenodo.YYYYYYY** (placeholder until the deposit is published).
-Software archive of this release: Zenodo DOI **10.5281/zenodo.XXXXXXX** (placeholder).
+</div>
 
----
+Ten deep networks were each fitted to the same neurons in five macaques, then asked to do something harder than predicting responses to natural images: **synthesize images that push a neuron's firing to a chosen level, up or down, in small steps**. This repository lets you rebuild every figure of the paper, run the full analysis pipeline, and use the method on your own encoding models.
 
-## 1. Install
+<div align="center">
+<img src="docs/assets/models_grid.gif" width="850" alt="The same seed image accentuated by ten encoding models, from suppress to drive">
+<br><sub>One seed image, one anterior-IT site, ten encoding models. Each model is steered along its own encoding axis from the lowest to the highest target response. The adversarially trained models (bottom right) produce coherent face-like drivers; most others produce texture.</sub>
+</div>
+
+## What's inside
+
+- **Feature accentuation** — gradient-based synthesis that moves a seed image along a fitted encoding axis to hit a target level, in a Fourier-parameterised, augmentation-robust image space (`scripts/synthesis/`, `notebooks/demos/02`).
+- **Controversial accentuation** — the same machinery with an objective of the form *model A up, model B down*, so two models disagree maximally about one image (`notebooks/demos/03`).
+- **Encoding-model fitting** — layer-wise feature hooks, GPU PCA, ridge regression and the per-site layer-selection rule used in the paper (`core/`, `neural_regress/`, `notebooks/demos/01`).
+- **Adversarial sensitivity and gradient spectra** — the two model properties the paper links to control success: how far a small pixel perturbation can move a readout, and how the readout's input gradient is distributed over spatial frequency (`scripts/adversarial/`, `scripts/gradients/`, `notebooks/demos/04-05`).
+- **Every figure of the paper** — 6 main + 49 supplementary, as scripts and as notebooks, rendered from the released data (`figures/`, `notebooks/figures/`).
+
+<div align="center">
+<img src="docs/assets/sweep_cake.gif" width="300" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
+<img src="docs/assets/sweep_bird.gif" width="300" alt="accentuation sweep of a bird image">
+<br><sub>Two accentuation sweeps of the robust ResNet-50 for the same aIT site: eleven target levels from suppress to drive.</sub>
+</div>
+
+## 🚀 Getting started
 
 ```bash
 git clone https://github.com/jacob-prince/parametric-neural-control.git
 cd parametric-neural-control
-conda env create -f environment.yml      # the reference environment (exact pins, CPU only)
-conda activate pnc
+conda env create -f environment.yml && conda activate pnc
 pip install -e .
-python -m ipykernel install --user --name pnc --display-name "Python 3 (pnc)"   # kernel for the notebooks
+python -m ipykernel install --user --name pnc --display-name "Python 3 (pnc)"
 ```
 
-`environment.yml` pins the exact library versions the manuscript figures were rendered with
-(Python 3.12.12, numpy 2.4.1, matplotlib 3.10.8, Pillow 12.1.0, freetype 2.14.1, pandas 3.0.0,
-scipy 1.17.0, torch 2.10.0 CPU). Any recent Python with the packages in `pyproject.toml` will
-run the code; only pixel-exactness needs the pins (section 5).
-
-The GPU stages under `scripts/` need extra packages: `pip install -r requirements-scripts.txt`.
-
-## 2. Download the data
+Fetch the data you need (see [Data](#data)) and render a figure:
 
 ```bash
-python data/download_data.py --tier preprocessed    # ~0.5 GB: caches + the 55 manuscript PNGs
-python data/download_data.py --tier source          # ~25 GB: raw inputs (Tier A, see below)
-python data/download_data.py --verify-only          # re-check what is on disk
+python data/download_data.py --tier preprocessed      # ~0.5 GB: everything the figures read
+python figures/render_all.py --only divergence        # -> outputs/figures/divergence.png
+python figures/render_all.py                          # all 55 figures
 ```
 
-Files land in `preprocessed_data/` and `source_data/` (override with `PNC_PREPROCESSED_DATA`,
-`PNC_SOURCE_DATA`; outputs go to `outputs/`, override with `PNC_OUTPUT`). Downloads resume,
-every file is checked against the SHA-256 recorded in `data/zenodo_manifest.json`, and a file
-already present with the right checksum is never re-downloaded or overwritten.
+Or open a notebook: `notebooks/figures/04_divergence.ipynb` calls the same function and shows the figure with its caption.
 
-**Tier A source data** is everything needed to regenerate `preprocessed_data/` and to run the
-demos: trial-level neural recordings (HDF5) for the five macaques, the post-hoc encoding-model
-predictions, layer-selection scores, accentuation configs, the cluster analysis outputs (attacks,
-gradient spectra), the calibration image set, the accentuated and controversial stimuli that
-appear in figures (complete sweeps), the robust ResNet-50 backbone, the exported readouts of the
-two model-site pairs used by the demos, and a small set of *frozen inputs* whose
-producers cannot be re-run publicly (`source_data/frozen_inputs/PROVENANCE.md`). It does not
-include the complete set of 27,720 accentuated stimuli, the exported readout weights, or
-ImageNet-val; the scripts that need those are marked in `scripts/README.md`.
+## 🔬 Use the method
 
-## 3. Reproduce the figures
+The demos in `notebooks/demos/` run on a CPU at reduced scale and carry a `FULL_SCALE` switch with the paper's settings:
+
+| notebook | what it does |
+|---|---|
+| `00_data_tour` | the released recordings, predictions and caches, and the loader API |
+| `01_fit_encoding_model` | features → PCA → RidgeCV over candidate layers; the layer-selection rule |
+| `02_feature_accentuation` | wrap a fitted readout as a differentiable objective; sweep a seed image to 11 target levels; MACO superstimulus |
+| `03_controversial_accentuation` | steer two models apart on one image |
+| `04_adversarial_robustness` | PGD swing of the encoding axis, compared with the shipped cluster attacks |
+| `05_gradient_spectra` | input-gradient maps, radial Fourier profile, participation ratio |
+
+The core of demo 02, in a few lines:
+
+```python
+import numpy as np
+from notebooks.demos._demo_utils import EncodingObjective, feature_accentuation, load_image01, stimulus_path
+
+obj = EncodingObjective('resnet50_robust', monkey='red', unit=9)      # backbone -> layer -> PCA -> readout
+seed = load_image01(stimulus_path('shared0850_nsd61798.png'), size=256)
+lo, hi = obj.stats['q01_resp'], obj.stats['q99_resp']                  # this site's natural response range
+
+sweep = [feature_accentuation(obj, seed, target_level=t, image_size=256, total_steps=300)['image']
+         for t in np.linspace(lo - 0.25 * (hi - lo), hi + 0.5 * (hi - lo), 11)]
+```
+
+`scripts/synthesis/` holds the production synthesiser as we ran it (with GPUs and 6000 steps), `scripts/encoding/` the fitting and layer-selection code, `scripts/adversarial/` and `scripts/gradients/` the analyses behind Figures 5–6. Each folder has a README with inputs, outputs and hardware needs.
+
+## 📦 Data
+
+Two tiers, both on Zenodo (DOI to appear here at publication), downloaded and checksum-verified by one script:
 
 ```bash
-python figures/render_all.py                   # all 55 -> outputs/figures/<manuscript name>.png
-python figures/render_all.py --check           # ...and compare with the submitted PNGs
-python figures/render_all.py --only divergence,s17_control_slope_anova
-python -m figures.main.fig4_divergence --out outputs/figures        # one figure, one script
+python data/download_data.py --tier preprocessed   # ~0.5 GB  caches behind every figure
+python data/download_data.py --tier source         # ~35 GB   trial-level recordings, model predictions,
+                                                   #          stimuli, fitted readouts for the demos
 ```
 
-`figures/main/fig<N>_<name>.py` and `figures/supplementary/sup_<slug>.py` each expose
-`main(out_dir, **variant)` and a CLI with the same keyword arguments (variants such as
-`--outcome r` or `--monkey paul` reproduce the alternative renders we looked at; only the
-defaults are in the paper). Numbering of the supplementary figures comes from one place,
-`pnc/manifest.py`; output names are the manuscript names (`s17_control_slope_anova.png`).
+The source tier is enough to regenerate the caches from scratch (`python scripts/preprocessing/build_all.py`) and to run every demo. Files land in `source_data/` and `preprocessed_data/`; override with `PNC_SOURCE_DATA` and `PNC_PREPROCESSED_DATA`.
 
-`figures/render_all.py` runs each script in its own subprocess with a fixed environment (Agg
-backend, private matplotlib config, hash seed 0, single-threaded BLAS), writes
-`render_manifest.json` (script, duration, shape, pixel hash, library versions) and, with
-`--check`, compares the RGBA pixel array of each render with `tests/reference/figure_pixel_hashes.json`.
-
-Saved PNGs are border-trimmed exactly as the manuscript build trims them (`pnc/trim.py`), so a
-render *is* the manuscript file; set `PNC_NO_TRIM=1` for the raw matplotlib canvas.
-
-`notebooks/figures/` has one notebook per figure (55) that calls the same `main()` and shows
-the result with its caption (`figures/CAPTIONS.md`).
-
-## 4. Regenerate `preprocessed_data/`
-
-```bash
-python scripts/preprocessing/build_all.py --out /tmp/preproc      # ~15 min on a laptop
-python -m pytest tests/test_preproc_bit_exact.py -m preproc         # rebuild + compare
-```
-
-`scripts/preprocessing/run_preproc.py` turns the raw recordings and model predictions into the
-per-monkey caches (`brain_*.pkl`, `encoding_*.pkl`, `predictions_*.pkl`, `exclusions_*.pkl`,
-`stimuli.pkl`, the controversial-experiment tables); every preprocessing knob lives in its
-`CONFIG` dict. The other builders derive the figure-specific caches (layer selection, fLoc
-selectivity, tuning stability, axis alignment, held-out attack tables, outcome ceilings, ...).
-`build_all.py` runs them in dependency order in a pinned environment and records a
-`BUILD_MANIFEST.json` of SHA-256s.
-
-On the reference environment the rebuilt tree is byte-identical to the shipped one for every
-cache (the only exceptions are the `created`/`git` stamps in `MANIFEST.json`). Elsewhere the
-comparison in `tests/test_preproc_bit_exact.py` falls back to structured equality
-(same keys, arrays equal including NaN positions) and reports the level reached per file.
-
-## 5. Pixel-exact policy
-
-The figures depend on text rendering, so "pixel-exact" is defined on the **reference
-environment**: macOS (arm64) with the system *Helvetica Neue* font and the versions pinned in
-`environment.yml`. There, `render_all.py --check` and `pytest -m pixel` require the pixel
-hashes to match. On other platforms (or other fonts) the tests switch to **tolerance mode**
-automatically: same size within 2 px, fewer than 1 % of pixels differing, mean absolute
-difference below 0.5, with a diff image written to `outputs/pixel_diffs/` on failure. The mode
-in use is printed by `pytest tests/test_env.py -s`.
-
-One label in Figure 1 uses the *Light* face of Helvetica Neue. Apple's fonts cannot be
-redistributed, so the `.ttf` is not in the repo: `pnc.utils.light_font_properties` looks for
-`$PNC_HN_LIGHT_TTF`, then `figures/assets/private/HelveticaNeue-Light.ttf` (git-ignored; extract
-it from `/System/Library/Fonts/HelveticaNeue.ttc` on macOS), and otherwise falls back to the
-installed family at weight *light* (tolerance mode).
-
-## 6. The pipeline behind the figures (`scripts/`)
-
-| paper step | folder | runs from Tier A? |
-|---|---|---|
-| encoding-model fitting (features, PCA-750, RidgeCV layer sweep), layer selection, readout export, post-hoc prediction | `scripts/encoding/` | no (needs the calibration recordings + a GPU; readouts not shipped) |
-| feature accentuation (parametric sweeps), MACO superstimuli, controversial accentuation | `scripts/synthesis/` | yes for the demos' reduced settings; full runs need a GPU |
-| adversarial sensitivity of the encoding axes (PGD / FGSM, L-inf / L2), minimal-perturbation visualizations | `scripts/adversarial/` | attack outputs are shipped in `cluster_outputs/`; re-running needs a GPU |
-| input-gradient maps and their radial Fourier spectra, participation ratio, refit diet ladder | `scripts/gradients/` | spectra are shipped; the 30 full gradient-map pickles are frozen inputs |
-| ImageNet-val predictions through the 250 readouts | `scripts/imagenet/` | no (ImageNet-val); the cache is a frozen input |
-| ResNet-50 embedding cloud (Fig. 1) | `scripts/embeddings/` | no (needs the full accentuated stimulus set) |
-| producers of frozen csv inputs from the previous analysis tree | `scripts/provenance/` | partly (see its README) |
-| preprocessing into `preprocessed_data/` | `scripts/preprocessing/` | **yes** |
-
-Each folder's README lists, per script, what it computes, its inputs and outputs, which
-`preprocessed_data`/`cluster_outputs` files it produced, and its GPU/SLURM requirements. The
-scripts are the code we ran, with only path plumbing changed (original cluster paths are kept in
-comments). `core/` and `neural_regress/` are the library code they import (feature hooks, model
-zoo, GPU PCA/SRP, ridge regression, sklearn-to-torch conversion).
-
-## 7. Demos (`notebooks/demos/`)
-
-CPU-runnable at reduced scale with a `FULL_SCALE` switch documenting the paper settings:
-`00_data_tour`, `01_fit_encoding_model`, `02_feature_accentuation`, `03_controversial_accentuation`,
-`04_adversarial_robustness`, `05_gradient_spectra`.
-
-## 8. Tests
-
-```bash
-python -m pytest -q                                   # everything that the present data allow
-python -m pytest -q -m "not pixel and not preproc and not notebooks and not slow"   # no data needed
-python -m pytest -q -m pixel                          # 55 figures vs the manuscript
-python -m pytest -q -m preproc                        # rebuild preprocessed_data and compare
-python -m pytest -q --run-raw                         # also validate the raw HDF5 sources
-```
-
-Beyond the figure and cache checks, `tests/` carries the scientific-validation suite of the
-analysis pipeline: numerical kernels (outlier rejection, anchor-day standardization, noise
-ceilings, spectral flatness), cache integrity (study dimensions, partitions, target schedules,
-exclusion masks recomputed from their definitions), loader/statistic agreement, train/test
-isolation, and gradient-cache consistency. Tests that need data skip cleanly when it is absent;
-the suite never writes into `preprocessed_data/`.
-
-## 9. Layout
+## 🗂 Layout
 
 ```
-pnc/                figure-side library: paths, study config + style (utils), trim, manifest, preproc loader + transforms
-core/ neural_regress/   model zoo, feature hooks, GPU PCA/SRP, ridge fitting, sklearn->torch (library code)
-figures/            main/ and supplementary/ figure scripts, assets/, CAPTIONS.md, render_all.py
-notebooks/          figures/ (one per figure) and demos/
-scripts/            preprocessing, encoding, synthesis, adversarial, gradients, imagenet, embeddings, provenance, cluster
-data/               download_data.py, build_manifest.py, zenodo_upload.py, zenodo_manifest.json
-tests/              pytest suite + reference/ (pixel hashes, cache hashes, frozen pnc API)
-source_data/ preprocessed_data/ outputs/    data and renders (git-ignored)
+pnc/               study configuration, figure style, cache loader
+core/  neural_regress/   model zoo, feature hooks, GPU PCA/SRP, ridge fitting, sklearn -> torch
+figures/           main/ and supplementary/ figure scripts, CAPTIONS.md, render_all.py
+notebooks/         figures/ (one per figure) and demos/
+scripts/           preprocessing, encoding, synthesis, adversarial, gradients, imagenet, embeddings, provenance
+data/              download and packaging tools
+docs/              REPRODUCIBILITY.md: pixel-exact policy, cache regeneration, tests, Zenodo workflow
 ```
 
-## 10. Data hosting and citation
+How the figures are verified against the submitted manuscript, how the caches are rebuilt byte for byte, and what the test suite checks is all in [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
 
-The data record on Zenodo is created as a draft by `data/zenodo_upload.py` (token from
-`ZENODO_TOKEN`; the script never publishes) and published from the Zenodo web interface; the
-record id is then written into `data/zenodo_manifest.json`. The software release is archived
-separately through Zenodo's GitHub integration. Both DOIs and the citation are in `CITATION.cff`.
-Data are released under CC BY 4.0, code under the MIT license (`LICENSE`, which also carries the
-third-party notices).
+## 📖 Citation
+
+```bibtex
+@article{prince2026parametric,
+  title   = {Parametric neural control differentiates top neural network models of primate visual cortex},
+  author  = {Prince, Jacob S. and Wang, Binxu and Fel, Thomas and Jagadeesh, Akshay V. and Vaziri, Parisa A.
+             and Alvarez, George A. and Livingstone, Margaret S. and Konkle, Talia},
+  year    = {2026}
+}
+```
+
+## 🔗 Related
+
+- [Horama](https://github.com/serre-lab/Horama) — the feature-visualisation library the accentuation engine builds on (MACO, Fourier parameterisation)
+- [Feature accentuation](https://arxiv.org/abs/2402.10039) (Hamblin et al., 2024) and [MACO](https://arxiv.org/abs/2306.06805) (Fel et al., 2023)
+- [circuit_toolkit](https://github.com/PonceLab/circuit_toolkit) — the feature-hook utilities vendored in `core/`
+
+## Authors
+
+Jacob S. Prince (jacob.samuel.prince@gmail.com) and Binxu Wang, with Thomas Fel, Akshay V. Jagadeesh, Parisa A. Vaziri, George A. Alvarez, Margaret S. Livingstone and Talia Konkle. Harvard University, the Kempner Institute and Harvard Medical School.
+
+Code is MIT licensed; third-party notices are in `LICENSE`.
