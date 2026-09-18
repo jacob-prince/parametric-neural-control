@@ -33,7 +33,7 @@ THUMB_DIR_INET = os.path.join(PREPROC_DATA, 'fig6_imagenet_thumbs')
 # Canonical 10-model order (loader order); resolved lazily so --help works without data.
 class _Models(list):
     def _load(self):
-        if not len(self):
+        if not list.__len__(self):
             self.extend(L.load_predictions('red')['pred_models'])
         return self
     def __iter__(self):
