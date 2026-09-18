@@ -1,24 +1,24 @@
 <div align="center">
 
-<img src="figures/assets/schematic_fig1.png" width="720" alt="Closed-loop framework: calibrate, fit encoding models, accentuate images along the encoding axis, test the predictions back in the brain">
-
 # Parametric neural control
 
-**Code, models and data for**
-*Parametric neural control differentiates top neural network models of primate visual cortex*
+**Code, models and data for**<br>
+*Parametric neural control differentiates top neural network models of primate visual cortex*<br>
 Prince J.S.\*, Wang B.\*, Fel T., Jagadeesh A.V., Vaziri P.A., Alvarez G.A., Livingstone M.S. & Konkle T. (2026)
 
 [![python](https://img.shields.io/badge/python-3.12-blue.svg)](environment.yml)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![data](https://img.shields.io/badge/data-zenodo-orange.svg)](#data)
+[![data](https://img.shields.io/badge/data-zenodo-orange.svg)](#-data)
 [![notebooks](https://img.shields.io/badge/notebooks-61-lightgrey.svg)](notebooks)
+
+<img src="figures/assets/schematic_fig1.png" width="520" alt="Closed-loop framework: calibrate, fit encoding models, accentuate images along the encoding axis, test the predictions back in the brain">
 
 </div>
 
 Ten deep networks were each fitted to the same neurons in five macaques, then asked to do something harder than predicting responses to natural images: **synthesize images that push a neuron's firing to a chosen level, up or down, in small steps**. This repository lets you rebuild every figure of the paper, run the full analysis pipeline, and use the method on your own encoding models.
 
 <div align="center">
-<img src="docs/assets/models_grid.gif" width="850" alt="The same seed image accentuated by ten encoding models, from suppress to drive">
+<img src="docs/assets/models_grid.gif" width="640" alt="The same seed image accentuated by ten encoding models, from suppress to drive">
 <br><sub>One seed image, one anterior-IT site, ten encoding models. Each model is steered along its own encoding axis from the lowest to the highest target response. The adversarially trained models (bottom right) produce coherent face-like drivers; most others produce texture.</sub>
 </div>
 
@@ -31,8 +31,8 @@ Ten deep networks were each fitted to the same neurons in five macaques, then as
 - **Every figure of the paper** — 6 main + 49 supplementary, as scripts and as notebooks, rendered from the released data (`figures/`, `notebooks/figures/`).
 
 <div align="center">
-<img src="docs/assets/sweep_cake.gif" width="300" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
-<img src="docs/assets/sweep_bird.gif" width="300" alt="accentuation sweep of a bird image">
+<img src="docs/assets/sweep_cake.gif" width="240" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
+<img src="docs/assets/sweep_bird.gif" width="240" alt="accentuation sweep of a bird image">
 <br><sub>Two accentuation sweeps of the robust ResNet-50 for the same aIT site: eleven target levels from suppress to drive.</sub>
 </div>
 

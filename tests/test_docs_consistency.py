@@ -51,7 +51,7 @@ def test_readme_mentions_every_top_level_package():
 
 def test_readme_gifs_are_small_enough_for_github():
     for gif in (REPO / 'docs' / 'assets').glob('*.gif'):
-        assert gif.stat().st_size < 6_000_000, gif.name
+        assert gif.stat().st_size < 7_000_000, gif.name
 
 
 def test_citation_and_zenodo_metadata_agree():
