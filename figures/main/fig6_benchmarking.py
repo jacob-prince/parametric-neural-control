@@ -256,6 +256,8 @@ def main(out_dir, preset='rn50'):
             except StopIteration:
                 break
             path = item.get('thumb_path') if 'thumb_path' in item else None
+            if path is not None and not os.path.isabs(str(path)):
+                path = os.path.join(D.PREPROC_DATA, str(path))            # cache stores paths relative to preprocessed_data
             if path is not None and not os.path.exists(str(path)) and 'idx' in item:
                 path = os.path.join(D.THUMB_DIR_INET, f"{item['idx']}.JPEG")   # cached abs path is folder-move stale -> rebuild
             if path is None and 'source_model' in item:

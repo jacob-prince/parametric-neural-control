@@ -352,8 +352,9 @@ def write_manifest(cfg):
     cfg_json = {k: (list(v) if isinstance(v, (set, tuple)) else v) for k, v in cfg.items()}
     manifest = dict(created=datetime.now().isoformat(timespec='seconds'), git=git,
                     config=cfg_json,
-                    inputs=dict(control_h5=CONTROL_HDF5_PATH, controversial_nc_dir=CONTROV_DIR,
-                                controversial_h5=os.path.join(DATA_ROOT, 'brain_data_controversial',
+                    inputs=dict(control_h5=os.path.relpath(CONTROL_HDF5_PATH, DATA_ROOT),      # relative to source_data
+                                controversial_nc_dir=os.path.relpath(CONTROV_DIR, DATA_ROOT),
+                                controversial_h5=os.path.join('brain_data_controversial',
                                 'vvs_accentuate_day3_normalize_red_20250123-20250126.hdf5')),
                     outputs=sorted(os.path.basename(p) for p in glob.glob(os.path.join(CACHE, '*.pkl'))))
     json.dump(manifest, open(os.path.join(CACHE, 'MANIFEST.json'), 'w'), indent=2)

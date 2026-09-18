@@ -443,7 +443,7 @@ def build_pair(model_a, model_b, ch=2, out_dir=PREPROC_DATA):
 
     def _inet_meta(i):
         return dict(idx=int(i),
-                    thumb_path=os.path.join(THUMB_DIR_INET, f'{i}.JPEG'),
+                    thumb_path=os.path.join('fig6_imagenet_thumbs', f'{i}.JPEG'),   # relative to preprocessed_data (location-independent cache)
                     predA=float(inet[i, ch, mi_A]),
                     predB=float(inet[i, ch, mi_B]), diff=float(inet_diff[i]))
 

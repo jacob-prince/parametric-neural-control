@@ -3,9 +3,9 @@
  "known_pickle_only_semantic": [],
  "files": {
   "MANIFEST.json": {
-   "bytes": 2472,
-   "sha256": "e9a8b51817134547685370007ce323169036f6e9ffee23ecb11481f06119c0ee",
-   "md5": "76c49314dfe756f363d98b535b782054"
+   "bytes": 2548,
+   "sha256": "e0a1e59dbd1e03eb2163d2dbc9530cbc8187225add9aa0564647b7881f0cf151",
+   "md5": "a88f28cecc91e7a13c298c9bd6f79020"
   },
   "axis_alignment.pkl": {
    "bytes": 8325855,
@@ -1068,14 +1068,14 @@
    "md5": "2947c96e63af1a91183272057bd81dcd"
   },
   "fig6_pair_resnet50__resnet50_robust__ch2.pkl": {
-   "bytes": 1627335,
-   "sha256": "4e1ae057b212293f0ba51c9df380b326976c0ad350e8976f540b48da10eca1f7",
-   "md5": "b0ad06b15f6a7d94069eb096fb02353a"
+   "bytes": 1618887,
+   "sha256": "eeaa28daa8cc22e1e6a5530d463d3eb9c909eced364663dc0ce24f896b59ef91",
+   "md5": "cf7527b05b17a365b47b98eff0d1afe3"
   },
   "fig6_pair_resnet50_clip__clipag_vitb32__ch2.pkl": {
-   "bytes": 1627399,
-   "sha256": "c0598766c0cc25dca34972b5fe577316db08347698d9b8a438ca63123a446e91",
-   "md5": "e96213f5d54bd8fa721ae722cdca28bf"
+   "bytes": 1618951,
+   "sha256": "b10d713e3e2a7c236fe39367b4ca40a01fcb63b69fe8e152eaee9e308874df9f",
+   "md5": "8141cf2b377a8a3e3b1a023dd94b5648"
   },
   "fig6_separation.pkl": {
    "bytes": 2973176,

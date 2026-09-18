@@ -1,12 +1,12 @@
 {
  "archives": {
   "preprocessed_data.tar": {
-   "bytes": 365824000,
+   "bytes": 365803520,
    "kind": "dir",
-   "md5": "ba238f24b7c4ede519177c398f7324d0",
+   "md5": "2cf6a1d0535b87f03ca70b0a109dffe2",
    "n_members": 273,
    "path": ".",
-   "sha256": "b9663e795087202e2e09bd4b75a8c28c28e241fd465603e8bf909416eba8067b",
+   "sha256": "d12a5d9b09232be9124c0475bbe42e260c6626f6be6f57152cfc18c832d04b88",
    "tier": "preprocessed_data"
   },
   "reference_figures.tar": {
