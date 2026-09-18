@@ -13,7 +13,8 @@ Jacob S. Prince\*, Binxu Wang\*, Thomas Fel, Akshay V. Jagadeesh, Parisa A. Vazi
 [![data](https://img.shields.io/badge/data-zenodo-orange.svg)](#-data)
 [![notebooks](https://img.shields.io/badge/notebooks-61-lightgrey.svg)](notebooks)
 
-<img src="figures/assets/schematic_fig1.png" width="520" alt="Closed-loop framework: calibrate, fit encoding models, accentuate images along the encoding axis, test the predictions back in the brain">
+<img src="docs/assets/figure4_divergence.png" width="760" alt="Figure 4: ten encoding models predict natural-image responses about equally well, yet diverge sharply in how well they control neural firing with accentuated images">
+<br><sub>Ten encoding models predict responses to natural images about equally well (left), yet diverge sharply when asked to steer firing with their own accentuated images (right).</sub>
 
 </div>
 
