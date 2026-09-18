@@ -14,14 +14,13 @@ Jacob S. Prince\*, Binxu Wang\*, Thomas Fel, Akshay V. Jagadeesh, Parisa A. Vazi
 [![notebooks](https://img.shields.io/badge/notebooks-61-lightgrey.svg)](notebooks)
 
 <img src="docs/assets/figure4_divergence.png" width="760" alt="Figure 4: ten encoding models predict natural-image responses about equally well, yet diverge sharply in how well they control neural firing with accentuated images">
-<br><sub>Ten encoding models predict responses to natural images about equally well (left), yet diverge sharply when asked to steer firing with their own accentuated images (right).</sub>
 
 </div>
 
 Ten deep networks were each fitted to the same neurons in five macaques, then asked to do something harder than predicting responses to natural images: **synthesize images that push a neuron's firing to a chosen level, up or down, in small steps**. This repository lets you rebuild every figure of the paper, run the full analysis pipeline, and use the method on your own encoding models.
 
 <div align="center">
-<img src="docs/assets/models_grid.gif" width="640" alt="The same seed image accentuated by ten encoding models, from suppress to drive">
+<img src="docs/assets/models_grid.gif" width="840" alt="The same seed image accentuated by ten encoding models, from suppress to drive">
 <br><sub>One seed image, one anterior-IT site, ten encoding models. Each model is steered along its own encoding axis from the lowest to the highest target response. The adversarially trained models (bottom right) produce coherent face-like drivers; most others produce texture.</sub>
 </div>
 
@@ -34,8 +33,8 @@ Ten deep networks were each fitted to the same neurons in five macaques, then as
 - **Every figure of the paper** - 6 main + 49 supplementary, as scripts and as step-by-step notebooks that lay each script out with explanations, rendered from the released data (`figures/`, `notebooks/figures/`).
 
 <div align="center">
-<img src="docs/assets/sweep_cake.gif" width="240" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
-<img src="docs/assets/sweep_bird.gif" width="240" alt="accentuation sweep of a bird image">
+<img src="docs/assets/sweep_cake.gif" width="360" alt="accentuation sweep of a cake image">&nbsp;&nbsp;
+<img src="docs/assets/sweep_bird.gif" width="360" alt="accentuation sweep of a bird image">
 <br><sub>Two accentuation sweeps of the robust ResNet-50 for the same aIT site: eleven target levels from suppress to drive.</sub>
 </div>
 
