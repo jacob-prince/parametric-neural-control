@@ -38,6 +38,8 @@ def test_data_on_disk_matches_manifest(paths):
         pytest.skip('tests/reference/source_data_hashes.json not built yet')
     missing, bad = [], []
     for tier, files in hashes.items():
+        if tier.startswith('_'):
+            continue
         root = paths['source'] if tier == 'source_data' else paths['cache']
         if not root.exists():
             pytest.skip(f'{tier} not present')
