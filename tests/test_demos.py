@@ -100,12 +100,10 @@ def test_find_export_names_follow_the_readout_convention(monkeypatch, tmp_path):
 def test_encoding_objective_predicts_calibration_responses(source, cache):
     """The demo objective (backbone -> PCA -> readout) reproduces the cached post-hoc predictions."""
     from pnc.preproc import loader as L
-    from pnc.utils import STIMULI_PATH
-    import os
     obj = U.EncodingObjective('resnet50', 'red', 9)
     e = L.load_encoding('red'); mi = list(e['models']).index('resnet50'); ui = list(e['units']).index(9)
     names = [n for n in e['stim'][:6]]
-    imgs = torch.stack([U.load_image01(os.path.join(STIMULI_PATH, n), 224) for n in names])
+    imgs = torch.stack([U.load_image01(U.stimulus_path(n), 224) for n in names])
     with torch.no_grad():
         pred = obj(imgs).cpu().numpy()
     obj.close()

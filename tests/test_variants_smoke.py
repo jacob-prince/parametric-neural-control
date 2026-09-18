@@ -8,7 +8,7 @@ import pytest
 from conftest import REPO
 
 VARIANTS = [
-    ('figures.main.fig3_single_site', ['--monkey', 'paul', '--unit', '8', '--model', 'resnet50_robust']),
+    ('figures.main.fig3_single_site', ['--p2set', 'allcal']),   # other sites need build_fig3_embedding.py first
     ('figures.main.fig5_predictors', ['--outcome', 'r']),
     ('figures.main.fig6_benchmarking', ['--preset', 'clip']),
     ('figures.supplementary.sup_model_dichotomies', ['--resid']),
