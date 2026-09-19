@@ -3,6 +3,10 @@
 # are not needed to reproduce the figures from preprocessed_data.
 #
 #   pip install -r requirements-scripts.txt
+#
+# scikit-learn is pinned: neural_regress reaches into two private sklearn modules
+# (linear_model._base, random_projection._sparse_random_matrix) that may move between releases.
+scikit-learn==1.7.1
 torch
 torchvision
 timm
