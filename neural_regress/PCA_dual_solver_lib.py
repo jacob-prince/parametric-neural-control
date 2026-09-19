@@ -255,79 +255,12 @@ def test_pca_dual_fit_transform_sep():
     Xtrain = np.random.randn(1000, 1000)
     X2transform = np.random.randn(1000, 1000)
     n_components = 500
-    pca, X_proj, X2transform_proj = pca_dual_fit_transform_sep(Xtrain, X2transform, n_components)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'   # the self-check runs anywhere; the fits used a GPU
+    pca, X_proj, X2transform_proj = pca_dual_fit_transform_sep(Xtrain, X2transform, n_components, device=device)
     X2transform_proj_sklearn = pca.transform(X2transform)
     print(X_proj.shape, X2transform_proj.shape, X2transform_proj_sklearn.shape)
     assert np.allclose(X2transform_proj, X2transform_proj_sklearn, rtol=1e-4, atol=1e-4)
 
 
-def test_pca_dual_randn_data(n_features=20000, n_samples=1100, n_components=1000):
-    import time
-    from sklearn.decomposition import PCA as PCA_sklearn
-    from cuml.decomposition import PCA as PCA_cuml
-    # random select columns
-    # col_idx = np.random.choice(x_flat.shape[1], size=1000, replace=False)
-    # tmp_x = x_flat.cpu().numpy()[:, col_idx]
-    tmp_x = np.random.randn(1100, n_features)
-    # sklearn's PCA
-    pca = PCA_sklearn(n_components=n_components, svd_solver='auto', )
-    t0 = time.time()
-    x_pca_sklearn = pca.fit_transform(tmp_x)            # (n, k)
-    t1 = time.time()
-    print(f"PCA Sklearn Time taken: {t1 - t0} seconds")
-    components_sklearn = pca.components_               # (k, d)
-    explained_var_sklearn = pca.explained_variance_    # (k,)
-
-    # sklearn cuml PCA (use CUDA compute)
-    t0 = time.time()
-    pca_cuml = PCA_cuml(n_components=n_components, svd_solver='auto', )
-    x_pca_cuml = pca_cuml.fit_transform(tmp_x)
-    t1 = time.time()
-    print(f"PCA Cuml Time taken: {t1 - t0} seconds")
-    components_cuml = pca_cuml.components_
-    explained_var_cuml = pca_cuml.explained_variance_
-
-    # torch dual PCA
-    t0 = time.time()
-    X_proj_torch, PC_axes_torch, var_torch, var_ratio_torch, X_mean_torch = pca_dual_torch(
-        torch.from_numpy(tmp_x), n_components=n_components, device='cuda'
-    )
-    t1 = time.time()
-    print(f"PCA Dual Torch eigen decomposition Time taken: {t1 - t0} seconds")
-    X_proj_torch = X_proj_torch.cpu().numpy()          # bring back to CPU if needed
-    PC_axes_torch = PC_axes_torch.cpu().numpy()
-    var_torch = var_torch.cpu().numpy()
-    pca_reconstructed = create_sklearn_pca_from_torch(
-        PC_axes_torch, var_torch, var_ratio_torch, X_mean_torch, tmp_x.shape[0]
-    )
-    X_transformed_pca_reconstructed = pca_reconstructed.transform(tmp_x)
-    assert np.allclose(X_transformed_pca_reconstructed, X_proj_torch)
-    print("Reconstructed PCA matches the original PCA")
-    # Compare
-    compare_pca_results(
-        x_pca_sklearn, 
-        components_sklearn, 
-        explained_var_sklearn,
-        X_proj_torch, 
-        PC_axes_torch, 
-        var_torch,
-        rtol=1e-4,
-        atol=1e-4
-    )
-    compare_pca_results(
-        x_pca_cuml, 
-        components_cuml, 
-        explained_var_cuml,
-        X_proj_torch, 
-        PC_axes_torch, 
-        var_torch,
-        rtol=1e-4,
-        atol=1e-4
-    )
-
 if __name__ == "__main__":
-    test_pca_dual_randn_data(n_features=2000, n_samples=1100, n_components=1000)
-    test_pca_dual_randn_data(n_features=5000, n_samples=1100, n_components=1000)
-    test_pca_dual_randn_data(n_features=10000, n_samples=1100, n_components=1000)
-    test_pca_dual_randn_data(n_features=20000, n_samples=1100, n_components=1000) # 17G, cuda memory
-    test_pca_dual_randn_data(n_features=30000, n_samples=1100, n_components=1000) # 36.5G, cuda memory
+    test_pca_dual_fit_transform_sep()

@@ -1,5 +1,4 @@
 import os
-import sys
 import re
 import glob
 import pickle as pkl
@@ -18,7 +17,6 @@ import timm
 from torch.utils.data import DataLoader
 from core.layer_hook_utils import featureFetcher_module, featureFetcher, get_module_names
 from core.dataset_utils import ImagePathDataset
-sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
 from core.model_load_utils import load_model_transform
 
 

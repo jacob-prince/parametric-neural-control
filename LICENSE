@@ -45,3 +45,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Additional third-party notices
+------------------------------
+
+core/colormap_matlab.py contains the magma, inferno, plasma and viridis
+colormap data by Nathaniel J. Smith, Stefan van der Walt and Eric Firing,
+released under the CC0 1.0 Universal public domain dedication, and the parula
+colormap approximation distributed with matplotlib (matplotlib license).
+
+core/montage_utils.py adapts image-montage helpers from imutils by Adrian
+Rosebrock and Kyle Hounslow (MIT License) and torchvision (BSD 3-Clause).
+
+scripts/synthesis/ vendors a snapshot of prj_control_fa by Thomas Fel; its
+license and upstream commit are recorded in scripts/synthesis/PROVENANCE.md.

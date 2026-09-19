@@ -1,0 +1,28 @@
+# Core
+torch
+torchvision
+numpy
+matplotlib
+pandas
+Pillow
+scikit-learn
+
+# Model loading
+timm
+open_clip_torch
+clip @ git+https://github.com/openai/CLIP.git
+
+# Feature visualization
+horama
+
+# circuit_toolkit deps
+easydict
+imageio
+python-pptx
+
+# Misc
+h5py
+dill
+einops
+tqdm
+boto3

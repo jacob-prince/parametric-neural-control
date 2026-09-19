@@ -4,7 +4,7 @@ from pathlib import Path
 from torchvision import transforms
 import boto3
 
-save_root = f"/n/holylfs06/LABS/kempner_fellow_binxuwang/Users/binxuwang/brain_score_cache"
+save_root = os.environ.get("PNC_BRAINSCORE_CACHE", os.path.expanduser("~/.cache/parametric-neural-control/brainscore"))  # was /n/holylfs06/LABS/kempner_fellow_binxuwang/Users/binxuwang/brain_score_cache
 
 def download_from_s3(
     bucket: str,
@@ -39,9 +39,10 @@ def build_ReAlnet_model(identifier: str = "ReAlnet01",
     """
     Build a model from a given identifier.
     """
-    import sys
-    sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
-    from core.ReAlNet import CORnet_S, Encoder
+    try:
+        from core.ReAlNet import CORnet_S, Encoder
+    except ImportError:
+        raise ImportError("ReAlnet models were not used in the paper; core/ReAlNet.py is not distributed")
     
     local_weights_path = f"{save_root}/{identifier}_best_model_params.pt"
     realnet = CORnet_S()
@@ -110,8 +111,6 @@ def build_alexnet_brainscore(identifier: str = "training_seed_01",
     """
     Build a model from a given identifier.
     """
-    import sys
-    sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
     from core.alexnet_torch import alexnet_v2_pytorch
     
     model = alexnet_v2_pytorch()

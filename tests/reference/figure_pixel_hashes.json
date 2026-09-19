@@ -1,0 +1,669 @@
+{
+ "_comment": "sha256 of the RGBA pixel array (np.asarray(Image.open(p).convert('RGBA')).tobytes()) of each manuscript PNG (already border-trimmed). Regenerate with tests/reference/make_reference.py.",
+ "figures": {
+  "framework": {
+   "kind": "main",
+   "number": 1,
+   "script": "figures/main/fig1_framework.py",
+   "shape": [
+    1494,
+    2140,
+    4
+   ],
+   "sha256": "74fd835175dcaab9ed930e4f9b9aac6295824ad5b33a99735cb9fe5f96126cea"
+  },
+  "accentuation": {
+   "kind": "main",
+   "number": 2,
+   "script": "figures/main/fig2_accentuation.py",
+   "shape": [
+    5011,
+    4425,
+    4
+   ],
+   "sha256": "5c06121986b9419fc9385cf11798dc39b5ae8cba5b105f8b05691a4e22f1cc50"
+  },
+  "single_site": {
+   "kind": "main",
+   "number": 3,
+   "script": "figures/main/fig3_single_site.py",
+   "shape": [
+    2803,
+    3740,
+    4
+   ],
+   "sha256": "dabaacb6f2b81fc0c83ab7174d33b510b5cbd5fb071c5352fbe9936aeb4d4a81"
+  },
+  "divergence": {
+   "kind": "main",
+   "number": 4,
+   "script": "figures/main/fig4_divergence.py",
+   "shape": [
+    1454,
+    2067,
+    4
+   ],
+   "sha256": "ef8203cc820e0b4524931ad90fd021079ff1ab757eeae95205474fa4d3ed645c"
+  },
+  "predictors": {
+   "kind": "main",
+   "number": 5,
+   "script": "figures/main/fig5_predictors.py",
+   "shape": [
+    2856,
+    4119,
+    4
+   ],
+   "sha256": "83559c5a30b8145025d7527527ded0b5e44602e348a63836840862e247729e63"
+  },
+  "benchmarking": {
+   "kind": "main",
+   "number": 6,
+   "script": "figures/main/fig6_benchmarking.py",
+   "shape": [
+    2740,
+    4074,
+    4
+   ],
+   "sha256": "0024150ee2904dd583ad18bb15f23c39b26e02f6698bb5ee3365e1c3cf31bae8"
+  },
+  "s01_calibration_mosaic": {
+   "kind": "supplementary",
+   "number": 1,
+   "slug": "calibration_mosaic",
+   "script": "figures/supplementary/sup_calibration_mosaic.py",
+   "shape": [
+    2714,
+    2106,
+    4
+   ],
+   "sha256": "ed1672004b30d6a8a668520a33fa3508d5f6a6587d3136771ffa91b0f8b22599"
+  },
+  "s02_reliability": {
+   "kind": "supplementary",
+   "number": 2,
+   "slug": "reliability",
+   "script": "figures/supplementary/sup_reliability.py",
+   "shape": [
+    2254,
+    2201,
+    4
+   ],
+   "sha256": "6fab09310c67ae8df94bd6e6ba436e3539f81e172ac81b2815b6e495aaca4649"
+  },
+  "s03_anatomy": {
+   "kind": "supplementary",
+   "number": 3,
+   "slug": "anatomy",
+   "script": "figures/supplementary/sup_anatomy.py",
+   "shape": [
+    2669,
+    2131,
+    4
+   ],
+   "sha256": "eec204fdff096099a550c5e7bc0ece252592907ee0dd7c8a6a32271a2668242c"
+  },
+  "s04_floc_selectivity": {
+   "kind": "supplementary",
+   "number": 4,
+   "slug": "floc_selectivity",
+   "script": "figures/supplementary/sup_floc_selectivity.py",
+   "shape": [
+    1879,
+    2087,
+    4
+   ],
+   "sha256": "064fd2bd785f7511072563d8fed521e027a4ebeccab224221c651f082f43ba27"
+  },
+  "s05_layer_selection": {
+   "kind": "supplementary",
+   "number": 5,
+   "slug": "layer_selection",
+   "script": "figures/supplementary/sup_layer_selection.py",
+   "shape": [
+    1935,
+    1685,
+    4
+   ],
+   "sha256": "63500255acc8ea336ecb892e91af06b6888e9a99fd3e63e212a8e2e4744deabf"
+  },
+  "s06_hyperparam_selection": {
+   "kind": "supplementary",
+   "number": 6,
+   "slug": "hyperparam_selection",
+   "script": "figures/supplementary/sup_hyperparam_selection.py",
+   "shape": [
+    607,
+    2199,
+    4
+   ],
+   "sha256": "916fdac543434c143525d8b2b7f68c8e454b965aae419b795f65729bb15dce5b"
+  },
+  "s07_success_rate": {
+   "kind": "supplementary",
+   "number": 7,
+   "slug": "success_rate",
+   "script": "figures/supplementary/sup_success_rate.py",
+   "shape": [
+    872,
+    2109,
+    4
+   ],
+   "sha256": "8365fac555bb1e29c6d4ff1ddf6c8a16f6135b73268e3e665c4357de8453e511"
+  },
+  "s08_fair_filtering": {
+   "kind": "supplementary",
+   "number": 8,
+   "slug": "fair_filtering",
+   "script": "figures/supplementary/sup_fair_filtering.py",
+   "shape": [
+    586,
+    2080,
+    4
+   ],
+   "sha256": "8327b47d292019be83402794a1e564c8b506775e040e7b321b1e16da0bf9056a"
+  },
+  "s09_axis_alignment_stats": {
+   "kind": "supplementary",
+   "number": 9,
+   "slug": "axis_alignment_stats",
+   "script": "figures/supplementary/sup_axis_alignment_stats.py",
+   "shape": [
+    559,
+    1990,
+    4
+   ],
+   "sha256": "7fe5c440eb4df918fd83a12fc0086388f9bee7abcd5a49f9fef5b1fe590489cf"
+  },
+  "s10_axis_alignment_gallery": {
+   "kind": "supplementary",
+   "number": 10,
+   "slug": "axis_alignment_gallery",
+   "script": "figures/supplementary/sup_axis_alignment_gallery.py",
+   "shape": [
+    1790,
+    1981,
+    4
+   ],
+   "sha256": "9142f441ee45d94e884aa9cfb033f43ecae139b2734cc7b6b1775238ebc23bf8"
+  },
+  "s11_sweep_extremes": {
+   "kind": "supplementary",
+   "number": 11,
+   "slug": "sweep_extremes",
+   "script": "figures/supplementary/sup_sweep_extremes.py",
+   "shape": [
+    1641,
+    2122,
+    4
+   ],
+   "sha256": "255f46769fd5aef88acd6deea26af14b20817706062661fec13c1a91d73e3a12"
+  },
+  "s12_sweep_gallery_red": {
+   "kind": "supplementary",
+   "number": 12,
+   "slug": "sweep_gallery",
+   "script": "figures/supplementary/sup_sweep_gallery.py",
+   "shape": [
+    2354,
+    2077,
+    4
+   ],
+   "sha256": "882cb35b6bd00d761457a38d0e5ac1e5fcf30c86fbbbbb6fbafe992e67fece13",
+   "monkey": "red"
+  },
+  "s13_sweep_gallery_paul": {
+   "kind": "supplementary",
+   "number": 13,
+   "slug": "sweep_gallery",
+   "script": "figures/supplementary/sup_sweep_gallery.py",
+   "shape": [
+    2354,
+    2077,
+    4
+   ],
+   "sha256": "120f7747b8c305085161348d5e52064b369e2fed12d2eb87ea82da26bd971ebc",
+   "monkey": "paul"
+  },
+  "s14_sweep_gallery_venus": {
+   "kind": "supplementary",
+   "number": 14,
+   "slug": "sweep_gallery",
+   "script": "figures/supplementary/sup_sweep_gallery.py",
+   "shape": [
+    2354,
+    2077,
+    4
+   ],
+   "sha256": "4b9f9c4af4f5a26b5219cefa68d7702b88f06776741c96e57cb46c44ad5618a4",
+   "monkey": "venus"
+  },
+  "s15_sweep_gallery_leap": {
+   "kind": "supplementary",
+   "number": 15,
+   "slug": "sweep_gallery",
+   "script": "figures/supplementary/sup_sweep_gallery.py",
+   "shape": [
+    2354,
+    2077,
+    4
+   ],
+   "sha256": "fdfe2b493c3169272356612480fc733c7acf4084c4c6238cbe76412e481a5955",
+   "monkey": "leap"
+  },
+  "s16_sweep_gallery_three0": {
+   "kind": "supplementary",
+   "number": 16,
+   "slug": "sweep_gallery",
+   "script": "figures/supplementary/sup_sweep_gallery.py",
+   "shape": [
+    2354,
+    2077,
+    4
+   ],
+   "sha256": "6c250d347d3ef3b0daf788cd756b8ad41204706f2d7295c1ad7e5381303da0dd",
+   "monkey": "three0"
+  },
+  "s17_control_slope_anova": {
+   "kind": "supplementary",
+   "number": 17,
+   "slug": "control_slope_anova",
+   "script": "figures/supplementary/sup_control_slope_anova.py",
+   "shape": [
+    646,
+    2062,
+    4
+   ],
+   "sha256": "d547450eecdfffebccdac47af9219d128f93300b3d193dba5795236a37f1df82"
+  },
+  "s18_robust_metrics": {
+   "kind": "supplementary",
+   "number": 18,
+   "slug": "robust_metrics",
+   "script": "figures/supplementary/sup_robust_metrics.py",
+   "shape": [
+    738,
+    2092,
+    4
+   ],
+   "sha256": "9919b3c011440c22ce213ea8ef75716f0ca9af2d56252b9f89957736664067bf"
+  },
+  "s19_controllability_variation": {
+   "kind": "supplementary",
+   "number": 19,
+   "slug": "controllability_variation",
+   "script": "figures/supplementary/sup_controllability_variation.py",
+   "shape": [
+    827,
+    2054,
+    4
+   ],
+   "sha256": "ca9cb87db35ee31eaad9a83e7948344e9888b7fc6b97e028af9e85ba67e93864"
+  },
+  "s20_robust_by_site": {
+   "kind": "supplementary",
+   "number": 20,
+   "slug": "robust_by_site",
+   "script": "figures/supplementary/sup_robust_by_site.py",
+   "shape": [
+    678,
+    2070,
+    4
+   ],
+   "sha256": "c95d556dd186f12029d1d02d1f36fe3b650af9343b27df5a9d8827e23d178033"
+  },
+  "s21_cross_area_consistency": {
+   "kind": "supplementary",
+   "number": 21,
+   "slug": "cross_area_consistency",
+   "script": "figures/supplementary/sup_cross_area_consistency.py",
+   "shape": [
+    882,
+    2170,
+    4
+   ],
+   "sha256": "99590ab714a6e1495855571ee169e5d1308ff2fe754a400e655c61a6e2b0e28e"
+  },
+  "s22_high_control_examples_red": {
+   "kind": "supplementary",
+   "number": 22,
+   "slug": "high_control_examples",
+   "script": "figures/supplementary/sup_high_control_examples.py",
+   "shape": [
+    2182,
+    1984,
+    4
+   ],
+   "sha256": "4e52baf292ae6e4ef99bbe54ead405c417f777a61903e9f0f2359dd723cbde04",
+   "monkey": "red"
+  },
+  "s23_high_control_examples_paul": {
+   "kind": "supplementary",
+   "number": 23,
+   "slug": "high_control_examples",
+   "script": "figures/supplementary/sup_high_control_examples.py",
+   "shape": [
+    2182,
+    1984,
+    4
+   ],
+   "sha256": "d2c36825d665e23a166263b0608d7f7f2f55204c61db7877301271b1cd39dfab",
+   "monkey": "paul"
+  },
+  "s24_high_control_examples_venus": {
+   "kind": "supplementary",
+   "number": 24,
+   "slug": "high_control_examples",
+   "script": "figures/supplementary/sup_high_control_examples.py",
+   "shape": [
+    2182,
+    1984,
+    4
+   ],
+   "sha256": "5972e31f3db1b64c75eb0ed17002b517644e47a080260e51ef5d83ba5bb8b405",
+   "monkey": "venus"
+  },
+  "s25_high_control_examples_leap": {
+   "kind": "supplementary",
+   "number": 25,
+   "slug": "high_control_examples",
+   "script": "figures/supplementary/sup_high_control_examples.py",
+   "shape": [
+    2182,
+    1984,
+    4
+   ],
+   "sha256": "b475ad4ae0bca5baa6c72df472b08a5828403c0c292f657a707709fed058d08c",
+   "monkey": "leap"
+  },
+  "s26_high_control_examples_three0": {
+   "kind": "supplementary",
+   "number": 26,
+   "slug": "high_control_examples",
+   "script": "figures/supplementary/sup_high_control_examples.py",
+   "shape": [
+    2182,
+    1984,
+    4
+   ],
+   "sha256": "78ad8cd30cf19db52af94f77bdea171c58aa25d73c219c0c2ff90b232375f43d",
+   "monkey": "three0"
+  },
+  "s27_superstimuli": {
+   "kind": "supplementary",
+   "number": 27,
+   "slug": "superstimuli",
+   "script": "figures/supplementary/sup_superstimuli.py",
+   "shape": [
+    643,
+    2091,
+    4
+   ],
+   "sha256": "dd1066709a3decafa9aa778e2c6d7aa247cfd89934ec0e56d0185c63dc424156"
+  },
+  "s28_superstim_scatter_venus": {
+   "kind": "supplementary",
+   "number": 28,
+   "slug": "superstim_scatter_venus",
+   "script": "figures/supplementary/sup_superstim_scatter_venus.py",
+   "shape": [
+    1170,
+    2014,
+    4
+   ],
+   "sha256": "5dcd2650f6b27e339d89ffb2095a5ed0ebcec648ba6457a951a7f2ad96bb3850"
+  },
+  "s29_superstim_scatter_all": {
+   "kind": "supplementary",
+   "number": 29,
+   "slug": "superstim_scatter_all",
+   "script": "figures/supplementary/sup_superstim_scatter_all.py",
+   "shape": [
+    1027,
+    2023,
+    4
+   ],
+   "sha256": "fb447e125926e95eab8b704fa77db5572f7336e473c3a6142feacefe36a84fc5"
+  },
+  "s30_model_dichotomies": {
+   "kind": "supplementary",
+   "number": 30,
+   "slug": "model_dichotomies",
+   "script": "figures/supplementary/sup_model_dichotomies.py",
+   "shape": [
+    1418,
+    2057,
+    4
+   ],
+   "sha256": "1e65a626c80bfef2e742f21ec31a88af08f302e1993c34e10aa579ac2e98b9b6"
+  },
+  "s31_control_reliability": {
+   "kind": "supplementary",
+   "number": 31,
+   "slug": "control_reliability",
+   "script": "figures/supplementary/sup_control_reliability.py",
+   "shape": [
+    1293,
+    2075,
+    4
+   ],
+   "sha256": "acb181daf643758113531168e4ff05f7c161b229a3790e0522ef8b2aa47e0558"
+  },
+  "s32_robadvctl_regaxis": {
+   "kind": "supplementary",
+   "number": 32,
+   "slug": "robadvctl_regaxis",
+   "script": "figures/supplementary/sup_robadvctl_regaxis.py",
+   "shape": [
+    1466,
+    1665,
+    4
+   ],
+   "sha256": "d7be1064314c196cd2ff1c46045e4a6f135fe6667cd9f37e8da989dbdedf753f"
+  },
+  "s33_robadvctl_controls": {
+   "kind": "supplementary",
+   "number": 33,
+   "slug": "robadvctl_controls",
+   "script": "figures/supplementary/sup_robadvctl_controls.py",
+   "shape": [
+    722,
+    2120,
+    4
+   ],
+   "sha256": "14641d883b0055dcbcd778738acc1f136c142325cd3fe8981670ca13d8cafc1e"
+  },
+  "s34_robadvctl_alignment": {
+   "kind": "supplementary",
+   "number": 34,
+   "slug": "robadvctl_alignment",
+   "script": "figures/supplementary/sup_robadvctl_alignment.py",
+   "shape": [
+    1328,
+    2099,
+    4
+   ],
+   "sha256": "a5225346007a07ce494f8be5025dedb018502136c5a74f99bff7fd3766bb1a90"
+  },
+  "s35_exclusion_regimes": {
+   "kind": "supplementary",
+   "number": 35,
+   "slug": "exclusion_regimes",
+   "script": "figures/supplementary/sup_exclusion_regimes.py",
+   "shape": [
+    1633,
+    1997,
+    4
+   ],
+   "sha256": "6ab88074717e0e1dde8466c65c93c818ad38b4a71bbd70c99f9ce953817e3c61"
+  },
+  "s36_controversial": {
+   "kind": "supplementary",
+   "number": 36,
+   "slug": "controversial",
+   "script": "figures/supplementary/sup_controversial.py",
+   "shape": [
+    1713,
+    2004,
+    4
+   ],
+   "sha256": "d914507f37333c36ee1bdcb0c95af27dd42466b275cf85d7666a3b0b40420a3e"
+  },
+  "s37_controversial_stimuli": {
+   "kind": "supplementary",
+   "number": 37,
+   "slug": "controversial_stimuli",
+   "script": "figures/supplementary/sup_controversial_stimuli.py",
+   "shape": [
+    3188,
+    2115,
+    4
+   ],
+   "sha256": "f7c361c1391d57b253aa10aabd89cc80ef54739f272ecbcb66b0d094f30cca86"
+  },
+  "s38_controversial_results": {
+   "kind": "supplementary",
+   "number": 38,
+   "slug": "controversial_results",
+   "script": "figures/supplementary/sup_controversial_results.py",
+   "shape": [
+    1349,
+    2052,
+    4
+   ],
+   "sha256": "8101adcecb936d13288f42875b7ac0cf1e32ce2d2f4daf6a6df057d37892d2dc"
+  },
+  "s39_adversarial_sensitivity": {
+   "kind": "supplementary",
+   "number": 39,
+   "slug": "adversarial_sensitivity",
+   "script": "figures/supplementary/sup_adversarial_sensitivity.py",
+   "shape": [
+    2290,
+    4055,
+    4
+   ],
+   "sha256": "48e5ad50b4424a0888a06e73d511b8370d05363c044b7d76679080339c34ce43"
+  },
+  "s40_adversarial_robustness": {
+   "kind": "supplementary",
+   "number": 40,
+   "slug": "adversarial_robustness",
+   "script": "figures/supplementary/sup_adversarial_robustness.py",
+   "shape": [
+    671,
+    2117,
+    4
+   ],
+   "sha256": "cb79151b485aa739fe3631f444a67c635205d16a2a0079bfe98770f474c1bdfb"
+  },
+  "s41_adv_sensitivity_formulations": {
+   "kind": "supplementary",
+   "number": 41,
+   "slug": "adv_sensitivity_formulations",
+   "script": "figures/supplementary/sup_adv_sensitivity_formulations.py",
+   "shape": [
+    1550,
+    1439,
+    4
+   ],
+   "sha256": "9f5aacea9659cf581d6fbc052e70d2a9e3d7fa332a14aabe99c976108b45a6be"
+  },
+  "s42_flatness_pipeline": {
+   "kind": "supplementary",
+   "number": 42,
+   "slug": "flatness_pipeline",
+   "script": "figures/supplementary/sup_flatness_pipeline.py",
+   "shape": [
+    2044,
+    2074,
+    4
+   ],
+   "sha256": "a50481d70ff90d7cabe5e0d03fc3dd4695079e937c673e111d040539e8f1613b"
+  },
+  "s43_gradient_gallery": {
+   "kind": "supplementary",
+   "number": 43,
+   "slug": "gradient_gallery",
+   "script": "figures/supplementary/sup_gradient_gallery.py",
+   "shape": [
+    2141,
+    2040,
+    4
+   ],
+   "sha256": "7b5875046d1ce4c4c765674925492bd03642f302bb34eef366841ae7dc2b5bb5"
+  },
+  "s44_gradient_geometry": {
+   "kind": "supplementary",
+   "number": 44,
+   "slug": "gradient_geometry",
+   "script": "figures/supplementary/sup_gradient_geometry.py",
+   "shape": [
+    2290,
+    4078,
+    4
+   ],
+   "sha256": "9596661e708b09dbef92a1e8cb763f8e8579530bdd7a4dea113558e53f47089a"
+  },
+  "s45_concentration_image_robustness": {
+   "kind": "supplementary",
+   "number": 45,
+   "slug": "concentration_image_robustness",
+   "script": "figures/supplementary/sup_concentration_image_robustness.py",
+   "shape": [
+    554,
+    2138,
+    4
+   ],
+   "sha256": "26e2cfc4db42c6a514355ec6ef7d58eadd6d588ebd9978cf08bbf1ab733e711b"
+  },
+  "s46_refit_diet_ladder": {
+   "kind": "supplementary",
+   "number": 46,
+   "slug": "refit_diet_ladder",
+   "script": "figures/supplementary/sup_refit_diet_ladder.py",
+   "shape": [
+    1708,
+    2131,
+    4
+   ],
+   "sha256": "4d2a8f9d37b72b455b4ad070f5397e9100cd4b14226cc283ee1fee810394b54f"
+  },
+  "s47_flatness_regime_control": {
+   "kind": "supplementary",
+   "number": 47,
+   "slug": "flatness_regime_control",
+   "script": "figures/supplementary/sup_flatness_regime_control.py",
+   "shape": [
+    930,
+    2074,
+    4
+   ],
+   "sha256": "44d7e70df68c03b314de137aa4ec8cdb0cf576d2188c1a6ea5f720d74f1cedf0"
+  },
+  "s48_predicting_cv_trained": {
+   "kind": "supplementary",
+   "number": 48,
+   "slug": "predicting_cv_trained",
+   "script": "figures/supplementary/sup_predicting_cv_trained.py",
+   "shape": [
+    1315,
+    2076,
+    4
+   ],
+   "sha256": "5f4a1ed794045bb0bd2459e12ec0850a1faf723d20345820381d8ec2d0ea046d"
+  },
+  "s49_predicting_summary": {
+   "kind": "supplementary",
+   "number": 49,
+   "slug": "predicting_summary",
+   "script": "figures/supplementary/sup_predicting_summary.py",
+   "shape": [
+    819,
+    2171,
+    4
+   ],
+   "sha256": "ccdfb47c39999a8a76ba1efa6075c3fafe9e559b2d6308bd4231dd5a82153fa4"
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "archives": {
+  "preprocessed_data.tar": {
+   "bytes": 365803520,
+   "kind": "dir",
+   "md5": "2a7920fa89129671df1d5a7ef2afeedc",
+   "n_members": 273,
+   "path": ".",
+   "sha256": "5b58b5fd231cf0b11cde0f2ddb8d528e97ab6beabd4582a03de62f8c8387fc76",
+   "tier": "preprocessed_data"
+  },
+  "reference_figures.tar": {
+   "bytes": 170178560,
+   "kind": "dir",
+   "md5": "2a439988ff2df2e5bc7e1b0f70b7ef34",
+   "n_members": 55,
+   "path": ".",
+   "sha256": "02fece1c42cebb16ba56f45937f96b8af3860acaba480973dae5e7d54132cf85",
+   "tier": "reference_figures"
+  }
+ },
+ "record_id": null,
+ "sandbox": false
+}

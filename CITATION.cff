@@ -1,0 +1,64 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the article below."
+type: software
+title: "parametric-neural-control"
+version: 1.0.0
+date-released: 2026-09-17
+repository-code: "https://github.com/jacob-prince/parametric-neural-control"
+license: MIT
+authors:
+  - family-names: Prince
+    given-names: Jacob S.
+    affiliation: "Harvard University"
+  - family-names: Wang
+    given-names: Binxu
+    affiliation: "Harvard University; Kempner Institute"
+  - family-names: Fel
+    given-names: Thomas
+    affiliation: "Harvard University; Kempner Institute"
+  - family-names: Jagadeesh
+    given-names: Akshay V.
+    affiliation: "Harvard Medical School"
+  - family-names: Vaziri
+    given-names: Parisa A.
+    affiliation: "Harvard Medical School"
+  - family-names: Alvarez
+    given-names: George A.
+    affiliation: "Harvard University; Kempner Institute"
+  - family-names: Livingstone
+    given-names: Margaret S.
+    affiliation: "Harvard Medical School"
+  - family-names: Konkle
+    given-names: Talia
+    affiliation: "Harvard University; Kempner Institute"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.XXXXXXX"
+    description: "Zenodo archive of the software release (placeholder until the release is archived)"
+  - type: doi
+    value: "10.5281/zenodo.YYYYYYY"
+    description: "Zenodo dataset record with source_data and preprocessed_data (placeholder until published)"
+preferred-citation:
+  type: article
+  title: "Parametric neural control differentiates top neural network models of primate visual cortex"
+  journal: bioRxiv
+  year: 2026
+  doi: 10.64898/2026.08.16.745063
+  url: "https://www.biorxiv.org/content/10.64898/2026.08.16.745063v1"
+  authors:
+    - family-names: Prince
+      given-names: Jacob S.
+    - family-names: Wang
+      given-names: Binxu
+    - family-names: Fel
+      given-names: Thomas
+    - family-names: Jagadeesh
+      given-names: Akshay V.
+    - family-names: Vaziri
+      given-names: Parisa A.
+    - family-names: Alvarez
+      given-names: George A.
+    - family-names: Livingstone
+      given-names: Margaret S.
+    - family-names: Konkle
+      given-names: Talia

@@ -1,3 +1,4 @@
+import os
 import torch as th
 import torch
 import torchvision.transforms as T
@@ -8,7 +9,13 @@ def load_model_transform(modelname, device="cuda"):
     # Prepare model and transforms
     if modelname == "resnet50_robust":
         model = resnet50(pretrained=False)
-        model.load_state_dict(th.load("/n/holylfs06/LABS/kempner_fellow_binxuwang/Users/binxuwang/Projects/VVS_Accentuation/model_backbones/imagenet_linf_8_pure.pt", weights_only=False))
+        ckpt_dir = os.environ.get("PNC_MODEL_BACKBONES", "")  # was /n/holylfs06/LABS/kempner_fellow_binxuwang/Users/binxuwang/Projects/VVS_Accentuation/model_backbones
+        ckpt_path = os.path.join(ckpt_dir, "imagenet_linf_8_pure.pt")
+        if not os.path.isfile(ckpt_path):
+            raise FileNotFoundError(
+                f"Robust ResNet-50 checkpoint not found at {ckpt_path!r}. Set PNC_MODEL_BACKBONES to a directory "
+                "containing imagenet_linf_8_pure.pt (source_data/model_backbones after running data/download_data.py).")
+        model.load_state_dict(th.load(ckpt_path, weights_only=False))
         transforms_pipeline = T.Compose([
             T.ToTensor(),
             T.Resize((224, 224)),
@@ -37,7 +44,7 @@ def load_model_transform(modelname, device="cuda"):
     elif modelname == "clipag_vitb32":
         import open_clip
         from os.path import join
-        ckpt_dir = '/n/holylfs06/LABS/kempner_fellow_binxuwang/Users/binxuwang/Projects/VVS_Accentuation/model_backbones'
+        ckpt_dir = os.environ.get("PNC_MODEL_BACKBONES", "")  # was /n/holylfs06/LABS/kempner_fellow_binxuwang/Users/binxuwang/Projects/VVS_Accentuation/model_backbones
         data = torch.load(join(ckpt_dir, 'CLIPAG_ViTB32.pt'), map_location='cpu', weights_only=False)
         data = data['state_dict']
         data = {k.replace('module.', ''): v for k, v in data.items()}
@@ -67,13 +74,9 @@ def load_model_transform(modelname, device="cuda"):
             # T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ])
     elif modelname == "ReAlnet01":
-        import sys
-        sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
         from core.brainscore_model_utils import build_ReAlnet_model
         model, transforms_pipeline = build_ReAlnet_model(identifier="ReAlnet01")
     elif modelname == "AlexNet_training_seed_01":
-        import sys
-        sys.path.append("/n/home12/binxuwang/Github/Closed-loop-visual-insilico")
         from core.brainscore_model_utils import build_alexnet_brainscore
         model, transforms_pipeline = build_alexnet_brainscore(identifier="training_seed_01")
     elif modelname == "regnety_640":
