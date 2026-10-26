@@ -145,34 +145,23 @@ Jacob S. Prince (jacob.samuel.prince@gmail.com) and Binxu Wang, with Thomas Fel,
 
 Code is MIT licensed; third-party notices are in `LICENSE`.
 
-## 🔎 Requirements, timings and reviewer notes
+## 🔎 Requirements and timings
 
-**System requirements.** Figures, notebooks and demos were tested on macOS (Apple silicon) with
-Python 3.12 and the versions pinned in `environment.yml` (numpy 2.4.1, scipy 1.17.0, pandas 3.0.0,
-matplotlib 3.10.8, scikit-learn 1.7.1, statsmodels 0.14.6, torch 2.10.0, torchvision 0.25.0, h5py 3.15.1,
-Pillow 12.1.0). Pixel-exact figure reproduction is guaranteed only on that reference environment;
-elsewhere the tests fall back to a tolerance comparison ([docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)).
-No non-standard hardware is needed for the figures or demos. The as-run GPU stages (`scripts/`) used one
-NVIDIA H100 (80 GB) per SLURM job on the Harvard Kempner cluster (synthesis: 16 cores, 250 GB RAM, 24 h
-limit per site × model array task; attacks and gradient spectra: 8–16 cores, 64–120 GB, 2–6 h); any CUDA
-GPU with ≥ 24 GB should run the synthesis scripts at the paper's settings.
+Tested on macOS (Apple silicon) with Python 3.12 and the versions pinned in `environment.yml`. No
+special hardware is needed for the figures or demos. Timings below are rough estimates from one
+Apple-silicon MacBook Pro and will vary across systems.
 
-**Install time.** About 2 minutes with a warm conda cache (75 s measured on a MacBook Pro), up to
-10 minutes on a first install that downloads PyTorch.
-`python -m pytest -q -m "not pixel and not preproc and not notebooks and not slow"` runs the 588
-data-free tests in about 90 s and confirms the install.
-
-**Demo: expected output and run time.** `python figures/render_all.py --only divergence` writes
-`outputs/figures/divergence.png`, the paper's Figure 4, pixel-identical to
-`preprocessed_data/reference_figures/divergence.png` on the reference environment; `--check` prints
-`ok / pixel-exact` per figure and writes `outputs/figures/render_manifest.json` with each figure's pixel
-hash and duration. Measured on an Apple-silicon MacBook Pro: Figure 4 in 4 s at 0.4 GB RAM; all 55
-figures in about 6 minutes, peaking at 8 GB for the largest (16 GB RAM recommended); demo notebook 02 in
-2.5 minutes at about 2 GB on CPU at its reduced scale. With `FULL_SCALE = True` the demos use the paper's
-settings and need a GPU.
-
-**Data access during peer review.** The Zenodo record is an unpublished draft reachable only through the
-access link given to the journal. Download the archives from that link into a directory and run
-`python data/download_data.py --tier preprocessed --from-local DIR` (or `--tier all`); checksums are
-verified exactly as for a published record. `python data/download_data.py` without `--from-local` works
-once the record is public.
+- **install**: ~2 min with a warm conda cache, up to ~10 min when PyTorch has to be downloaded.
+  `python -m pytest -q -m "not pixel and not preproc and not notebooks and not slow"` (588 tests, ~90 s)
+  checks the install.
+- **demo**: `python figures/render_all.py --only divergence` writes `outputs/figures/divergence.png`,
+  the paper's Figure 4, in ~4 s and under 1 GB of RAM; `--check` compares it with the shipped PNG and
+  reports `pixel-exact`. All 55 figures: ~6 min, up to 8 GB of RAM. Demo notebooks: a few minutes each
+  on CPU at reduced scale, ~2 GB; `FULL_SCALE = True` needs a GPU.
+- **GPU stages** (`scripts/`): as run, one NVIDIA H100 80 GB per SLURM job on the Kempner cluster
+  (synthesis: 16 cores, 250 GB RAM, 24 h limit; attacks and gradient spectra: 8–16 cores, 64–120 GB,
+  2–6 h). Any CUDA GPU with ≥ 24 GB should do.
+- **peer review**: the Zenodo record is a draft reachable only through the link given to the journal.
+  Download its archives into a directory and run
+  `python data/download_data.py --tier preprocessed --from-local DIR` (or `--tier all`); checksums are
+  verified as usual. Plain `download_data.py` works once the record is public.
