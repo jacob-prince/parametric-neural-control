@@ -3,8 +3,8 @@
  "known_pickle_only_semantic": [],
  "files": {
   "MANIFEST.json": {
-   "sha256": "e376cde4314dc003887d975501efff5194d9818e4e540f2132bb200c690e85b9",
-   "md5": "4fd973c307981a8ec805a1bae5a147dd",
+   "sha256": "5f9ee2b30eccfada6c2621dc72eb12bf062ca93fd2d1c87b8d8304f723367ba8",
+   "md5": "fa1a886ff61c8684b19e467c962b1870",
    "bytes": 1870
   },
   "axis_alignment.pkl": {
@@ -1348,14 +1348,14 @@
    "bytes": 11840
   },
   "sup_superstim_scatter_all.pkl": {
-   "sha256": "0b2a677abec132ae846f344b53f7bc3ff30a35554a4a72c6123ab41d17877372",
-   "md5": "156a66031b4170828ec138d528c72615",
-   "bytes": 7604863
+   "sha256": "1dca86fab81c68231c5921fe07069771d94285bb9d897b9c3af5b948f539dec2",
+   "md5": "fd379f099490e04bf55d3908a6e7e9cc",
+   "bytes": 6863296
   },
   "sup_superstim_scatter_venus.pkl": {
-   "sha256": "f5416a5db71f9b71852bf696dc0ba2ec3bf22bbbdac14f0504f634f41b5e7893",
-   "md5": "9e2293fe7892096a56a6f313d8fff966",
-   "bytes": 2065842
+   "sha256": "0fb4d0ab2cb5eff29209f38a34fafe2c9506b59e912f5e7ef69429404a208702",
+   "md5": "c01f02f378dbf9157eb38542f41395fb",
+   "bytes": 1867617
   },
   "tuning_stability.pkl": {
    "sha256": "fe270ab05df039963d999e1eea598ce758e3db4cf44cc55d6306b093dae7e7f3",

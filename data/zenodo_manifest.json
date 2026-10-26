@@ -1,12 +1,12 @@
 {
  "archives": {
   "preprocessed_data.tar": {
-   "bytes": 365803520,
+   "bytes": 364820480,
    "kind": "dir",
-   "md5": "2a7920fa89129671df1d5a7ef2afeedc",
-   "n_members": 273,
+   "md5": "3b3e0621b743fbee265ea97ca7efa361",
+   "n_members": 272,
    "path": ".",
-   "sha256": "5b58b5fd231cf0b11cde0f2ddb8d528e97ab6beabd4582a03de62f8c8387fc76",
+   "sha256": "e7cc5a68619f0a99138f513307429a7e0faea155cabe6a488391fb2c2d316470",
    "tier": "preprocessed_data"
   },
   "reference_figures.tar": {
@@ -17,8 +17,179 @@
    "path": ".",
    "sha256": "02fece1c42cebb16ba56f45937f96b8af3860acaba480973dae5e7d54132cf85",
    "tier": "reference_figures"
+  },
+  "source_data__accentuation_configs.tar.gz": {
+   "bytes": 45145,
+   "kind": "dir",
+   "md5": "c4d58ee951c5e1a3509b5bf02995126a",
+   "n_members": 316,
+   "path": "accentuation_configs",
+   "sha256": "0ab7ac0572e9fcda23b2fef7df505cf7af63e6e5ed24bc69663eedb5b763cbac",
+   "tier": "source_data"
+  },
+  "source_data__brain_data_encoding__sessdata_pkl.tar": {
+   "bytes": 2712401920,
+   "kind": "glob:*_sessdata.pkl",
+   "md5": "c61b780a1ffdae2607d8d96ae8ecc697",
+   "n_members": 22,
+   "path": "brain_data_encoding",
+   "sha256": "d31dbafa0ac33f2bd8ce30bf9eea83dd34c97c37011421a45ac84f2381037e78",
+   "tier": "source_data"
+  },
+  "source_data__cluster_outputs.tar": {
+   "bytes": 553400320,
+   "kind": "dir",
+   "md5": "0a4a531c78789403be655d9c68a52af5",
+   "n_members": 1492,
+   "path": "cluster_outputs",
+   "sha256": "6134e1c82b9c669872ecbfe63ffd3b4d73a96d5820e9a0611a5b9c05901faeb2",
+   "tier": "source_data"
+  },
+  "source_data__encoding_model_outputs.tar": {
+   "bytes": 3835473920,
+   "kind": "dir",
+   "md5": "d03e9fa10c97d21f533f8aed659f366c",
+   "n_members": 35,
+   "path": "encoding_model_outputs",
+   "sha256": "f9465048f9a67517b947ff1cc419130529c07c8f83209ed5b2c0ebd0bcd81090",
+   "tier": "source_data"
+  },
+  "source_data__frozen_inputs.tar": {
+   "bytes": 283760640,
+   "kind": "dir",
+   "md5": "4a17b03a5556b401d2f82939518e1e56",
+   "n_members": 226,
+   "path": "frozen_inputs",
+   "sha256": "b6ca5c2c2d7a9d7f18b6da725f452b9717f971dc14a8e0931c503e7936e295c4",
+   "tier": "source_data"
+  },
+  "source_data__image_pca_projections.tar": {
+   "bytes": 7046686720,
+   "kind": "dir",
+   "md5": "235953ae918c8677dfe7d3ddbcd4ad1b",
+   "n_members": 506,
+   "path": "image_pca_projections",
+   "sha256": "345949a1a8ce784883968a81366a33f6f3e57e2c774fe202166b546d815506c3",
+   "tier": "source_data"
+  },
+  "source_data__leap_250426-250501_vvs-encodingstimuli_z1_rw80-250.h5": {
+   "bytes": 624524480,
+   "kind": "file",
+   "md5": "324346365a99ae5f653a078393c34cd8",
+   "n_members": 1,
+   "path": "brain_data_encoding/leap_250426-250501_vvs-encodingstimuli_z1_rw80-250.h5",
+   "sha256": "3b844468f0520f4f4a0c3ef368c7d13078c79cb01f1c6b1542cf037afe67bf37",
+   "tier": "source_data"
+  },
+  "source_data__model_backbones.tar": {
+   "bytes": 102502400,
+   "kind": "dir",
+   "md5": "185892531833f8bbae657a7736c4fb5f",
+   "n_members": 1,
+   "path": "model_backbones",
+   "sha256": "847d079b8ad40ddba5009c346835fd25c1cd5f3c61d0f83832c08e0d48ff62c9",
+   "tier": "source_data"
+  },
+  "source_data__model_features.tar": {
+   "bytes": 10199040,
+   "kind": "dir",
+   "md5": "a592e4eee97ae3d3658624ca3367a604",
+   "n_members": 50,
+   "path": "model_features",
+   "sha256": "c136493171f388a7fe6cc8b2ecda413e0f4e2557405c141601ff4c9b7ded8650",
+   "tier": "source_data"
+  },
+  "source_data__model_predictions.tar": {
+   "bytes": 29245440,
+   "kind": "dir",
+   "md5": "0d2256ccf5813e3471c3980a3f08bfc5",
+   "n_members": 25,
+   "path": "model_predictions",
+   "sha256": "c677031e9bd4f281208ea71cc8171bbae624fa58cef9f20fafdbdc90e2622113",
+   "tier": "source_data"
+  },
+  "source_data__paul_20250428-20250430_vvs-encodingstimuli_z1_rw100-400.h5": {
+   "bytes": 80236416,
+   "kind": "file",
+   "md5": "fd335b3832f622379954c39a5c99273b",
+   "n_members": 1,
+   "path": "brain_data_encoding/paul_20250428-20250430_vvs-encodingstimuli_z1_rw100-400.h5",
+   "sha256": "06a47eeb9e10c7af5bccdd36711c6d95616e42f45c2a18ac7d9575fdf7cd2301",
+   "tier": "source_data"
+  },
+  "source_data__red_20250428-20250430_vvs-encodingstimuli_z1_rw100-400.h5": {
+   "bytes": 160199622,
+   "kind": "file",
+   "md5": "e99d7e87c256c62d19d2be2d88021e12",
+   "n_members": 1,
+   "path": "brain_data_encoding/red_20250428-20250430_vvs-encodingstimuli_z1_rw100-400.h5",
+   "sha256": "95bd93300caba8a60bf44f16bb659bfa083d3179a9baabc1eab900e021d5b933",
+   "tier": "source_data"
+  },
+  "source_data__stimuli_control.tar": {
+   "bytes": 10613411840,
+   "kind": "dir",
+   "md5": "9b8153718b0a114a08ef6abb6df593aa",
+   "n_members": 4619,
+   "path": "stimuli_control",
+   "sha256": "9a04d3178fa3ea19ba3e2c499c1c111e009f6c604b68780db4fad54a9fcfc884",
+   "tier": "source_data"
+  },
+  "source_data__stimuli_controversial.tar": {
+   "bytes": 39690240,
+   "kind": "dir",
+   "md5": "985eb17b39259ac3ce4e2b64fb1f33da",
+   "n_members": 140,
+   "path": "stimuli_controversial",
+   "sha256": "4f2f7fc88185ed9c179d44eedff46d931549d92ec6e996bd240c51802d3d4896",
+   "tier": "source_data"
+  },
+  "source_data__stimuli_encoding.tar": {
+   "bytes": 243261440,
+   "kind": "dir",
+   "md5": "72556a8f866c2ade111df82a08f0c387",
+   "n_members": 971,
+   "path": "stimuli_encoding",
+   "sha256": "b119e9e02d6ddcd3bbc3669df6bbd632a988e5a570969913d59df02283022c8a",
+   "tier": "source_data"
+  },
+  "source_data__three0_250426-250501_vvs-encodingstimuli_z1_rw80-250.h5": {
+   "bytes": 743021636,
+   "kind": "file",
+   "md5": "fb26b99e7f2a321789f875eacf9c0ca6",
+   "n_members": 1,
+   "path": "brain_data_encoding/three0_250426-250501_vvs-encodingstimuli_z1_rw80-250.h5",
+   "sha256": "7af6b3858e3850663b208aa8313c127d3935a48da4d31b61017877426a1247fb",
+   "tier": "source_data"
+  },
+  "source_data__venus_250426-250429_vvs-encodingstimuli_z1_rw80-250.h5": {
+   "bytes": 1703061536,
+   "kind": "file",
+   "md5": "0b7b34be01f27cb9fc51e13c1b344c09",
+   "n_members": 1,
+   "path": "brain_data_encoding/venus_250426-250429_vvs-encodingstimuli_z1_rw80-250.h5",
+   "sha256": "b533f8e16e8b67aac3e3b300636c6afa582a0189f32463ff1cee9a3a288e5887",
+   "tier": "source_data"
+  },
+  "source_data__vvs-accentuate_controlsessions_5monkeys_250504-250512.h5": {
+   "bytes": 6004209354,
+   "kind": "file",
+   "md5": "ae631e7c7067530d201b64d7dec4e780",
+   "n_members": 1,
+   "path": "brain_data_control/vvs-accentuate_controlsessions_5monkeys_250504-250512.h5",
+   "sha256": "09ebfb40ae1385bfbc704c3629cdbab95f1508476eede62f07baa82b099c0c18",
+   "tier": "source_data"
+  },
+  "source_data__vvs_accentuate_day3_normalize_red_20250123-20250126.hdf5": {
+   "bytes": 229505136,
+   "kind": "file",
+   "md5": "0f35f746f25dccaa338c43b52c4b5e2e",
+   "n_members": 1,
+   "path": "brain_data_controversial/vvs_accentuate_day3_normalize_red_20250123-20250126.hdf5",
+   "sha256": "260a0869c8d299822b473e0dfc929b7fa2abc29c7dd5fe927b77547f52b071d5",
+   "tier": "source_data"
   }
  },
- "record_id": null,
+ "record_id": 23573698,
  "sandbox": false
 }
