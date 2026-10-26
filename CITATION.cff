@@ -36,8 +36,8 @@ identifiers:
     value: "10.5281/zenodo.XXXXXXX"
     description: "Zenodo archive of the software release (placeholder until the release is archived)"
   - type: doi
-    value: "10.5281/zenodo.YYYYYYY"
-    description: "Zenodo dataset record with source_data and preprocessed_data (placeholder until published)"
+    value: "10.5281/zenodo.23573698"
+    description: "Zenodo dataset record with source_data and preprocessed_data"
 preferred-citation:
   type: article
   title: "Parametric neural control differentiates top neural network models of primate visual cortex"

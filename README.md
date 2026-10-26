@@ -95,7 +95,7 @@ sweep = [feature_accentuation(obj, seed, target_level=t, image_size=256, total_s
 
 ## 📦 Data
 
-Two tiers, both on Zenodo (DOI to appear here at publication), downloaded and checksum-verified by one script:
+Two tiers, both on Zenodo ([10.5281/zenodo.23573698](https://doi.org/10.5281/zenodo.23573698)), downloaded and checksum-verified by one script:
 
 ```bash
 python data/download_data.py --tier preprocessed   # ~0.5 GB  caches behind every figure
@@ -144,3 +144,24 @@ How the figures are verified against the submitted manuscript, how the caches ar
 Jacob S. Prince (jacob.samuel.prince@gmail.com) and Binxu Wang, with Thomas Fel, Akshay V. Jagadeesh, Parisa A. Vaziri, George A. Alvarez, Margaret S. Livingstone and Talia Konkle. Harvard University, the Kempner Institute and Harvard Medical School.
 
 Code is MIT licensed; third-party notices are in `LICENSE`.
+
+## 🔎 Requirements and timings
+
+Tested on macOS (Apple silicon) with Python 3.12 and the versions pinned in `environment.yml`. No
+special hardware is needed for the figures or demos. Timings below are rough estimates from one
+Apple-silicon MacBook Pro and will vary across systems.
+
+- **install**: ~2 min with a warm conda cache, up to ~10 min when PyTorch has to be downloaded.
+  `python -m pytest -q -m "not pixel and not preproc and not notebooks and not slow"` (588 tests, ~90 s)
+  checks the install.
+- **demo**: `python figures/render_all.py --only divergence` writes `outputs/figures/divergence.png`,
+  the paper's Figure 4, in ~4 s and under 1 GB of RAM; `--check` compares it with the shipped PNG and
+  reports `pixel-exact`. All 55 figures: ~6 min, up to 8 GB of RAM. Demo notebooks: a few minutes each
+  on CPU at reduced scale, ~2 GB; `FULL_SCALE = True` needs a GPU.
+- **GPU stages** (`scripts/`): as run, one NVIDIA H100 80 GB per SLURM job on the Kempner cluster
+  (synthesis: 16 cores, 250 GB RAM, 24 h limit; attacks and gradient spectra: 8–16 cores, 64–120 GB,
+  2–6 h). Any CUDA GPU with ≥ 24 GB should do.
+- **peer review**: the Zenodo record is a draft reachable only through the link given to the journal.
+  Download its archives into a directory and run
+  `python data/download_data.py --tier preprocessed --from-local DIR` (or `--tier all`); checksums are
+  verified as usual. Plain `download_data.py` works once the record is public.
